@@ -1,0 +1,112 @@
+body {
+    background-color: theme('colors.background');
+    color: #f8fafc;
+    overflow-x: hidden;
+    background-color: rgb(213, 224, 223);
+
+}
+
+.glass-nav {
+    background: rgba(2, 6, 23, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bento-box {
+    background: #1f2937;
+    /* Gris oscuro mate (gray-800) */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bento-box:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(16, 185, 129, 0.1) inset;
+    transform: translateY(-4px);
+}
+
+.btn-aurora {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: theme('colors.primaryLight');
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-aurora:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: theme('colors.primary');
+    transform: scale(1.02);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline {
+    background: rgba(255, 255, 255, 0.03);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.aurora-glow {
+    position: absolute;
+    width: 80vw;
+    height: 50vh;
+    background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+    top: -20vh;
+    left: 10vw;
+    filter: blur(60px);
+    z-index: -1;
+    pointer-events: none;
+    animation: pulse-aurora 8s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-aurora {
+    0% {
+        opacity: 0.5;
+        transform: scale(1) translateY(0);
+    }
+
+    100% {
+        opacity: 0.8;
+        transform: scale(1.1) translateY(20px);
+    }
+}
+
+.hero-mask {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}
+
+/* Elegante barra de progreso animada */
+.progress-bar-animated {
+    background: linear-gradient(90deg, theme('colors.accent'), theme('colors.primaryLight'));
+    background-size: 200% 100%;
+    animation: gradient-move 3s ease infinite;
+}
+
+@keyframes gradient-move {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}

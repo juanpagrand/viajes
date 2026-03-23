@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora Voyages | Expedición Ártica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Outfit"', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#020617', /* slate-950 */
+                        surface: '#0f172a', /* slate-900 */
+                        surfaceLight: '#1e293b', /* slate-800 */
+                        primary: '#10b981', /* emerald-500 (Aurora color) */
+                        primaryLight: '#34d399', /* emerald-400 */
+                        accent: '#3b82f6', /* blue-500 */
+                    },
+                    animation: {
+                        'carousel': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col">
+
+    <!-- Luz ambiental simulando Aurora Boreal -->
+    <div class="aurora-glow"></div>
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="compass" class="text-primary w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="font-bold text-xl tracking-wide">AURORA <span class="text-primary font-light">VOYAGES</span>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
+                <a href="#"
+                    class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full"
+                    data-i18n="nav-home">Inicio</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-mission">La Misión</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-fleet">Flota</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-routes">Rutas</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-logbook">Bitácora</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Dropdown de Idioma -->
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer text-sm font-medium py-2 pr-0 pl-2 focus:outline-none"
+                        id="lang-btn">
+                        <i data-lucide="globe" class="w-4 h-4 text-primaryLight"></i>
+                        <span id="current-lang" class="font-bold tracking-wider">ES</span>
+                        <i data-lucide="chevron-down"
+                            class="w-3 h-3 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                    </button>
+                    <!-- Menú desplegable -->
+                    <div
+                        class="absolute right-0 top-full mt-2 w-36 bg-surfaceLight/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] transform origin-top-right group-hover:scale-100 scale-95 flex flex-col overflow-hidden before:absolute before:-top-4 before:right-0 before:w-full before:h-4 before:bg-transparent">
+                        <button onclick="changeLanguage('es')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">Español
+                            <span class="text-[10px] font-bold text-primary">ES</span></button>
+                        <button onclick="changeLanguage('en')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">English
+                            <span class="text-[10px] font-bold text-primary">EN</span></button>
+                        <button onclick="changeLanguage('no')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between font-medium">Norsk
+                            <span class="text-[10px] font-bold text-primary">NO</span></button>
+                    </div>
+                </div>
+
+                <a href="#" class="btn-outline hidden sm:inline-flex items-center gap-2">
+                    <i data-lucide="user" class="w-4 h-4"></i> <span data-i18n="login">Acceder</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Hero Full Screen -->
+    <section
+        class="relative w-full h-screen min-h-[700px] flex flex-col justify-end items-center pb-40 text-center overflow-hidden">
+        <!-- VIDEO BACKGROUND (Absolute, full screen) -->
+        <video autoplay muted loop playsinline
+            class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 opacity-80">
+            <source th:src="@{/images/pabarco.mp4}" type="video/mp4">
+        </video>
+
+        <!-- FADE DEGRADADO PARA FUNDIR CON EL FONDO Y EVITAR CORTE SECO -->
+        <div class="absolute inset-0 z-10 pointer-events-none"
+            style="background: linear-gradient(to top, rgb(213, 224, 223) 0%, transparent 20%);">
+        </div>
+
+        <!-- CONTENIDO DEL HERO -->
+        <div class="relative z-20 px-4 w-full max-w-5xl flex flex-col items-center">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 text-sm text-primaryLight font-medium">
+                <div class="w-2 h-2 rounded-full bg-primaryLight animate-pulse"></div>
+                <span data-i18n="hero-tag">Expedición 2026/2027 Abierta</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 drop-shadow-xl leading-tight">
+                <span data-i18n="hero-title-1">DOMINA LOS MARES</span> <br />
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primaryLight to-accent"
+                    data-i18n="hero-title-2">
+                    DEL FIN DEL MUNDO
+                </span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mb-10 drop-shadow-md" data-i18n="hero-subtitle">
+                Navega hacia lo desconocido...
+            </p>
+
+            <a href="#" class="btn-aurora flex items-center gap-3 text-lg" data-i18n="hero-btn">
+                Comenzar la Aventura
+            </a>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <main class="w-full px-4 sm:px-8 xl:px-12 relative z-30 -mt-20">
+        <!-- Dashboard / Bento Grid Inferior -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- TARJETA: EXPEDICIÓN ACTUAL (Ocupa 4 columnas) -->
+            <div class="bento-box p-6 lg:col-span-4 flex flex-col relative overflow-hidden">
+                <!-- Decoración de fondo -->
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+
+                <div class="flex justify-between items-center mb-6 relative z-10">
+                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
+                        <i data-lucide="navigation" class="w-4 h-4 text-primary"></i>
+                        <span data-i18n="route-title">Ruta Actual</span>
+                    </h3>
+                    <div
+                        class="px-2 py-1 rounded bg-primary/20 text-primary text-[10px] font-bold tracking-wider border border-primary/30">
+                        <span data-i18n="route-status">EN CURSO</span>
+                    </div>
+                </div>
+
+                <div
+                    class="flex-grow bg-background rounded-2xl border border-white/5 mb-6 relative z-10 overflow-hidden min-h-[250px] shadow-inner">
+                    <!-- Mapa Interactivo -->
+                    <iframe width="100%" height="100%"
+                        class="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-500 hover:opacity-100"
+                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=13.0,67.5,15.5,69.0&amp;layer=mapnik&amp;marker=68.3,14.2"
+                        style="border: 0; filter: invert(100%) hue-rotate(180deg) contrast(110%); pointer-events: auto;"></iframe>
+                </div>
+
+                <div class="mt-auto relative z-10">
+                    <div class="flex justify-between text-xs text-slate-400 mb-3 font-medium">
+                        <span data-i18n="route-progress">Progreso de Travesía</span>
+                        <span class="text-primaryLight font-mono">68.3°N, 14.2°E</span>
+                    </div>
+                    <div class="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden border border-white/5">
+                        <div class="progress-bar-animated h-full rounded-full relative" style="width: 65%">
+                            <div class="absolute right-0 top-0 bottom-0 w-10 bg-white/40 blur-[2px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA: PRÓXIMOS VIAJES (Ocupa 5 columnas) -->
+            <div class="bento-box p-6 lg:col-span-5 flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
+                        <i data-lucide="calendar-days" class="w-4 h-4 text-accent"></i>
+                        <span data-i18n="next-title">Próximas Salidas</span>
+                    </h3>
+                </div>
+
+                <div class="flex-grow flex">
+                    <!-- Viaje Único -->
+                    <div
+                        class="w-full group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-lg">
+                        <img th:src="@{/images/polo-norte-07082025-2076085.jpg}" alt="Próxima Expedición"
+                            class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent opacity-90">
+                        </div>
+
+                        <div
+                            class="absolute top-3 right-3 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-[11px] text-white border border-white/10">
+                            <span data-i18n="next-tag">Abierto a Tripulación</span>
+                        </div>
+
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <div class="text-xs text-primaryLight mb-2 font-mono tracking-wider"><span
+                                    data-i18n="next-soon">PRÓXIMAMENTE</span></div>
+                            <div
+                                class="font-bold text-2xl leading-tight group-hover:text-primary transition-colors duration-300">
+                                <span data-i18n="next-dest">NUEVO DESTINO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    class="mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center gap-2 text-sm text-slate-300 transition-colors border border-white/5">
+                    <span data-i18n="next-btn">Ver calendario completo</span> <i data-lucide="arrow-right"
+                        class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- TARJETA: REGISTROS Y BITÁCORA (Ocupa 3 columnas) -->
+            <div class="bento-box p-6 lg:col-span-3 flex flex-col h-full max-h-[450px]">
+                <div class="flex justify-between items-center mb-5 border-b border-white/10 pb-4">
+                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
+                        <i data-lucide="book-open" class="w-4 h-4 text-slate-300"></i>
+                        <span data-i18n="log-title">Bitácora</span>
+                    </h3>
+                </div>
+
+                <div class="flex-grow space-y-1 overflow-y-auto pr-2 custom-scrollbar">
+
+                    <!-- Log Item 1 -->
+                    <div
+                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
+                        <div
+                            class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-emerald-500/30 group-hover:bg-emerald-500/20 transition-colors">
+                            <i data-lucide="anchor" class="w-4 h-4 text-emerald-400"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block" data-i18n="log-1-time">HACE
+                                2 HORAS</span>
+                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
+                                data-i18n="log-1-text">
+                                Cruzando el Círculo Polar Ártico. Vientos fuertes de cola, avanzamos a buen ritmo.</p>
+                        </div>
+                    </div>
+
+                    <!-- Log Item 2 -->
+                    <div
+                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
+                        <div
+                            class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-blue-500/30 group-hover:bg-blue-500/20 transition-colors">
+                            <i data-lucide="camera" class="w-4 h-4 text-blue-400"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-blue-400 font-mono mb-1 block"
+                                data-i18n="log-2-time">AYER</span>
+                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
+                                data-i18n="log-2-text">
+                                Avistamiento de orcas a babor. Condiciones fotográficas impecables.</p>
+                        </div>
+                    </div>
+
+                    <!-- Log Item 3 -->
+                    <div
+                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
+                        <div
+                            class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-slate-500/30 group-hover:bg-slate-500/20 transition-colors">
+                            <i data-lucide="settings" class="w-4 h-4 text-slate-400"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 font-mono mb-1 block" data-i18n="log-3-time">HACE 3
+                                DÍAS</span>
+                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
+                                data-i18n="log-3-text">
+                                Mantenimiento preventivo en cubierta completado exitosamente antes de la tormenta.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Carrusel de Patrocinadores (Full Width horizontal slider) -->
+    <section class="w-full bg-[#0f172a]/40 border-y border-white/5 py-10 mt-20 overflow-hidden relative">
+        <div
+            class="absolute inset-0 w-full h-full bg-gradient-to-r from-background via-transparent to-background z-20 pointer-events-none">
+        </div>
+
+        <div class="flex w-max animate-carousel">
+            <!-- Grupo 1 -->
+            <div class="flex items-center gap-12 px-6">
+                <!-- Cambia estos DIVs grises por etiquetas img para usar tus propios logos reales -->
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 1</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 2</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 3</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 4</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 5</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 6</div>
+            </div>
+            <!-- Grupo 2 (Repetición exacta para loop infinito) -->
+            <div class="flex items-center gap-12 px-6">
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 1</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 2</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 3</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 4</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 5</div>
+                <div
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
+                    SPONSOR 6</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NUEVA SECCIÓN: El Barco y Su Historia -->
+    <section class="w-full px-6 md:px-10 lg:px-16 py-24 relative z-30">
+        <div class="max-w-7xl mx-auto">
+            <!-- Título de Sección -->
+            <div class="mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center gap-3 drop-shadow-md">
+                    <i data-lucide="anchor" class="text-primary w-8 h-8"></i>
+                    <span data-i18n="story-title">El Navío y su Historia</span>
+                </h2>
+                <p class="text-slate-400 mt-2 text-lg" data-i18n="story-subtitle">Conoce el corazón de nuestra
+                    expedición</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+                <!-- Columna Izquierda: 3 Fotos (Flex Staggered) -->
+                <div class="lg:col-span-5 flex flex-col gap-6 justify-between h-full">
+                    <!-- Foto 1 (Arriba Izquierda) -->
+                    <div
+                        class="w-[70%] aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-lg self-start group">
+                        <img th:src="@{/images/WhatsApp Image 2026-03-21 at 8.17.20 AM (3).jpeg}" alt="Barco detalle 1"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                    </div>
+                    <!-- Foto 2 (Medio Derecha) -->
+                    <div
+                        class="w-[70%] aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-lg self-end group -my-10 relative z-10">
+                        <img th:src="@{/images/fto.jpeg}" alt="Barco detalle 2"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                    </div>
+                    <!-- Foto 3 (Abajo Izquierda) -->
+                    <div
+                        class="w-[70%] aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-lg self-start group">
+                        <img th:src="@{/images/Captura de pantalla 2026-03-21 192859.png}" alt="Barco detalle 3"
+                            class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Historia -->
+                <div class="lg:col-span-7 h-full">
+                    <div class="bento-box p-8 md:p-12 h-full flex flex-col justify-center">
+                        <h3 class="text-2xl text-primaryLight font-bold mb-6" data-i18n="story-h3">Un Legado en los
+                            Mares</h3>
+                        <div class="space-y-6 text-slate-300 text-lg leading-relaxed">
+                            <p data-i18n="story-p1">El barco fue diseñado específicamente para soportar las condiciones
+                                más extremas del
+                                Círculo Polar Ártico. Con un casco reforzado doble y tecnología de navegación de última
+                                generación, es más que un simple medio de transporte: es nuestro refugio seguro en el
+                                fin del mundo.</p>
+                            <p data-i18n="story-p2">Su historia comenzó hace más de dos décadas cruzando el recóndito
+                                paso del noroeste. Hoy
+                                en día, ha sido completamente remodelado para combinar el romanticismo de la navegación
+                                clásica con las comodidades modernas necesarias para exploraciones científicas a largo
+                                plazo.</p>
+                            <a href="#"
+                                class="inline-flex items-center gap-2 text-primary hover:text-white transition-colors mt-4 font-medium">Leer
+                                bitácora de construcción <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA DEL CAPITÁN -->
+            <div class="mt-24">
+                <!-- Etiqueta encima -->
+                <div
+                    class="inline-block px-4 py-2 rounded-t-xl bg-[#1f2937] border-t border-x border-white/10 text-primaryLight font-bold tracking-widest text-xs uppercase translate-y-px relative z-10 ml-8">
+                    <span data-i18n="cap-tag">Capitán</span>
+                </div>
+                <!-- Tarjeta -->
+                <div class="bento-box p-8 md:p-12 relative z-0">
+                    <div class="flex flex-col md:flex-row gap-10 items-center md:items-start">
+                        <!-- Foto del capitán -->
+                        <div
+                            class="w-40 h-40 md:w-56 md:h-56 shrink-0 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_30px_rgba(16,185,129,0.15)] group">
+                            <img th:src="@{/images/2969933.png}" alt="Capitán"
+                                class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                        </div>
+                        <!-- Descripción -->
+                        <div>
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-2" data-i18n="cap-title">Capitán
+                            </h3>
+                            <p class="text-accent font-mono text-sm mb-6 tracking-wider" data-i18n="cap-role">MÁSTER
+                                MARINER & LÍDER DE
+                                EXPEDICIÓN</p>
+                            <p class="text-slate-300 text-lg leading-relaxed mb-4" data-i18n="cap-p1">
+                                Con más de 30 años de experiencia navegando las aguas más traicioneras del planeta,
+                                David no es solo un capitán; es un estratega del mar. capaz de leer las corrientes y
+                                anticipar los cambios del clima.
+                            </p>
+                            <p class="text-slate-300 text-lg leading-relaxed" data-i18n="cap-p2">
+                                Su liderazgo férreo a bordo garantiza la asombrosa seguridad de la tripulación y
+                                convierte cada travesía en una clase maestra de auténtica exploración oceánica.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-10">
+            <!-- Branding -->
+            <div class="text-center md:text-left">
+                <h4 class="text-white text-2xl font-bold tracking-wider mb-2">AURORA <span
+                        class="text-primary font-light">VOYAGES</span></h4>
+                <p class="text-slate-400" data-i18n="foot-desc">Exploración polar de élite.</p>
+            </div>
+
+            <!-- Contacto Estilo Bento -->
+            <div
+                class="flex flex-col sm:flex-row items-center gap-8 md:gap-12 bg-[#0f172a]/50 px-10 py-6 rounded-3xl border border-white/5 shadow-inner">
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-contact">Contáctanos</div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> ########
+                    </div>
+                </div>
+                <!-- Divisor -->
+                <div class="hidden sm:block w-px h-12 bg-white/10"></div>
+                <div class="block sm:hidden h-px w-24 bg-white/10"></div>
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-email">Correo Electrónico
+                    </div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i> ########
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
+
+    <!-- Inicializar iconos -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
