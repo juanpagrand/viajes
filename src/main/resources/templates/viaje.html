@@ -4,40 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurora Voyages | Expedición Ártica</title>
+    <title>El Loco David | Expedición Ártica</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" th:href="@{/css/barco.css}">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Outfit"', 'sans-serif'],
-                    },
-                    colors: {
-                        background: '#020617', /* slate-950 */
-                        surface: '#0f172a', /* slate-900 */
-                        surfaceLight: '#1e293b', /* slate-800 */
-                        primary: '#10b981', /* emerald-500 (Aurora color) */
-                        primaryLight: '#34d399', /* emerald-400 */
-                        accent: '#3b82f6', /* blue-500 */
-                    },
-                    animation: {
-                        'carousel': 'marquee 25s linear infinite',
-                    },
-                    keyframes: {
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-50%)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
 </head>
 
 <body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col">
@@ -52,21 +26,16 @@
                 <div
                     class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
                     <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
-                        <i data-lucide="compass" class="text-primary w-5 h-5"></i>
+                        <i data-lucide="ship" class="text-primary w-5 h-5"></i>
                     </div>
                 </div>
-                <div class="font-bold text-xl tracking-wide">AURORA <span class="text-primary font-light">VOYAGES</span>
+                <div class="font-bold text-xl tracking-wide">EL LOCO <span class="text-primary font-light">DAVID</span>
                 </div>
             </div>
 
+            <!-- Navigation hidden for public visitors -->
             <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
-                <a href="#"
-                    class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full"
-                    data-i18n="nav-home">Inicio</a>
-                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-mission">La Misión</a>
-                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-fleet">Flota</a>
-                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-routes">Rutas</a>
-                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-logbook">Bitácora</a>
+                <!-- Se mostrarán solo en el dashboard -->
             </div>
 
             <div class="flex items-center gap-4">
@@ -95,7 +64,7 @@
                     </div>
                 </div>
 
-                <a href="#" class="btn-outline hidden sm:inline-flex items-center gap-2">
+                <a th:href="@{/login}" class="btn-outline hidden sm:inline-flex items-center gap-2">
                     <i data-lucide="user" class="w-4 h-4"></i> <span data-i18n="login">Acceder</span>
                 </a>
             </div>
@@ -450,8 +419,8 @@
         <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-10">
             <!-- Branding -->
             <div class="text-center md:text-left">
-                <h4 class="text-white text-2xl font-bold tracking-wider mb-2">AURORA <span
-                        class="text-primary font-light">VOYAGES</span></h4>
+                <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></h4>
                 <p class="text-slate-400" data-i18n="foot-desc">Exploración polar de élite.</p>
             </div>
 

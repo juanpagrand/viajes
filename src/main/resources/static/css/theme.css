@@ -1,0 +1,26 @@
+/* Centralized CSS classes used across pages */
+.glass-panel {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.input-dark {
+    background: rgba(2, 6, 23, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.input-dark:focus {
+    outline: none;
+    border-color: #34d399; /* Primary light hover fallback */
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+.admin-input-focus:focus {
+    border-color: #3b82f6 !important; /* Accent color fallback for Admin forms */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}

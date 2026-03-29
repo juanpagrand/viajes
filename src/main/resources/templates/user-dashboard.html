@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Dashboard de Viajero</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col">
+
+    <!-- Luz ambiental simulando Aurora Boreal -->
+    <div class="aurora-glow"></div>
+
+    <!-- Navegación logueado -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="ship" class="text-primary w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
+                <a href="#"
+                    class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full"
+                    data-i18n="nav-home">Inicio</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-mission">La Misión</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-fleet">Flota</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-routes">Rutas</a>
+                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-logbook">Bitácora</a>
+                <a href="#" class="hover:text-primaryLight transition-colors flex gap-1 items-center"><i data-lucide="shopping-bag" class="w-4 h-4"></i> Tienda</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-3 mr-4">
+                    <i data-lucide="user" class="text-primaryLight w-4 h-4"></i>
+                    <span class="text-sm font-medium text-white" th:text="${usuario.nombre}">Tripulante</span>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-outline hidden sm:inline-flex items-center gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 hover:border-red-400">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Salir
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Hero Full Screen -->
+    <section class="relative w-full h-screen min-h-[700px] flex flex-col justify-end items-center pb-40 text-center overflow-hidden">
+        <!-- VIDEO BACKGROUND -->
+        <video autoplay muted loop playsinline
+            class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 opacity-80">
+            <source th:src="@{/images/pabarco.mp4}" type="video/mp4">
+        </video>
+
+        <!-- FADE DEGRADADO -->
+        <div class="absolute inset-0 z-10 pointer-events-none"
+            style="background: linear-gradient(to top, rgb(213, 224, 223) 0%, transparent 20%);">
+        </div>
+
+        <!-- CONTENIDO DEL HERO -->
+        <div class="relative z-20 px-4 w-full max-w-5xl flex flex-col items-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 text-sm text-primaryLight font-medium">
+                <div class="w-2 h-2 rounded-full bg-primaryLight animate-pulse"></div>
+                <span>Área Exclusiva para Tripulantes</span>
+            </div>
+
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 drop-shadow-xl leading-tight">
+                <span data-i18n="hero-title-1">BIENVENIDO</span> <br />
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primaryLight to-accent"
+                      th:text="${usuario.nombre}">
+                    TRIPULANTE
+                </span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mb-10 drop-shadow-md">
+                Estás dentro del portal oficial de la expedición El Loco David.
+            </p>
+
+            <a href="#" class="btn-aurora flex items-center gap-3 text-lg">
+                Ver Mapa Interactivo
+            </a>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <main class="w-full px-4 sm:px-8 xl:px-12 relative z-30 -mt-20">
+        <!-- Dashboard / Bento Grid Inferior -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- TARJETA: EXPEDICIÓN ACTUAL (Ocupa 4 columnas) -->
+            <div class="bento-box p-6 lg:col-span-4 flex flex-col relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
+                <div class="flex justify-between items-center mb-6 relative z-10">
+                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
+                        <i data-lucide="navigation" class="w-4 h-4 text-primary"></i>
+                        <span>Ruta Actual</span>
+                    </h3>
+                    <div class="px-2 py-1 rounded bg-primary/20 text-primary text-[10px] font-bold tracking-wider border border-primary/30">
+                        <span>EN CURSO</span>
+                    </div>
+                </div>
+
+                <div class="flex-grow bg-background rounded-2xl border border-white/5 mb-6 relative z-10 overflow-hidden min-h-[250px] shadow-inner">
+                    <iframe width="100%" height="100%"
+                        class="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-500 hover:opacity-100"
+                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=13.0,67.5,15.5,69.0&amp;layer=mapnik&amp;marker=68.3,14.2"
+                        style="border: 0; filter: invert(100%) hue-rotate(180deg) contrast(110%); pointer-events: auto;"></iframe>
+                </div>
+                 <!-- Progreso UI -->
+                <div class="mt-auto relative z-10">
+                    <div class="flex justify-between text-xs text-slate-400 mb-3 font-medium">
+                        <span>Progreso de Travesía</span>
+                        <span class="text-primaryLight font-mono">68.3°N, 14.2°E</span>
+                    </div>
+                    <div class="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden border border-white/5">
+                        <div class="progress-bar-animated h-full rounded-full relative" style="width: 65%">
+                            <div class="absolute right-0 top-0 bottom-0 w-10 bg-white/40 blur-[2px]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TARJETA: TIENDA / COMPRAS (Ocupa 5 columnas) -->
+            <div class="bento-box p-6 lg:col-span-5 flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-4 h-4 text-accent"></i>
+                        <span>Tienda de la Expedición</span>
+                    </h3>
+                </div>
+
+                <div class="flex-grow flex">
+                    <div class="w-full group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-lg flex items-center justify-center bg-surfaceLight">
+                        <!-- Placeholder merch -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-surface via-surface/40 to-transparent"></div>
+                        <div class="text-center relative z-10 p-6">
+                            <i data-lucide="tag" class="w-12 h-12 text-primaryLight mx-auto mb-4 opacity-50"></i>
+                            <h4 class="text-2xl font-bold text-white mb-2">Merchandising Oficial</h4>
+                            <p class="text-slate-400 text-sm">Adquiere abrigos, termos y gorros de El Loco David.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="mt-5 w-full py-3 rounded-xl bg-accent/10 hover:bg-accent/20 flex items-center justify-center gap-2 text-sm text-accent transition-colors border border-accent/20 font-bold">
+                    Ingresar a Tienda <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- TARJETA: REGISTROS Y BITÁCORA (Ocupa 3 columnas) -->
+            <div class="bento-box p-6 lg:col-span-3 flex flex-col h-full max-h-[450px]">
+                <div class="flex justify-between items-center mb-5 border-b border-white/10 pb-4">
+                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
+                        <i data-lucide="book-open" class="w-4 h-4 text-slate-300"></i>
+                        <span>Bitácora</span>
+                    </h3>
+                </div>
+
+                <div class="flex-grow space-y-1 overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all">
+                        <div class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-emerald-500/30">
+                            <i data-lucide="anchor" class="w-4 h-4 text-emerald-400"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block">HACE 2 HORAS</span>
+                            <p class="text-sm text-slate-300 leading-snug">Cruzando el Círculo Polar Ártico. Vientos fuertes de cola.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
+            <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span class="text-primary font-light">DAVID</span></h4>
+            <p class="text-slate-400">Portal de Tripulación.</p>
+        </div>
+    </footer>
+
+    <!-- Inicializar iconos -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
