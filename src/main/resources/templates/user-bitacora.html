@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Bitácora Oficial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col" style="background-color: #020617;">
+
+    <!-- Luz ambiental simulando Aurora Boreal -->
+    <div class="aurora-glow"></div>
+
+    <!-- Navegación logueado -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="ship" class="text-primary w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
+                <a th:href="@{/user}" class="hover:text-white transition-colors">Volver al Panel</a>
+                <a href="#" class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full">Bitácora</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-3 mr-4">
+                    <i data-lucide="user" class="text-primaryLight w-4 h-4"></i>
+                    <span class="text-sm font-medium text-white" th:text="${usuario.nombre}">Tripulante</span>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-outline hidden sm:inline-flex items-center gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 hover:border-red-400">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Salir
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenedor Principal (Estilo Periódico pero Moderno/Dark) -->
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 flex-grow relative z-30">
+        
+        <!-- Cabecera -->
+        <header class="text-center mb-16 relative">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 text-sm text-primaryLight font-medium">
+                <div class="w-2 h-2 rounded-full bg-primaryLight animate-pulse"></div>
+                <span th:text="${#temporals.format(#temporals.createNow(), 'dd MMMM yyyy')}">FECHA ACTUAL</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-xl leading-tight uppercase tracking-wide">
+                BITÁCORA <span class="bg-clip-text text-transparent bg-gradient-to-r from-primaryLight to-accent">OFICIAL</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto drop-shadow-md font-light">
+                Reportes y memorias directas desde el Círculo Polar Ártico.
+            </p>
+        </header>
+
+        <!-- Mensaje de Vacío -->
+        <div th:if="${#lists.isEmpty(bitacoras)}" class="bento-box p-10 text-center text-slate-400 text-lg">
+            <i data-lucide="clock" class="w-12 h-12 mx-auto mb-4 opacity-50"></i>
+            Aún no hay registros en la bitácora. Las noticias de la expedición aparecerán aquí pronto.
+        </div>
+
+        <!-- Diseño Cuadrícula (Newspaper style but glassmorphic) -->
+        <div th:if="${!#lists.isEmpty(bitacoras)}" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- NOTICIA PRINCIPAL (Abarca 8 columnas) -->
+            <article class="lg:col-span-8 bento-box p-8 md:p-10 flex flex-col relative overflow-hidden group" th:with="mainItem=${bitacoras[0]}">
+                <!-- Decoración -->
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="mb-6 relative z-10">
+                    <div class="flex items-center gap-2 mb-4 text-primaryLight uppercase tracking-widest text-xs font-bold bg-primary/10 inline-flex px-3 py-1 rounded-lg border border-primary/20">
+                        <i th:data-lucide="${mainItem.icono}" class="w-4 h-4"></i>
+                        <span th:text="${#temporals.format(mainItem.fecha, 'dd MMMM, yyyy')}">FECHA</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold leading-tight text-white mb-6 drop-shadow-lg" th:text="${mainItem.titulo}">Título de la Noticia Principal</h2>
+                </div>
+                
+                <!-- Imagen Destacada -->
+                <figure th:if="${mainItem.fotoAdjunta != null && !mainItem.fotoAdjunta.isEmpty()}" class="w-full mb-8 rounded-2xl overflow-hidden relative border border-white/10 shadow-2xl z-10">
+                    <img th:src="${mainItem.fotoAdjunta}" class="w-full h-auto max-h-[500px] object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" alt="Fotografía destacada">
+                    <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none"></div>
+                </figure>
+                
+                <!-- Contenido -->
+                <div class="text-lg text-slate-300 leading-relaxed relative z-10" th:text="${mainItem.descripcion}">
+                    Texto detallado de la noticia principal...
+                </div>
+            </article>
+
+            <!-- COLUMNA LATERAL (Abarca 4 columnas) -->
+            <aside class="lg:col-span-4 flex flex-col gap-6">
+                
+                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-white/10">
+                    <i data-lucide="history" class="w-5 h-5 text-accent"></i>
+                    <h3 class="text-white font-bold tracking-widest uppercase text-sm">Entradas Anteriores</h3>
+                </div>
+
+                <!-- Iterar el resto de las noticias -->
+                <article th:each="bitacora, iterStat : ${bitacoras}" th:if="${iterStat.index > 0}" class="bento-box p-6 hover:border-primary/30 transition-all cursor-pointer group flex flex-col">
+                    
+                    <!-- Imagen Secundaria (Si existe) -->
+                    <figure th:if="${bitacora.fotoAdjunta != null && !bitacora.fotoAdjunta.isEmpty()}" class="w-full mb-4 rounded-xl overflow-hidden border border-white/10">
+                        <img th:src="${bitacora.fotoAdjunta}" class="w-full h-40 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" alt="Fotografía">
+                    </figure>
+                    
+                    <div class="flex items-center gap-2 mb-3 text-slate-400 uppercase tracking-widest text-[10px] font-bold">
+                        <div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                            <i th:data-lucide="${bitacora.icono}" class="w-3 h-3 text-primaryLight"></i>
+                        </div>
+                        <span th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
+                    </div>
+                    
+                    <h4 class="text-xl font-bold leading-snug text-white mb-3 group-hover:text-primaryLight transition-colors" th:text="${bitacora.titulo}">Título Secundario</h4>
+                    
+                    <p class="text-slate-400 text-sm leading-relaxed line-clamp-3" th:text="${bitacora.descripcion}">
+                        Breve extracto de la noticia secundaria...
+                    </p>
+                </article>
+
+            </aside>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
+            <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span class="text-primary font-light">DAVID</span></h4>
+            <p class="text-slate-400">Portal de Tripulación.</p>
+        </div>
+    </footer>
+
+    <!-- Inicializar iconos -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

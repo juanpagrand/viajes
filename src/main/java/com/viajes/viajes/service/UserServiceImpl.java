@@ -4,6 +4,7 @@ import com.viajes.viajes.model.Role;
 import com.viajes.viajes.model.User;
 import com.viajes.viajes.model.UserDto;
 import com.viajes.viajes.repository.UserRepository;
+import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,35 @@ public class UserServiceImpl implements UserService {
         user.setFoto(userDto.getFoto());
         // For admin, we don't automatically update email from profile to avoid losing login context without extra checks,
         // but if requested, we can do it. For now, we update it if provided.
+        if (userDto.getEmail() != null && !userDto.getEmail().isEmpty()) {
+            user.setEmail(userDto.getEmail());
+        }
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void toggleUserStatus(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setActivo(!user.isActivo());
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateUserById(Long id, UserDto userDto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setNombre(userDto.getNombre());
+        user.setDescripcion(userDto.getDescripcion());
+        user.setFoto(userDto.getFoto());
         if (userDto.getEmail() != null && !userDto.getEmail().isEmpty()) {
             user.setEmail(userDto.getEmail());
         }

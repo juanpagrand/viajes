@@ -35,7 +35,7 @@
 
             <!-- Navigation hidden for public visitors -->
             <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
-                <!-- Se mostrarán solo en el dashboard -->
+                <!-- Se mostrarán solo en el panel -->
             </div>
 
             <div class="flex items-center gap-4">
@@ -113,7 +113,7 @@
 
     <!-- Contenido Principal -->
     <main class="w-full px-4 sm:px-8 xl:px-12 relative z-30 -mt-20">
-        <!-- Dashboard / Bento Grid Inferior -->
+        <!-- Panel / Bento Grid Inferior -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             <!-- TARJETA: EXPEDICIÓN ACTUAL (Ocupa 4 columnas) -->
@@ -207,53 +207,20 @@
                 </div>
 
                 <div class="flex-grow space-y-1 overflow-y-auto pr-2 custom-scrollbar">
-
-                    <!-- Log Item 1 -->
-                    <div
-                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
+                    <div th:each="bitacora : ${bitacoras}" class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
                         <div
                             class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-emerald-500/30 group-hover:bg-emerald-500/20 transition-colors">
-                            <i data-lucide="anchor" class="w-4 h-4 text-emerald-400"></i>
+                            <i th:data-lucide="${bitacora.icono}" class="w-4 h-4 text-emerald-400"></i>
                         </div>
                         <div>
-                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block" data-i18n="log-1-time">HACE
-                                2 HORAS</span>
-                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
-                                data-i18n="log-1-text">
-                                Cruzando el Círculo Polar Ártico. Vientos fuertes de cola, avanzamos a buen ritmo.</p>
+                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block uppercase" th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
+                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug" th:text="${bitacora.descripcion}">
+                                Descripción de la bitácora.</p>
                         </div>
                     </div>
 
-                    <!-- Log Item 2 -->
-                    <div
-                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
-                        <div
-                            class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-blue-500/30 group-hover:bg-blue-500/20 transition-colors">
-                            <i data-lucide="camera" class="w-4 h-4 text-blue-400"></i>
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-blue-400 font-mono mb-1 block"
-                                data-i18n="log-2-time">AYER</span>
-                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
-                                data-i18n="log-2-text">
-                                Avistamiento de orcas a babor. Condiciones fotográficas impecables.</p>
-                        </div>
-                    </div>
-
-                    <!-- Log Item 3 -->
-                    <div
-                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
-                        <div
-                            class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-slate-500/30 group-hover:bg-slate-500/20 transition-colors">
-                            <i data-lucide="settings" class="w-4 h-4 text-slate-400"></i>
-                        </div>
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-mono mb-1 block" data-i18n="log-3-time">HACE 3
-                                DÍAS</span>
-                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
-                                data-i18n="log-3-text">
-                                Mantenimiento preventivo en cubierta completado exitosamente antes de la tormenta.</p>
-                        </div>
+                    <div th:if="${#lists.isEmpty(bitacoras)}" class="p-3 text-center text-sm text-slate-400">
+                        No hay entradas en la bitácora aún.
                     </div>
                 </div>
             </div>
@@ -262,54 +229,24 @@
     </main>
 
     <!-- Carrusel de Patrocinadores (Full Width horizontal slider) -->
-    <section class="w-full bg-[#0f172a]/40 border-y border-white/5 py-10 mt-20 overflow-hidden relative">
-        <div
-            class="absolute inset-0 w-full h-full bg-gradient-to-r from-background via-transparent to-background z-20 pointer-events-none">
+    <section th:if="${!#lists.isEmpty(sponsors)}" class="w-full bg-[#0f172a]/40 border-y border-white/5 py-10 mt-20 overflow-hidden relative">
+        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-background via-transparent to-background z-20 pointer-events-none">
         </div>
 
         <div class="flex w-max animate-carousel">
             <!-- Grupo 1 -->
             <div class="flex items-center gap-12 px-6">
-                <!-- Cambia estos DIVs grises por etiquetas img para usar tus propios logos reales -->
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 1</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 2</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 3</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 4</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 5</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 6</div>
+                <div th:each="sponsor : ${sponsors}" class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
+                    <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}" th:alt="${sponsor.descripcion}" class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
+                    <span th:unless="${sponsor.logoPath != null}" class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2" th:text="${sponsor.descripcion}">SPONSOR</span>
+                </div>
             </div>
             <!-- Grupo 2 (Repetición exacta para loop infinito) -->
             <div class="flex items-center gap-12 px-6">
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 1</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 2</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 3</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 4</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 5</div>
-                <div
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-slate-400 font-bold tracking-widest uppercase shadow-lg">
-                    SPONSOR 6</div>
+                <div th:each="sponsor : ${sponsors}" class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
+                    <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}" th:alt="${sponsor.descripcion}" class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
+                    <span th:unless="${sponsor.logoPath != null}" class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2" th:text="${sponsor.descripcion}">SPONSOR</span>
+                </div>
             </div>
         </div>
     </section>

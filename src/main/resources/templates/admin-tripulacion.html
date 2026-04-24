@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Gestionar Tripulación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col">
+
+    <!-- Iluminación del fondo -->
+    <div class="absolute top-[0%] left-[-10%] w-[50%] h-[50%] bg-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <!-- Navegación Admin -->
+    <nav class="sticky top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
+                    </div>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-300 hidden sm:inline-block">Capitán <span th:text="${admin.nombre}" class="text-white ml-1"></span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-6 py-10 relative z-10">
+        
+        <div class="flex justify-between items-center mb-8 pb-4 border-b border-white/10">
+            <div class="flex items-center gap-3">
+                <i data-lucide="users" class="text-accent w-8 h-8"></i>
+                <h2 class="text-3xl font-bold text-white">Gestionar Tripulación</h2>
+            </div>
+        </div>
+
+        <!-- Success Messages -->
+        <div th:if="${param.successStatus}" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+            <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+            <p>Estado del usuario actualizado correctamente.</p>
+        </div>
+        <div th:if="${param.successEdit}" class="bg-primary/10 border border-primary/30 text-primaryLight px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+            <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+            <p>Usuario actualizado correctamente.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div th:each="usuario : ${usuarios}" class="glass-panel p-6 rounded-3xl relative overflow-hidden transition-all duration-300" th:classappend="${!usuario.activo ? 'opacity-60 grayscale hover:grayscale-0 hover:opacity-100' : ''}">
+                
+                <!-- Status & Role Badges -->
+                <div class="absolute top-4 right-4 flex flex-col gap-2 items-end">
+                    <span th:if="${usuario.role.name() == 'ROLE_ADMIN'}" class="bg-accent/20 text-accent text-[10px] uppercase tracking-wider px-2 py-1 rounded font-bold border border-accent/30">Capitán</span>
+                    <span th:unless="${usuario.role.name() == 'ROLE_ADMIN'}" class="bg-primary/20 text-primaryLight text-[10px] uppercase tracking-wider px-2 py-1 rounded font-bold border border-primary/30">Tripulante</span>
+                    
+                    <span th:if="${!usuario.activo}" class="bg-red-500/20 text-red-400 text-[10px] uppercase tracking-wider px-2 py-1 rounded font-bold border border-red-500/30">Inactivo</span>
+                </div>
+                
+                <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white/10 mb-4 bg-surfaceLight flex items-center justify-center">
+                    <img th:if="${usuario.foto != null && !usuario.foto.isEmpty()}" th:src="${usuario.foto}" alt="Perfil" class="w-full h-full object-cover">
+                    <i th:unless="${usuario.foto != null && !usuario.foto.isEmpty()}" data-lucide="user" class="w-8 h-8 text-slate-400"></i>
+                </div>
+                
+                <h3 class="text-xl font-bold text-white mb-1" th:text="${usuario.nombre}">Nombre</h3>
+                <p class="text-sm text-slate-400 mb-4 truncate" th:text="${usuario.email}">email</p>
+                
+                <div class="flex gap-3 mt-6 pt-4 border-t border-white/5">
+                    <a th:href="@{/admin/tripulacion/editar/{id}(id=${usuario.id})}" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 text-center py-2.5 rounded-xl text-sm transition-colors border border-white/5 hover:border-white/10 flex items-center justify-center gap-2 font-medium">
+                        <i data-lucide="edit-2" class="w-4 h-4"></i> Editar
+                    </a>
+                    <form th:action="@{/admin/tripulacion/toggle-status/{id}(id=${usuario.id})}" method="post" class="flex-1">
+                        <!-- Evitar que un admin se desactive a sí mismo -->
+                        <button th:if="${usuario.id != admin.id}" type="submit" class="w-full h-full text-center py-2.5 rounded-xl text-sm transition-colors border flex items-center justify-center gap-2 font-medium"
+                                th:classappend="${usuario.activo ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'}">
+                            <i th:data-lucide="${usuario.activo ? 'power-off' : 'power'}" class="w-4 h-4"></i>
+                            <span th:text="${usuario.activo ? 'Desactivar' : 'Activar'}"></span>
+                        </button>
+                        <button th:if="${usuario.id == admin.id}" disabled type="button" class="w-full h-full text-center py-2.5 rounded-xl text-sm transition-colors border border-slate-600/30 bg-slate-800/30 text-slate-500 cursor-not-allowed flex items-center justify-center gap-2 font-medium">
+                            <i data-lucide="shield" class="w-4 h-4"></i> Es tu cuenta
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

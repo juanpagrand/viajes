@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Nueva Bitácora</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col">
+
+    <!-- Iluminación del fondo -->
+    <div class="absolute top-[0%] left-[-10%] w-[50%] h-[50%] bg-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <!-- Navegación Admin -->
+    <nav class="sticky top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
+                    </div>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-300 hidden sm:inline-block">Capitán <span th:text="${admin.nombre}" class="text-white ml-1"></span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-10 relative z-10">
+        
+        <div class="glass-panel p-8 md:p-10 rounded-3xl">
+            <div class="flex items-center gap-3 mb-8 pb-4 border-b border-white/10">
+                <i data-lucide="book-open" class="text-accent w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-white">Añadir Entrada a Bitácora</h2>
+            </div>
+
+            <form th:action="@{/admin/bitacora/guardar}" th:object="${bitacora}" method="post" enctype="multipart/form-data" class="space-y-6">
+                
+                <!-- Título y Fecha -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i data-lucide="type" class="w-4 h-4 text-slate-400"></i> Título de la Entrada
+                        </label>
+                        <input type="text" th:field="*{titulo}" required 
+                               class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600"
+                               placeholder="Ej: Cruzando el Cabo de Hornos">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                            <i data-lucide="calendar" class="w-4 h-4 text-slate-400"></i> Fecha
+                        </label>
+                        <input type="date" th:field="*{fecha}" required 
+                               class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 text-slate-200 [color-scheme:dark]">
+                    </div>
+                </div>
+
+                <!-- Selección de Icono -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-3 flex items-center gap-2">
+                        <i data-lucide="smile" class="w-4 h-4 text-slate-400"></i> Icono (Loguito)
+                    </label>
+                    <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                        <!-- Icono 1 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="anchor" id="icon-anchor" class="peer sr-only" required>
+                            <label for="icon-anchor" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="anchor" class="w-6 h-6 text-emerald-400"></i>
+                            </label>
+                        </div>
+                        <!-- Icono 2 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="ship" id="icon-ship" class="peer sr-only">
+                            <label for="icon-ship" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="ship" class="w-6 h-6 text-blue-400"></i>
+                            </label>
+                        </div>
+                        <!-- Icono 3 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="map" id="icon-map" class="peer sr-only">
+                            <label for="icon-map" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="map" class="w-6 h-6 text-amber-400"></i>
+                            </label>
+                        </div>
+                        <!-- Icono 4 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="compass" id="icon-compass" class="peer sr-only">
+                            <label for="icon-compass" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="compass" class="w-6 h-6 text-red-400"></i>
+                            </label>
+                        </div>
+                        <!-- Icono 5 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="wind" id="icon-wind" class="peer sr-only">
+                            <label for="icon-wind" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="wind" class="w-6 h-6 text-cyan-400"></i>
+                            </label>
+                        </div>
+                        <!-- Icono 6 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="alert-triangle" id="icon-alert" class="peer sr-only">
+                            <label for="icon-alert" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="alert-triangle" class="w-6 h-6 text-orange-400"></i>
+                            </label>
+                        </div>
+                        <!-- Icono 7 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="cloud-lightning" id="icon-storm" class="peer sr-only">
+                            <label for="icon-storm" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="cloud-lightning" class="w-6 h-6 text-indigo-400"></i>
+                            </label>
+                        </div>
+                        <!-- Icono 8 -->
+                        <div class="relative">
+                            <input type="radio" th:field="*{icono}" value="star" id="icon-star" class="peer sr-only">
+                            <label for="icon-star" class="peer-checked:border-accent peer-checked:bg-accent/20 flex flex-col items-center justify-center p-3 rounded-xl border border-white/10 bg-white/5 cursor-pointer hover:bg-white/10 transition-colors">
+                                <i data-lucide="star" class="w-6 h-6 text-yellow-400"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subir Foto Adjunta -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i data-lucide="camera" class="w-4 h-4 text-slate-400"></i> Adjuntar Foto a la Bitácora (Opcional)
+                    </label>
+                    <input type="file" name="fotoArchivo" accept="image/*"
+                           class="w-full input-dark px-4 py-3 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/20 file:text-primaryLight hover:file:bg-primary/30 text-slate-300 cursor-pointer">
+                </div>
+
+                <!-- Descripción -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i data-lucide="align-left" class="w-4 h-4 text-slate-400"></i> Descripción del Relato
+                    </label>
+                    <textarea th:field="*{descripcion}" required rows="8" 
+                              class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 resize-none font-sans text-slate-200" 
+                              placeholder="Describe los acontecimientos de esta bitácora..."></textarea>
+                </div>
+
+                <div class="flex justify-end pt-4 border-t border-white/5 gap-4">
+                    <a th:href="@{/admin}" class="px-6 py-3 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-colors font-medium">
+                        Cancelar
+                    </a>
+                    <button type="submit" 
+                            class="bg-accent hover:bg-blue-400 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(96,165,250,0.4)] flex items-center gap-2">
+                        <i data-lucide="save" class="w-4 h-4"></i> Guardar Bitácora
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+        
+        // Auto-asignar la fecha actual al cargar si está vacía
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.querySelector('input[type="date"]');
+            if(dateInput && !dateInput.value) {
+                dateInput.value = new Date().toISOString().split('T')[0];
+            }
+        });
+    </script>
+</body>
+</html>

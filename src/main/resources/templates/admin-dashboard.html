@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Loco David | Dashboard de Capitán</title>
+    <title>El Loco David | Panel de Capitán</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
           rel="stylesheet">
@@ -66,14 +66,17 @@
                     <i data-lucide="tool" class="w-4 h-4"></i> Operaciones
                 </h4>
                 <div class="space-y-3">
-                    <button class="w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-accent/20 hover:text-accent transition-colors text-sm text-slate-300 flex items-center gap-3 border border-white/5 border-l-2 border-l-transparent hover:border-l-accent">
+                    <a th:href="@{/admin/bitacora/nueva}" class="block w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-accent/20 hover:text-accent transition-colors text-sm text-slate-300 flex items-center gap-3 border border-white/5 border-l-2 border-l-transparent hover:border-l-accent">
                         <i data-lucide="book-open" class="w-4 h-4"></i> Añadir entrada a Bitácora
-                    </button>
-                    <button class="w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-accent/20 hover:text-accent transition-colors text-sm text-slate-300 flex items-center gap-3 border border-white/5 border-l-2 border-l-transparent hover:border-l-accent">
+                    </a>
+                    <a th:href="@{/admin/tripulacion}" class="block w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-accent/20 hover:text-accent transition-colors text-sm text-slate-300 flex items-center gap-3 border border-white/5 border-l-2 border-l-transparent hover:border-l-accent">
                         <i data-lucide="users" class="w-4 h-4"></i> Gestionar Tripulación
-                    </button>
+                    </a>
                     <a th:href="@{/admin/register}" class="block w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-accent/20 hover:text-accent transition-colors text-sm text-slate-300 flex items-center gap-3 border border-white/5 border-l-2 border-l-transparent hover:border-l-accent">
                         <i data-lucide="shield" class="w-4 h-4"></i> Crear Nuevo Administrador
+                    </a>
+                    <a th:href="@{/admin/sponsors}" class="block w-full text-left px-4 py-3 rounded-xl bg-white/5 hover:bg-accent/20 hover:text-accent transition-colors text-sm text-slate-300 flex items-center gap-3 border border-white/5 border-l-2 border-l-transparent hover:border-l-accent">
+                        <i data-lucide="star" class="w-4 h-4"></i> Gestionar Sponsors
                     </a>
                 </div>
             </div>
@@ -93,7 +96,7 @@
                     <p>Perfil actualizado correctamente.</p>
                 </div>
 
-                <form th:action="@{/admin/profile/update}" method="post" class="space-y-6">
+                <form th:action="@{/admin/profile/update}" method="post" enctype="multipart/form-data" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Nombre -->
                         <div>
@@ -114,14 +117,14 @@
                         </div>
                     </div>
 
-                    <!-- URL Foto -->
+                    <!-- Foto Archivo -->
                     <div>
                         <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
-                            <i data-lucide="image" class="w-4 h-4 text-slate-400"></i> Foto de Perfil (URL Web)
+                            <i data-lucide="upload-cloud" class="w-4 h-4 text-slate-400"></i> Subir Foto de Perfil
                         </label>
-                        <input type="text" name="foto" th:value="${admin.foto}" 
-                               class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600" 
-                               placeholder="https://ejemplo.com/mifoto.jpg">
+                        <input type="file" name="fotoArchivo" accept="image/*"
+                               class="w-full input-dark px-4 py-3 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent/20 file:text-accent hover:file:bg-accent/30 text-slate-300 cursor-pointer">
+                        <p class="text-xs text-slate-500 mt-2">Formatos aceptados: JPG, PNG, GIF. Si no seleccionas nada, se mantendrá tu foto actual.</p>
                     </div>
 
                     <!-- Descripción -->

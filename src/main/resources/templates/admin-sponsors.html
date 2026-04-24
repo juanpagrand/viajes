@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Gestionar Sponsors</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col">
+
+    <!-- Iluminación del fondo -->
+    <div class="absolute top-[0%] left-[-10%] w-[50%] h-[50%] bg-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <!-- Navegación Admin -->
+    <nav class="sticky top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
+                    </div>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-300 hidden sm:inline-block">Capitán <span th:text="${admin.nombre}" class="text-white ml-1"></span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-6 py-10 relative z-10 flex flex-col lg:flex-row gap-8">
+        
+        <!-- Columna Izquierda: Formulario Crear -->
+        <div class="lg:w-1/3">
+            <div class="glass-panel p-8 rounded-3xl sticky top-28">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2 mb-6">
+                    <i data-lucide="plus-circle" class="text-accent w-6 h-6"></i> Nuevo Sponsor
+                </h2>
+                
+                <form th:action="@{/admin/sponsors/guardar}" th:object="${nuevoSponsor}" method="post" enctype="multipart/form-data" class="space-y-5">
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1 ml-1 font-medium">Descripción / Nombre</label>
+                        <input type="text" th:field="*{descripcion}" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm text-slate-400 mb-1 ml-1 font-medium">Logo (Imagen)</label>
+                        <input type="file" name="fotoArchivo" accept="image/*" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-slate-300 focus:outline-none focus:border-accent transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent/10 file:text-accent hover:file:bg-accent/20 cursor-pointer">
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-accent hover:bg-accent/90 text-white font-bold tracking-wide shadow-lg shadow-accent/20 transition-all hover:-translate-y-0.5 mt-4 flex items-center justify-center gap-2">
+                        <i data-lucide="save" class="w-5 h-5"></i> Guardar Sponsor
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Columna Derecha: Listado -->
+        <div class="lg:w-2/3 flex flex-col">
+            <div class="flex justify-between items-center mb-6 pb-2 border-b border-white/10">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <i data-lucide="star" class="text-primary w-6 h-6"></i> Sponsors Existentes
+                </h2>
+            </div>
+
+            <!-- Success Messages -->
+            <div th:if="${param.successAdd}" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+                <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+                <p>Sponsor creado correctamente.</p>
+            </div>
+            <div th:if="${param.successStatus}" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+                <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+                <p>Estado del sponsor actualizado.</p>
+            </div>
+            <div th:if="${param.successEdit}" class="bg-primary/10 border border-primary/30 text-primaryLight px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+                <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+                <p>Sponsor editado correctamente.</p>
+            </div>
+
+            <div th:if="${#lists.isEmpty(sponsors)}" class="text-center py-10 bg-white/5 rounded-2xl border border-white/5">
+                <i data-lucide="inbox" class="w-12 h-12 text-slate-500 mx-auto mb-3 opacity-50"></i>
+                <p class="text-slate-400">Aún no has registrado ningún sponsor.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div th:each="sponsor : ${sponsors}" class="glass-panel p-5 rounded-2xl flex flex-col justify-between transition-all duration-300" th:classappend="${!sponsor.activo ? 'opacity-50 grayscale hover:grayscale-0 hover:opacity-100' : ''}">
+                    
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="h-16 w-32 bg-white/10 rounded flex items-center justify-center overflow-hidden">
+                            <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}" alt="Logo Sponsor" class="h-full object-contain">
+                            <span th:unless="${sponsor.logoPath != null}" class="text-xs text-slate-500">Sin logo</span>
+                        </div>
+                        <span th:if="${sponsor.activo}" class="bg-primary/20 text-primaryLight text-[10px] uppercase tracking-wider px-2 py-1 rounded font-bold border border-primary/30">Activo</span>
+                        <span th:unless="${sponsor.activo}" class="bg-red-500/20 text-red-400 text-[10px] uppercase tracking-wider px-2 py-1 rounded font-bold border border-red-500/30">Inactivo</span>
+                    </div>
+                    
+                    <p class="text-slate-300 font-medium mb-4 line-clamp-2" th:text="${sponsor.descripcion}">Descripción</p>
+                    
+                    <div class="flex gap-2 border-t border-white/10 pt-4 mt-auto">
+                        <a th:href="@{/admin/sponsors/editar/{id}(id=${sponsor.id})}" class="flex-1 bg-white/5 hover:bg-white/10 text-slate-300 text-center py-2 rounded-lg text-sm border border-white/5 hover:border-white/10 transition-colors flex items-center justify-center gap-1">
+                            <i data-lucide="edit" class="w-4 h-4"></i> Editar
+                        </a>
+                        <form th:action="@{/admin/sponsors/toggle/{id}(id=${sponsor.id})}" method="post" class="flex-1">
+                            <button type="submit" class="w-full text-center py-2 rounded-lg text-sm border transition-colors flex items-center justify-center gap-1"
+                                    th:classappend="${sponsor.activo ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'}">
+                                <i th:data-lucide="${sponsor.activo ? 'power-off' : 'power'}" class="w-4 h-4"></i>
+                                <span th:text="${sponsor.activo ? 'Desactivar' : 'Activar'}"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
