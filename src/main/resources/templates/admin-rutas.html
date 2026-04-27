@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Monitor de Rutas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col">
+
+    <!-- Iluminación del fondo -->
+    <div class="absolute top-[0%] left-[-10%] w-[50%] h-[50%] bg-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <!-- Navegación Admin -->
+    <nav class="sticky top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="anchor" class="text-accent w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a th:href="@{/admin}" class="text-sm font-medium text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver al Panel
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-6 py-10 relative z-10">
+        
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-white flex items-center gap-3">
+                    <i data-lucide="navigation" class="text-accent w-8 h-8"></i> Monitor de Ruta
+                </h1>
+                <p class="text-slate-400 mt-2 text-sm">Gestiona la ruta actual del navío y calcula estimaciones.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Panel Izquierdo: Ruta Activa y Simulación -->
+            <div class="lg:col-span-7 space-y-6">
+                <div class="glass-panel p-8 rounded-3xl h-full flex flex-col">
+                    <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 border-b border-white/10 pb-4">
+                        <i data-lucide="activity" class="w-5 h-5 text-emerald-400"></i> Estado Actual
+                    </h2>
+
+                    <!-- Si hay ruta activa -->
+                    <div th:if="${rutaActiva != null}">
+                        <div class="flex justify-between items-center mb-6">
+                            <div>
+                                <span class="text-[10px] text-emerald-400 font-bold tracking-widest uppercase px-2 py-1 bg-emerald-400/10 rounded border border-emerald-400/20">EN NAVEGACIÓN</span>
+                            </div>
+                            <form th:action="@{/admin/rutas/finalizar}" method="post">
+                                <button type="submit" class="text-xs bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-lg transition-colors border border-red-500/30 flex items-center gap-2">
+                                    <i data-lucide="square" class="w-3 h-3"></i> Finalizar Ruta
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="bg-surface border border-white/5 p-4 rounded-2xl text-center">
+                                <div class="text-xs text-slate-400 uppercase tracking-widest mb-1">Origen</div>
+                                <div class="font-bold text-white text-lg" th:text="${rutaActiva.origen}">Origen</div>
+                            </div>
+                            <div class="bg-surface border border-white/5 p-4 rounded-2xl text-center">
+                                <div class="text-xs text-slate-400 uppercase tracking-widest mb-1">Destino</div>
+                                <div class="font-bold text-white text-lg" th:text="${rutaActiva.destino}">Destino</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 rounded-2xl p-6 border border-white/5">
+                            <div class="flex justify-between text-sm mb-2">
+                                <span class="text-slate-400">Progreso Estimado</span>
+                                <span class="text-accent font-bold" th:text="${#numbers.formatDecimal(progreso, 1, 1)} + '%'">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden border border-white/5 mb-4">
+                                <div class="bg-gradient-to-r from-accent to-emerald-400 h-full rounded-full relative transition-all duration-1000" th:style="'width: ' + ${progreso} + '%'">
+                                    <div class="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-[2px]"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between text-xs text-slate-400">
+                                <div><i data-lucide="clock" class="w-3 h-3 inline"></i> Tiempo est. total: <span class="text-white" th:text="${rutaActiva.tiempoEstimadoHoras} + ' hrs'">0 hrs</span></div>
+                                <div><i data-lucide="map-pin" class="w-3 h-3 inline"></i> Coord: <span class="text-white font-mono" th:text="${latActual} + '°N, ' + ${lngActual} + '°E'">0,0</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Si NO hay ruta activa -->
+                    <div th:if="${rutaActiva == null}" class="flex-grow flex flex-col items-center justify-center text-center py-10 opacity-60">
+                        <i data-lucide="anchor" class="w-16 h-16 text-slate-500 mb-4"></i>
+                        <h3 class="text-xl text-slate-300 font-bold mb-2">Navío Atracado</h3>
+                        <p class="text-slate-400 text-sm max-w-xs">No hay ninguna ruta en curso. Inicia una nueva travesía desde el panel de mando.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Derecho: Formulario Nueva Ruta -->
+            <div class="lg:col-span-5 space-y-6">
+                <div class="glass-panel p-8 rounded-3xl">
+                    <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 border-b border-white/10 pb-4">
+                        <i data-lucide="play-circle" class="w-5 h-5 text-accent"></i> Iniciar Travesía
+                    </h2>
+
+                    <!-- Success Message -->
+                    <div th:if="${param.successAdd}" class="bg-primary/10 border border-primary/30 text-primaryLight px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+                        <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+                        <p>Ruta iniciada correctamente. Cálculo estimado generado.</p>
+                    </div>
+                    <div th:if="${param.successStop}" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+                        <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+                        <p>Ruta finalizada correctamente.</p>
+                    </div>
+
+                    <form th:action="@{/admin/rutas/iniciar}" method="post" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-slate-400"></i> Punto de Origen
+                            </label>
+                            <select name="origen" required
+                                   class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600">
+                                <option value="" disabled selected>Selecciona un puerto...</option>
+                                <option th:each="puerto : ${puertos}" th:value="${puerto}" th:text="${puerto}"></option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                                <i data-lucide="flag" class="w-4 h-4 text-slate-400"></i> Punto de Destino
+                            </label>
+                            <select name="destino" required
+                                   class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600">
+                                <option value="" disabled selected>Selecciona un puerto...</option>
+                                <option th:each="puerto : ${puertos}" th:value="${puerto}" th:text="${puerto}"></option>
+                            </select>
+                        </div>
+
+                        <div class="bg-accent/5 border border-accent/20 rounded-xl p-4 text-xs text-slate-400">
+                            <i data-lucide="info" class="w-4 h-4 text-accent inline mb-1"></i> El sistema calculará automáticamente el tiempo estimado y trazará las coordenadas iniciales basadas en simulación satelital. Al iniciar, se detendrá cualquier ruta previa.
+                        </div>
+
+                        <button type="submit" 
+                                class="w-full bg-accent hover:bg-blue-400 text-white font-bold px-6 py-3.5 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(96,165,250,0.4)] flex items-center justify-center gap-2 mt-4">
+                            <i data-lucide="navigation" class="w-5 h-5"></i> Zarpar Ahora
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

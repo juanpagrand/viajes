@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas - El Loco David</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col">
+
+    <!-- Luz ambiental simulando Aurora Boreal -->
+    <div class="aurora-glow"></div>
+
+    <!-- Navegación logueado -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="ship" class="text-primary w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
+                <a th:href="@{/user}" class="hover:text-white transition-colors" data-i18n="nav-home">Inicio</a>
+                <a th:href="@{/user/rutas}" class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full" data-i18n="nav-routes">Rutas</a>
+                <a th:href="@{/user/bitacora}" class="hover:text-white transition-colors" data-i18n="nav-logbook">Bitácora</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-3 mr-4">
+                    <i data-lucide="user" class="text-primaryLight w-4 h-4"></i>
+                    <span class="text-sm font-medium text-white" th:text="${usuario.nombre}">Tripulante</span>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn-outline hidden sm:inline-flex items-center gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 hover:border-red-400">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> Salir
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-8 xl:px-12 pt-32 pb-20 relative z-30">
+        
+        <!-- SECCIÓN: RUTA ACTUAL -->
+        <h2 class="text-2xl font-bold text-black mb-6 flex items-center gap-3">
+            <i data-lucide="navigation" class="w-6 h-6 text-primary"></i> Rastreo de Expedición
+        </h2>
+
+        <div class="bg-black rounded-3xl p-6 flex flex-col relative overflow-hidden mb-12 shadow-2xl">
+            <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+            
+            <div class="flex justify-between items-center mb-6 relative z-10">
+                <div>
+                    <h3 class="font-bold text-lg text-white mb-1" th:if="${rutaActiva != null}" th:text="${rutaActiva.origen} + ' ➔ ' + ${rutaActiva.destino}">Ruta en Curso</h3>
+                    <h3 class="font-bold text-lg text-white mb-1" th:unless="${rutaActiva != null}">Atracado en Puerto</h3>
+                    <p class="text-slate-400 text-sm">Monitoreo Satelital en Tiempo Real</p>
+                </div>
+                <div th:if="${rutaActiva != null}" class="px-3 py-1.5 rounded-lg bg-primary/20 text-primary text-xs font-bold tracking-wider border border-primary/30 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> EN CURSO
+                </div>
+                <div th:unless="${rutaActiva != null}" class="px-3 py-1.5 rounded-lg bg-slate-500/20 text-slate-400 text-xs font-bold tracking-wider border border-slate-500/30 flex items-center gap-2">
+                    <i data-lucide="anchor" class="w-3 h-3"></i> ATRACADO
+                </div>
+            </div>
+
+            <div class="bg-background rounded-2xl border border-white/5 mb-6 relative z-10 overflow-hidden min-h-[500px] shadow-inner">
+                <!-- Mapa Interactivo Leaflet -->
+                <div th:if="${rutaActiva != null}" id="map" class="absolute inset-0 w-full h-full opacity-90 transition-opacity duration-500 hover:opacity-100" style="filter: invert(100%) hue-rotate(180deg) contrast(110%); z-index: 1;"></div>
+                
+                <div th:unless="${rutaActiva != null}" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center opacity-50 bg-slate-900">
+                    <i data-lucide="anchor" class="w-16 h-16 text-slate-500 mb-4"></i>
+                    <span class="text-slate-400 text-lg font-mono tracking-widest">NAVE EN PUERTO, ESPERANDO ZARPAR</span>
+                </div>
+            </div>
+            
+            <!-- Tiempos y Progreso -->
+            <div class="relative z-10 bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Posición Actual</p>
+                        <p th:if="${rutaActiva != null}" class="text-white font-mono" th:text="${latRuta} + '°N, ' + ${lngRuta} + '°E'">--°N, --°E</p>
+                        <p th:unless="${rutaActiva != null}" class="text-slate-500 font-mono">No disponible</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Tiempo Transcurrido</p>
+                        <p th:if="${rutaActiva != null}" class="text-white font-mono"><span th:text="${horasTranscurridas}">0</span> Horas</p>
+                        <p th:unless="${rutaActiva != null}" class="text-slate-500 font-mono">--</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Tiempo Estimado (Total)</p>
+                        <p th:if="${rutaActiva != null}" class="text-white font-mono"><span th:text="${horasTotales}">0</span> Horas</p>
+                        <p th:unless="${rutaActiva != null}" class="text-slate-500 font-mono">--</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Progreso</p>
+                        <p th:if="${rutaActiva != null}" class="text-primary font-bold font-mono" th:text="${#numbers.formatDecimal(progresoRuta, 1, 1)} + '%'">0%</p>
+                        <p th:unless="${rutaActiva != null}" class="text-slate-500 font-mono">0%</p>
+                    </div>
+                </div>
+
+                <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden border border-white/5 shadow-inner">
+                    <div th:if="${rutaActiva != null}" class="progress-bar-animated h-full rounded-full relative bg-gradient-to-r from-emerald-500 to-primaryLight" th:style="'width: ' + ${progresoRuta} + '%'">
+                        <div class="absolute right-0 top-0 bottom-0 w-20 bg-white/30 blur-[4px]"></div>
+                    </div>
+                    <div th:unless="${rutaActiva != null}" class="h-full rounded-full relative bg-slate-700" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: FUTUROS VIAJES -->
+        <h2 class="text-2xl font-bold text-black mb-6 flex items-center gap-3 mt-16">
+            <i data-lucide="map" class="w-6 h-6 text-accent"></i> Próximos Destinos Planificados
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div th:if="${#lists.isEmpty(destinos)}" class="col-span-full h-48 border border-dashed border-gray-400 rounded-2xl flex flex-col items-center justify-center text-gray-600">
+                <i data-lucide="map-pin-off" class="w-8 h-8 mb-2 opacity-50"></i>
+                <p>No hay próximos viajes programados por el momento.</p>
+            </div>
+
+            <div th:each="destino : ${destinos}" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-lg h-72">
+                <img th:if="${destino.imagenPath != null}" th:src="@{${destino.imagenPath}}" th:alt="${destino.nombre}" class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105">
+                <div th:unless="${destino.imagenPath != null}" class="w-full h-full bg-slate-800 flex items-center justify-center opacity-80">
+                    <i data-lucide="image" class="w-12 h-12 text-slate-600"></i>
+                </div>
+
+                <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent opacity-90"></div>
+
+                <div class="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs text-white border border-white/10">
+                    Próximamente
+                </div>
+
+                <div class="absolute bottom-6 left-6 right-6">
+                    <div class="font-bold text-2xl text-white leading-tight group-hover:text-accent transition-colors duration-300 mb-2">
+                        <span th:text="${destino.nombre}">NUEVO DESTINO</span>
+                    </div>
+                    <p class="text-sm text-slate-300 line-clamp-3" th:text="${destino.descripcion}"></p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
+            <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span class="text-primary font-light">DAVID</span></h4>
+            <p class="text-slate-400">Portal de Tripulación.</p>
+        </div>
+    </footer>
+
+    <!-- Inicializar iconos -->
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- Script de Mapa Leaflet -->
+    <script th:if="${rutaActiva != null}" th:inline="javascript">
+        /*<![CDATA[*/
+        var latOrigen = /*[[${latOrigen}]]*/ 68.0;
+        var lngOrigen = /*[[${lngOrigen}]]*/ 13.0;
+        var latDestino = /*[[${latDestino}]]*/ 70.0;
+        var lngDestino = /*[[${lngDestino}]]*/ 18.0;
+        var latActual = /*[[${latRuta}]]*/ 69.0;
+        var lngActual = /*[[${lngRuta}]]*/ 15.0;
+
+        var map = L.map('map', {
+            zoomControl: true,
+            attributionControl: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        var shipIcon = L.divIcon({
+            html: '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#10b981" stroke="#064e3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10v4"/><path d="M12 2v3"/></svg>',
+            className: '',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+        });
+
+        var latlngs = [
+            [latOrigen, lngOrigen],
+            [latDestino, lngDestino]
+        ];
+        var polyline = L.polyline(latlngs, {color: '#10b981', dashArray: '5, 10', weight: 4}).addTo(map);
+
+        L.marker([latActual, lngActual], {icon: shipIcon}).addTo(map);
+        
+        map.fitBounds(polyline.getBounds(), {padding: [80, 80]});
+        /*]]>*/
+    </script>
+</body>
+</html>

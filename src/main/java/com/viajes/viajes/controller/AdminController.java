@@ -30,13 +30,15 @@ public class AdminController {
     private final FileStorageService fileStorageService;
     private final com.viajes.viajes.repository.SponsorRepository sponsorRepository;
     private final DestinoRepository destinoRepository;
+    private final com.viajes.viajes.service.RutaService rutaService;
 
-    public AdminController(UserService userService, BitacoraRepository bitacoraRepository, FileStorageService fileStorageService, com.viajes.viajes.repository.SponsorRepository sponsorRepository, DestinoRepository destinoRepository) {
+    public AdminController(UserService userService, BitacoraRepository bitacoraRepository, FileStorageService fileStorageService, com.viajes.viajes.repository.SponsorRepository sponsorRepository, DestinoRepository destinoRepository, com.viajes.viajes.service.RutaService rutaService) {
         this.userService = userService;
         this.bitacoraRepository = bitacoraRepository;
         this.fileStorageService = fileStorageService;
         this.sponsorRepository = sponsorRepository;
         this.destinoRepository = destinoRepository;
+        this.rutaService = rutaService;
     }
 
     @GetMapping
@@ -296,6 +298,46 @@ public class AdminController {
         }
         
         return "redirect:/admin/destinos?successEdit";
+    }
+
+    // --- RUTAS MANAGEMENT ---
+
+    @GetMapping("/rutas")
+    public String gestionarRutas(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User admin = userService.findUserByEmail(auth.getName());
+        model.addAttribute("admin", admin);
+        
+        java.util.Optional<com.viajes.viajes.model.Ruta> rutaActivaOpt = rutaService.getRutaActiva();
+        
+        if (rutaActivaOpt.isPresent()) {
+            com.viajes.viajes.model.Ruta ruta = rutaActivaOpt.get();
+            double progreso = rutaService.calcularProgreso();
+            double[] coords = rutaService.calcularCoordenadasActuales(progreso);
+            
+            model.addAttribute("rutaActiva", ruta);
+            model.addAttribute("progreso", progreso);
+            model.addAttribute("latActual", coords[0]);
+            model.addAttribute("lngActual", coords[1]);
+        }
+        
+        List<com.viajes.viajes.model.Ruta> rutasHistory = rutaService.findAll();
+        model.addAttribute("rutas", rutasHistory);
+        model.addAttribute("puertos", rutaService.getPuertosDisponibles());
+        
+        return "admin-rutas";
+    }
+
+    @PostMapping("/rutas/iniciar")
+    public String iniciarRuta(@RequestParam("origen") String origen, @RequestParam("destino") String destino) {
+        rutaService.iniciarRuta(origen, destino);
+        return "redirect:/admin/rutas?successAdd";
+    }
+
+    @PostMapping("/rutas/finalizar")
+    public String finalizarRuta() {
+        rutaService.finalizarRutaActiva();
+        return "redirect:/admin/rutas?successStop";
     }
 }
 

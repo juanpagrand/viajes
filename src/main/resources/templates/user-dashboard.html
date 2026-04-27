@@ -12,6 +12,8 @@
     <link rel="stylesheet" th:href="@{/css/barco.css}">
     <script th:src="@{/js/tailwind-config.js}"></script>
     <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
 <body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col">
@@ -38,9 +40,9 @@
                 <a href="#"
                     class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full"
                     data-i18n="nav-home">Inicio</a>
-                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-mission">La Misión</a>
-                <a href="#" class="hover:text-white transition-colors" data-i18n="nav-routes">Rutas</a>
-                <a th:href="@{/user/bitacora}" class="hover:text-white transition-colors" data-i18n="nav-logbook">Bitácora</a>
+                <a th:href="@{/user/rutas}" class="hover:text-white transition-colors" data-i18n="nav-routes">Rutas</a>
+                <a th:href="@{/user/bitacora}" class="hover:text-white transition-colors"
+                    data-i18n="nav-logbook">Bitácora</a>
             </div>
 
             <div class="flex items-center gap-4">
@@ -92,7 +94,7 @@
                 Estás dentro del portal oficial de la expedición El Loco David.
             </p>
 
-            <a href="#" class="btn-aurora flex items-center gap-3 text-lg">
+            <a th:href="@{/user/rutas}" class="btn-aurora flex items-center gap-3 text-lg">
                 Ver Mapa Interactivo
             </a>
         </div>
@@ -103,70 +105,21 @@
         <!-- Panel / Bento Grid Inferior -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-            <!-- TARJETA: EXPEDICIÓN ACTUAL (Ocupa 4 columnas) -->
-            <div class="bento-box p-6 lg:col-span-4 flex flex-col relative overflow-hidden">
-                <div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl"></div>
-                <div class="flex justify-between items-center mb-6 relative z-10">
-                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
-                        <i data-lucide="navigation" class="w-4 h-4 text-primary"></i>
-                        <span>Ruta Actual</span>
-                    </h3>
-                    <div
-                        class="px-2 py-1 rounded bg-primary/20 text-primary text-[10px] font-bold tracking-wider border border-primary/30">
-                        <span>EN CURSO</span>
-                    </div>
-                </div>
-
-                <div
-                    class="flex-grow bg-background rounded-2xl border border-white/5 mb-6 relative z-10 overflow-hidden min-h-[250px] shadow-inner">
-                    <iframe width="100%" height="100%"
-                        class="absolute inset-0 w-full h-full object-cover opacity-90 transition-opacity duration-500 hover:opacity-100"
-                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                        src="https://www.openstreetmap.org/export/embed.html?bbox=13.0,67.5,15.5,69.0&amp;layer=mapnik&amp;marker=68.3,14.2"
-                        style="border: 0; filter: invert(100%) hue-rotate(180deg) contrast(110%); pointer-events: auto;"></iframe>
-                </div>
-                <!-- Progreso UI -->
-                <div class="mt-auto relative z-10">
-                    <div class="flex justify-between text-xs text-slate-400 mb-3 font-medium">
-                        <span>Progreso de Travesía</span>
-                        <span class="text-primaryLight font-mono">68.3°N, 14.2°E</span>
-                    </div>
-                    <div class="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden border border-white/5">
-                        <div class="progress-bar-animated h-full rounded-full relative" style="width: 65%">
-                            <div class="absolute right-0 top-0 bottom-0 w-10 bg-white/40 blur-[2px]"></div>
-                        </div>
-                    </div>
-                </div>
+            <!-- TARJETA: CTA EXPEDICIÓN ACTUAL (Ocupa 9 columnas) -->
+            <div class="bento-box p-8 lg:col-span-9 flex flex-col items-center justify-center relative overflow-hidden text-center min-h-[300px]">
+                <div class="absolute -right-10 -top-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-10 -bottom-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <i data-lucide="satellite" class="w-16 h-16 text-primary mb-6 relative z-10 opacity-80"></i>
+                <h3 class="text-3xl font-bold text-white mb-4 relative z-10">Centro de Monitoreo</h3>
+                <p class="text-slate-300 text-lg max-w-lg mx-auto mb-8 relative z-10">Accede a la vista satelital en tiempo real para rastrear la posición de la nave, estimaciones de tiempo y explorar los próximos destinos planificados.</p>
+                
+                <a th:href="@{/user/rutas}" class="relative z-10 bg-primary/20 hover:bg-primary/30 text-primary font-bold py-3 px-8 rounded-xl border border-primary/30 transition-all hover:scale-105 flex items-center gap-2">
+                    Abrir Mapa de Rutas <i data-lucide="external-link" class="w-4 h-4"></i>
+                </a>
             </div>
 
-            <!-- TARJETA: TIENDA / COMPRAS (Ocupa 5 columnas) -->
-            <div class="bento-box p-6 lg:col-span-5 flex flex-col">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
-                        <i data-lucide="shopping-bag" class="w-4 h-4 text-accent"></i>
-                        <span>Tienda de la Expedición</span>
-                    </h3>
-                </div>
 
-                <div class="flex-grow flex">
-                    <div
-                        class="w-full group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-lg flex items-center justify-center bg-surfaceLight">
-                        <!-- Placeholder merch -->
-                        <div class="absolute inset-0 bg-gradient-to-tr from-surface via-surface/40 to-transparent">
-                        </div>
-                        <div class="text-center relative z-10 p-6">
-                            <i data-lucide="tag" class="w-12 h-12 text-primaryLight mx-auto mb-4 opacity-50"></i>
-                            <h4 class="text-2xl font-bold text-white mb-2">Merchandising Oficial</h4>
-                            <p class="text-slate-400 text-sm">Adquiere abrigos, termos y gorros de El Loco David.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <button
-                    class="mt-5 w-full py-3 rounded-xl bg-accent/10 hover:bg-accent/20 flex items-center justify-center gap-2 text-sm text-accent transition-colors border border-accent/20 font-bold">
-                    Ingresar a Tienda <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
-            </div>
 
             <!-- TARJETA: REGISTROS Y BITÁCORA (Ocupa 3 columnas) -->
             <div class="bento-box p-6 lg:col-span-3 flex flex-col h-full max-h-[450px]">
@@ -175,22 +128,27 @@
                         <i data-lucide="book-open" class="w-4 h-4 text-slate-300"></i>
                         <span>Bitácora</span>
                     </h3>
-                    <a th:href="@{/user/bitacora}" class="text-xs text-primary hover:text-white transition-colors flex items-center gap-1 font-bold">Ver completo <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                    <a th:href="@{/user/bitacora}"
+                        class="text-xs text-primary hover:text-white transition-colors flex items-center gap-1 font-bold">Ver
+                        completo <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
                 </div>
 
                 <div class="flex-grow space-y-1 overflow-y-auto pr-2 custom-scrollbar">
-                    <div th:each="bitacora : ${bitacoras}" class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
+                    <div th:each="bitacora : ${bitacoras}"
+                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
                         <div
                             class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-emerald-500/30 group-hover:bg-emerald-500/20 transition-colors">
                             <i th:data-lucide="${bitacora.icono}" class="w-4 h-4 text-emerald-400"></i>
                         </div>
                         <div>
-                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block uppercase" th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
-                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug" th:text="${bitacora.descripcion}">
+                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block uppercase"
+                                th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
+                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
+                                th:text="${bitacora.descripcion}">
                                 Descripción.</p>
                         </div>
                     </div>
-                    
+
                     <div th:if="${#lists.isEmpty(bitacoras)}" class="p-3 text-center text-sm text-slate-400">
                         No hay entradas en la bitácora aún.
                     </div>
@@ -212,6 +170,8 @@
     <script>
         lucide.createIcons();
     </script>
+
+
 </body>
 
 </html>
