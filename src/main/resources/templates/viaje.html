@@ -65,7 +65,8 @@
                 </div>
 
                 <a th:href="@{/login}" class="btn-outline flex items-center gap-2 text-sm justify-center">
-                    <i data-lucide="user" class="w-4 h-4"></i> <span data-i18n="login" class="hidden sm:inline">Acceder</span>
+                    <i data-lucide="user" class="w-4 h-4"></i> <span data-i18n="login"
+                        class="hidden sm:inline">Acceder</span>
                 </a>
             </div>
         </div>
@@ -105,7 +106,7 @@
                 Navega hacia lo desconocido...
             </p>
 
-            <a href="#" class="btn-aurora flex items-center gap-3 text-lg" data-i18n="hero-btn">
+            <a href="login.html" class="btn-aurora flex items-center gap-3 text-lg" data-i18n="hero-btn">
                 Comenzar la Aventura
             </a>
         </div>
@@ -162,14 +163,43 @@
                         <i data-lucide="calendar-days" class="w-4 h-4 text-accent"></i>
                         <span data-i18n="next-title">Próximas Salidas</span>
                     </h3>
+                    <!-- Controles del Slider -->
+                    <div class="flex gap-2" th:if="${destinos != null and destinos.size() > 1}">
+                        <button
+                            onclick="document.getElementById('slider-destinos').scrollBy({left: -320, behavior: 'smooth'})"
+                            class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 transition-colors border border-white/10 focus:outline-none">
+                            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                        </button>
+                        <button
+                            onclick="document.getElementById('slider-destinos').scrollBy({left: 320, behavior: 'smooth'})"
+                            class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 transition-colors border border-white/10 focus:outline-none">
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="flex-grow flex">
-                    <!-- Viaje Único -->
-                    <div
-                        class="w-full group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-lg">
-                        <img th:src="@{/images/polo-norte-07082025-2076085.jpg}" alt="Próxima Expedición"
+                <div id="slider-destinos"
+                    class="flex-grow flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth [&::-webkit-scrollbar]:hidden"
+                    style="scrollbar-width: none;">
+
+                    <!-- Mostrar mensaje si no hay destinos activos -->
+                    <div th:if="${#lists.isEmpty(destinos)}"
+                        class="w-full shrink-0 h-64 border border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center text-slate-500 snap-center">
+                        <i data-lucide="map" class="w-8 h-8 mb-2 opacity-50"></i>
+                        <p class="text-sm">No hay próximas salidas programadas</p>
+                    </div>
+
+                    <!-- Viaje(s) Dinámico(s) -->
+                    <div th:each="destino : ${destinos}"
+                        class="w-full shrink-0 snap-center group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-lg h-64">
+                        <img th:if="${destino.imagenPath != null}" th:src="@{${destino.imagenPath}}"
+                            th:alt="${destino.nombre}"
                             class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105">
+                        <div th:unless="${destino.imagenPath != null}"
+                            class="w-full h-full bg-slate-800 flex items-center justify-center opacity-80">
+                            <i data-lucide="image" class="w-12 h-12 text-slate-600"></i>
+                        </div>
+
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent opacity-90">
                         </div>
@@ -183,18 +213,19 @@
                             <div class="text-xs text-primaryLight mb-2 font-mono tracking-wider"><span
                                     data-i18n="next-soon">PRÓXIMAMENTE</span></div>
                             <div
-                                class="font-bold text-2xl leading-tight group-hover:text-primary transition-colors duration-300">
-                                <span data-i18n="next-dest">NUEVO DESTINO</span>
+                                class="font-bold text-2xl leading-tight group-hover:text-primary transition-colors duration-300 mb-1">
+                                <span th:text="${destino.nombre}">NUEVO DESTINO</span>
                             </div>
+                            <p class="text-sm text-slate-300 line-clamp-2" th:text="${destino.descripcion}"></p>
                         </div>
                     </div>
                 </div>
 
-                <button
+                <a th:href="login.html"
                     class="mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center gap-2 text-sm text-slate-300 transition-colors border border-white/5">
                     <span data-i18n="next-btn">Ver calendario completo</span> <i data-lucide="arrow-right"
                         class="w-4 h-4"></i>
-                </button>
+                </a>
             </div>
 
             <!-- TARJETA: REGISTROS Y BITÁCORA (Ocupa 3 columnas) -->
@@ -207,14 +238,17 @@
                 </div>
 
                 <div class="flex-grow space-y-1 overflow-y-auto pr-2 custom-scrollbar">
-                    <div th:each="bitacora : ${bitacoras}" class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
+                    <div th:each="bitacora : ${bitacoras}"
+                        class="flex gap-4 group cursor-pointer p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5">
                         <div
                             class="w-10 h-10 rounded-full bg-surfaceLight flex items-center justify-center shrink-0 border border-emerald-500/30 group-hover:bg-emerald-500/20 transition-colors">
                             <i th:data-lucide="${bitacora.icono}" class="w-4 h-4 text-emerald-400"></i>
                         </div>
                         <div>
-                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block uppercase" th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
-                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug" th:text="${bitacora.descripcion}">
+                            <span class="text-[10px] text-emerald-400 font-mono mb-1 block uppercase"
+                                th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
+                            <p class="text-sm text-slate-300 group-hover:text-white transition-colors leading-snug"
+                                th:text="${bitacora.descripcion}">
                                 Descripción de la bitácora.</p>
                         </div>
                     </div>
@@ -229,30 +263,42 @@
     </main>
 
     <!-- Carrusel de Patrocinadores (Full Width horizontal slider) -->
-    <section th:if="${!#lists.isEmpty(sponsors)}" class="w-full bg-[#0f172a]/40 border-y border-white/5 py-10 mt-20 overflow-hidden relative">
-        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-background via-transparent to-background z-20 pointer-events-none">
+    <section th:if="${!#lists.isEmpty(sponsors)}"
+        class="w-full bg-[#0f172a]/40 border-y border-white/5 py-10 mt-20 overflow-hidden relative">
+        <div
+            class="absolute inset-0 w-full h-full bg-gradient-to-r from-background via-transparent to-background z-20 pointer-events-none">
         </div>
 
         <div class="flex w-max animate-carousel">
             <!-- Grupo 1 -->
             <div class="flex items-center gap-12 px-6">
-                <div th:each="sponsor : ${sponsors}" class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
-                    <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}" th:alt="${sponsor.descripcion}" class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
-                    <span th:unless="${sponsor.logoPath != null}" class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2" th:text="${sponsor.descripcion}">SPONSOR</span>
+                <div th:each="sponsor : ${sponsors}"
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
+                    <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}"
+                        th:alt="${sponsor.descripcion}"
+                        class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
+                    <span th:unless="${sponsor.logoPath != null}"
+                        class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2"
+                        th:text="${sponsor.descripcion}">SPONSOR</span>
                 </div>
             </div>
             <!-- Grupo 2 (Repetición exacta para loop infinito) -->
             <div class="flex items-center gap-12 px-6">
-                <div th:each="sponsor : ${sponsors}" class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
-                    <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}" th:alt="${sponsor.descripcion}" class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
-                    <span th:unless="${sponsor.logoPath != null}" class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2" th:text="${sponsor.descripcion}">SPONSOR</span>
+                <div th:each="sponsor : ${sponsors}"
+                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
+                    <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}"
+                        th:alt="${sponsor.descripcion}"
+                        class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
+                    <span th:unless="${sponsor.logoPath != null}"
+                        class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2"
+                        th:text="${sponsor.descripcion}">SPONSOR</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- NUEVA SECCIÓN: El Barco y Su Historia -->
-    <section class="w-full px-6 md:px-10 lg:px-16 py-24 relative z-30">
+    <section id="barco" class="w-full px-6 md:px-10 lg:px-16 py-24 relative z-30">
         <div class="max-w-7xl mx-auto">
             <!-- Título de Sección -->
             <div class="mb-16">
@@ -358,7 +404,16 @@
             <div class="text-center md:text-left">
                 <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
                         class="text-primary font-light">DAVID</span></h4>
-                <p class="text-slate-400" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <p class="text-slate-400 mb-6" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <!-- Redes Sociales -->
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <a href="#barco" class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#barco" class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
+                        <i data-lucide="facebook" class="w-5 h-5"></i>
+                    </a>
+                </div>
             </div>
 
             <!-- Contacto Estilo Bento -->

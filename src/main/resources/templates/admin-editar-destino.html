@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Ruta | Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col items-center justify-center py-12">
+
+    <div class="absolute top-[0%] left-[-10%] w-[50%] h-[50%] bg-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="w-full max-w-2xl px-6 relative z-10">
+        <a th:href="@{/admin/destinos}" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-6 font-medium">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver a Gestión de Rutas
+        </a>
+
+        <div class="glass-panel p-8 md:p-10 rounded-3xl">
+            <div class="flex items-center gap-3 mb-8 pb-4 border-b border-white/10">
+                <i data-lucide="edit" class="text-accent w-6 h-6"></i>
+                <h2 class="text-2xl font-bold text-white">Editar Ruta / Destino</h2>
+            </div>
+
+            <!-- Previsualización Actual de la Imagen -->
+            <div class="mb-6 flex justify-center">
+                <div class="w-full h-48 rounded-2xl overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center relative group">
+                    <img th:if="${destino.imagenPath != null}" th:src="${destino.imagenPath}" class="w-full h-full object-cover">
+                    <i th:unless="${destino.imagenPath != null}" data-lucide="image" class="w-8 h-8 text-slate-500"></i>
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="text-white text-sm font-medium tracking-wide">Imagen Actual</span>
+                    </div>
+                </div>
+            </div>
+
+            <form th:action="@{/admin/destinos/editar/{id}(id=${destino.id})}" method="post" enctype="multipart/form-data" th:object="${destino}" class="space-y-6">
+                
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-400"></i> Nombre de la Ruta
+                    </label>
+                    <input type="text" th:field="*{nombre}" required 
+                           class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i data-lucide="align-left" class="w-4 h-4 text-slate-400"></i> Descripción
+                    </label>
+                    <textarea th:field="*{descripcion}" rows="4"
+                           class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 resize-none font-sans"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <i data-lucide="upload-cloud" class="w-4 h-4 text-slate-400"></i> Actualizar Imagen (Opcional)
+                    </label>
+                    <input type="file" name="fotoArchivo" accept="image/*"
+                           class="w-full input-dark px-4 py-3 rounded-xl file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent/20 file:text-accent hover:file:bg-accent/30 text-slate-300 cursor-pointer">
+                    <p class="text-xs text-slate-500 mt-2">Si no subes ninguna imagen, se mantendrá la actual.</p>
+                </div>
+
+                <!-- Input oculto para mantener el ID y el activo (aunque el path no cambie si editamos otro campo) -->
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{activo}" />
+
+                <div class="flex justify-end pt-4 border-t border-white/5 gap-4">
+                    <a th:href="@{/admin/destinos}" class="px-6 py-3 rounded-xl border border-white/10 text-slate-300 hover:bg-white/5 transition-colors">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="bg-accent hover:bg-blue-400 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(96,165,250,0.4)] flex items-center gap-2">
+                        <i data-lucide="save" class="w-4 h-4"></i> Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

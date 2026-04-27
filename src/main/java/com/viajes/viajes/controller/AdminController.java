@@ -18,6 +18,8 @@ import com.viajes.viajes.service.FileStorageService;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
+import com.viajes.viajes.model.Destino;
+import com.viajes.viajes.repository.DestinoRepository;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,12 +29,14 @@ public class AdminController {
     private final BitacoraRepository bitacoraRepository;
     private final FileStorageService fileStorageService;
     private final com.viajes.viajes.repository.SponsorRepository sponsorRepository;
+    private final DestinoRepository destinoRepository;
 
-    public AdminController(UserService userService, BitacoraRepository bitacoraRepository, FileStorageService fileStorageService, com.viajes.viajes.repository.SponsorRepository sponsorRepository) {
+    public AdminController(UserService userService, BitacoraRepository bitacoraRepository, FileStorageService fileStorageService, com.viajes.viajes.repository.SponsorRepository sponsorRepository, DestinoRepository destinoRepository) {
         this.userService = userService;
         this.bitacoraRepository = bitacoraRepository;
         this.fileStorageService = fileStorageService;
         this.sponsorRepository = sponsorRepository;
+        this.destinoRepository = destinoRepository;
     }
 
     @GetMapping
@@ -222,6 +226,76 @@ public class AdminController {
         }
         
         return "redirect:/admin/sponsors?successEdit";
+    }
+
+    // --- DESTINOS MANAGEMENT ---
+
+    @GetMapping("/destinos")
+    public String gestionarDestinos(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User admin = userService.findUserByEmail(auth.getName());
+        model.addAttribute("admin", admin);
+        
+        List<Destino> destinos = destinoRepository.findAll();
+        model.addAttribute("destinos", destinos);
+        model.addAttribute("nuevoDestino", new Destino());
+        return "admin-destinos";
+    }
+
+    @PostMapping("/destinos/guardar")
+    public String saveDestino(@ModelAttribute("nuevoDestino") Destino destino,
+                              @RequestParam(value = "fotoArchivo", required = false) MultipartFile fotoArchivo) {
+        if (fotoArchivo != null && !fotoArchivo.isEmpty()) {
+            String fotoPath = fileStorageService.storeFile(fotoArchivo);
+            destino.setImagenPath(fotoPath);
+        }
+        destinoRepository.save(destino);
+        return "redirect:/admin/destinos?successAdd";
+    }
+
+    @PostMapping("/destinos/toggle/{id}")
+    public String toggleDestinoStatus(@PathVariable Long id) {
+        Destino destino = destinoRepository.findById(id).orElse(null);
+        if (destino != null) {
+            destino.setActivo(!destino.isActivo());
+            destinoRepository.save(destino);
+        }
+        return "redirect:/admin/destinos?successStatus";
+    }
+
+    @GetMapping("/destinos/editar/{id}")
+    public String showEditDestinoForm(@PathVariable Long id, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User admin = userService.findUserByEmail(auth.getName());
+        model.addAttribute("admin", admin);
+        
+        Destino destino = destinoRepository.findById(id).orElse(null);
+        if (destino == null) {
+            return "redirect:/admin/destinos?errorNotFound";
+        }
+        
+        model.addAttribute("destino", destino);
+        return "admin-editar-destino";
+    }
+
+    @PostMapping("/destinos/editar/{id}")
+    public String updateDestino(@PathVariable Long id, 
+                                @ModelAttribute("destino") Destino destinoUpdates,
+                                @RequestParam(value = "fotoArchivo", required = false) MultipartFile fotoArchivo) {
+        
+        Destino existingDestino = destinoRepository.findById(id).orElse(null);
+        if (existingDestino != null) {
+            existingDestino.setNombre(destinoUpdates.getNombre());
+            existingDestino.setDescripcion(destinoUpdates.getDescripcion());
+            // Si sube una nueva foto, reemplazamos
+            if (fotoArchivo != null && !fotoArchivo.isEmpty()) {
+                String fotoPath = fileStorageService.storeFile(fotoArchivo);
+                existingDestino.setImagenPath(fotoPath);
+            }
+            destinoRepository.save(existingDestino);
+        }
+        
+        return "redirect:/admin/destinos?successEdit";
     }
 }
 
