@@ -1,23 +1,10 @@
 package com.viajes.viajes.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
 import java.util.UUID;
 
 @Service
 public class VippsService {
-
-    @Value("${vipps.client-id}")
-    private String clientId;
-
-    @Value("${vipps.client-secret}")
-    private String clientSecret;
-
-    @Value("${vipps.subscription-key}")
-    private String subscriptionKey;
-
-    @Value("${vipps.msn}")
-    private String msn;
 
     /**
      * Simula la creación de una sesión de pago eCom con Vipps.
@@ -28,10 +15,9 @@ public class VippsService {
     public String createPaymentSession(double amount, String orderId, String returnUrl) {
         // En un caso real:
         // HttpHeaders headers = new HttpHeaders();
-        // headers.set("client_id", clientId);
-        // headers.set("client_secret", clientSecret);
-        // headers.set("Ocp-Apim-Subscription-Key", subscriptionKey);
-        // headers.set("Merchant-Serial-Number", msn);
+        // headers.set("client_id", "...");
+        // headers.set("client_secret", "...");
+        // headers.set("Ocp-Apim-Subscription-Key", "...");
         // RestTemplate restTemplate = new RestTemplate();
         // ... llamada API real que retorna una URL de "Vipps Checkout".
 
