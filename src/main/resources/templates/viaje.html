@@ -142,9 +142,12 @@
                 <div
                     class="flex-grow bg-background rounded-2xl border border-white/5 mb-6 relative z-10 overflow-hidden min-h-[250px] shadow-inner">
                     <!-- Mapa Interactivo Leaflet -->
-                    <div th:if="${rutaActiva != null}" id="map" class="absolute inset-0 w-full h-full opacity-90 transition-opacity duration-500 hover:opacity-100" style="filter: invert(100%) hue-rotate(180deg) contrast(110%); z-index: 1;"></div>
-                    
-                    <div th:unless="${rutaActiva != null}" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center opacity-50 bg-slate-900">
+                    <div th:if="${rutaActiva != null}" id="map"
+                        class="absolute inset-0 w-full h-full opacity-90 transition-opacity duration-500 hover:opacity-100"
+                        style="filter: invert(100%) hue-rotate(180deg) contrast(110%); z-index: 1;"></div>
+
+                    <div th:unless="${rutaActiva != null}"
+                        class="absolute inset-0 w-full h-full flex flex-col items-center justify-center opacity-50 bg-slate-900">
                         <i data-lucide="anchor" class="w-12 h-12 text-slate-500 mb-2"></i>
                         <span class="text-slate-400 text-sm font-mono tracking-widest">EN PUERTO</span>
                     </div>
@@ -153,14 +156,17 @@
                 <div class="mt-auto relative z-10">
                     <div class="flex justify-between text-xs text-slate-400 mb-3 font-medium">
                         <span data-i18n="route-progress">Progreso de Travesía</span>
-                        <span th:if="${rutaActiva != null}" class="text-primaryLight font-mono" th:text="${latRuta} + '°N, ' + ${lngRuta} + '°E'">68.3°N, 14.2°E</span>
+                        <span th:if="${rutaActiva != null}" class="text-primaryLight font-mono"
+                            th:text="${latRuta} + '°N, ' + ${lngRuta} + '°E'">68.3°N, 14.2°E</span>
                         <span th:unless="${rutaActiva != null}" class="text-slate-500 font-mono">--°N, --°E</span>
                     </div>
                     <div class="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden border border-white/5">
-                        <div th:if="${rutaActiva != null}" class="progress-bar-animated h-full rounded-full relative" th:style="'width: ' + ${progresoRuta} + '%'">
+                        <div th:if="${rutaActiva != null}" class="progress-bar-animated h-full rounded-full relative"
+                            th:style="'width: ' + ${progresoRuta} + '%'">
                             <div class="absolute right-0 top-0 bottom-0 w-10 bg-white/40 blur-[2px]"></div>
                         </div>
-                        <div th:unless="${rutaActiva != null}" class="h-full rounded-full relative bg-slate-700" style="width: 0%"></div>
+                        <div th:unless="${rutaActiva != null}" class="h-full rounded-full relative bg-slate-700"
+                            style="width: 0%"></div>
                     </div>
                 </div>
             </div>
@@ -273,15 +279,18 @@
 
     <!-- Sección Donaciones CTA -->
     <section class="w-full max-w-7xl mx-auto px-4 sm:px-8 xl:px-12 mt-12 mb-8 relative z-30">
-        <div class="bg-gradient-to-br from-[#ff5b24]/90 to-[#ff5b24] border border-[#ff5b24]/50 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden flex flex-col items-center justify-center shadow-2xl">
+        <div
+            class="bg-gradient-to-br from-[#ff5b24]/90 to-[#ff5b24] border border-[#ff5b24]/50 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden flex flex-col items-center justify-center shadow-2xl">
             <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
             <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-            
+
             <i data-lucide="heart-handshake" class="w-16 h-16 text-black mb-4 relative z-10"></i>
             <h2 class="text-3xl md:text-4xl font-bold text-black mb-3 relative z-10">Únete a la Expedición</h2>
-            <p class="text-black text-lg font-medium max-w-2xl mx-auto mb-8 relative z-10">Apóyanos para nuestras futuras expediciones. Tu contribución hace posible que sigamos explorando los límites del mundo.</p>
-            
-            <a th:href="@{/donar}" class="relative z-10 bg-black hover:bg-black/80 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl shadow-black/30 transition-all hover:scale-105 flex items-center gap-3">
+            <p class="text-black text-lg font-medium max-w-2xl mx-auto mb-8 relative z-10">Apóyanos para nuestras
+                futuras expediciones. Tu contribución hace posible que sigamos explorando los límites del mundo.</p>
+
+            <a th:href="@{/donar}"
+                class="relative z-10 bg-black hover:bg-black/80 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl shadow-black/30 transition-all hover:scale-105 flex items-center gap-3">
                 Donar ahora con Vipps <i data-lucide="arrow-right" class="w-5 h-5"></i>
             </a>
         </div>
@@ -364,19 +373,16 @@
                         <h3 class="text-2xl text-primaryLight font-bold mb-6" data-i18n="story-h3">Un Legado en los
                             Mares</h3>
                         <div class="space-y-6 text-slate-300 text-lg leading-relaxed">
-                            <p data-i18n="story-p1">El barco fue diseñado específicamente para soportar las condiciones
-                                más extremas del
-                                Círculo Polar Ártico. Con un casco reforzado doble y tecnología de navegación de última
-                                generación, es más que un simple medio de transporte: es nuestro refugio seguro en el
-                                fin del mundo.</p>
-                            <p data-i18n="story-p2">Su historia comenzó hace más de dos décadas cruzando el recóndito
-                                paso del noroeste. Hoy
-                                en día, ha sido completamente remodelado para combinar el romanticismo de la navegación
-                                clásica con las comodidades modernas necesarias para exploraciones científicas a largo
-                                plazo.</p>
-                            <a href="#"
-                                class="inline-flex items-center gap-2 text-primary hover:text-white transition-colors mt-4 font-medium">Leer
-                                bitácora de construcción <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                            <p data-i18n="story-p1">El Loco David es un velero de acero de 49 pies, construido en un
+                                astillero danés en 1996. No es un barco de producción en serie, sino una embarcación
+                                sólida diseñada para navegación exigente.
+
+                                Con un casco robusto y preparado para largas travesías, está </p>
+                            <p data-i18n="story-p2">pensado para operar en
+                                condiciones extremas, incluyendo navegación en aguas frías y remotas.
+
+                                Actualmente se encuentra en proceso de preparación para una expedición que incluye cruce
+                                del Atlántico en solitario y navegación en alta latitud hacia el Ártico.</p>
                         </div>
                     </div>
                 </div>
@@ -406,13 +412,18 @@
                                 MARINER & LÍDER DE
                                 EXPEDICIÓN</p>
                             <p class="text-slate-300 text-lg leading-relaxed mb-4" data-i18n="cap-p1">
-                                Con más de 30 años de experiencia navegando las aguas más traicioneras del planeta,
-                                David no es solo un capitán; es un estratega del mar. capaz de leer las corrientes y
-                                anticipar los cambios del clima.
+                                Alberto Sierra Cortes es un navegante colombiano radicado en Noruega y creador del
+                                proyecto El Loco David.
+
+                                Cuenta con experiencia en la Infantería de Marina colombiana y en la marina mercante,
+                                además de varias travesías oceánicas.
                             </p>
                             <p class="text-slate-300 text-lg leading-relaxed" data-i18n="cap-p2">
-                                Su liderazgo férreo a bordo garantiza la asombrosa seguridad de la tripulación y
-                                convierte cada travesía en una clase maestra de auténtica exploración oceánica.
+                                Actualmente lidera la preparación del velero para una expedición que incluye el cruce
+                                del Atlántico en solitario y navegación en alta latitud hacia el Ártico.
+
+                                El proyecto refleja una combinación de experiencia marítima, preparación técnica y
+                                determinación personal.
                             </p>
                         </div>
                     </div>
@@ -432,11 +443,28 @@
                 <p class="text-slate-400 mb-6" data-i18n="foot-desc">Exploración polar de élite.</p>
                 <!-- Redes Sociales -->
                 <div class="flex items-center justify-center md:justify-start gap-4">
-                    <a href="https://instagram.com" target="_blank" class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    <a href="https://www.instagram.com/ellocodavidexpeditions?igsh=NDJra2UzOHU3Ymhq" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
                     </a>
-                    <a href="https://facebook.com" target="_blank" class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    <a href="https://facebook.com" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@elcolombonoruego" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-zinc-700/50 flex items-center justify-center text-slate-400 hover:text-white transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -502,12 +530,13 @@
             [latOrigen, lngOrigen],
             [latDestino, lngDestino]
         ];
-        var polyline = L.polyline(latlngs, {color: '#10b981', dashArray: '5, 10', weight: 3}).addTo(map);
+        var polyline = L.polyline(latlngs, { color: '#10b981', dashArray: '5, 10', weight: 3 }).addTo(map);
 
-        L.marker([latActual, lngActual], {icon: shipIcon}).addTo(map);
-        
-        map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
+        L.marker([latActual, lngActual], { icon: shipIcon }).addTo(map);
+
+        map.fitBounds(polyline.getBounds(), { padding: [50, 50] });
         /*]]>*/
     </script>
 </body>
+
 </html>
