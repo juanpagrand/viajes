@@ -22,6 +22,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         String adminEmail = "admin@gmail.com";
         Optional<User> adminOptional = userRepository.findByEmail(adminEmail);
 
@@ -31,9 +32,10 @@ public class DataInitializer implements CommandLineRunner {
             admin.setEmail(adminEmail);
             admin.setPassword(passwordEncoder.encode("123456789"));
             admin.setRole(Role.ROLE_ADMIN);
-            admin.setDescripcion("Máster Mariner & Líder de Expediciones. Más de 30 años navegando las aguas más traicioneras del planeta.");
+            admin.setDescripcion(
+                    "Máster Mariner & Líder de Expediciones. Más de 30 años navegando las aguas más traicioneras del planeta.");
             admin.setFoto("/images/2969933.png");
-            
+
             userRepository.save(admin);
             System.out.println("Admin user created automatically.");
         }
@@ -42,16 +44,18 @@ public class DataInitializer implements CommandLineRunner {
         Optional<User> userOptional = userRepository.findByEmail(userEmail);
 
         if (userOptional.isEmpty()) {
-            User normalUser = new User();
-            normalUser.setNombre("Usuario Viajero");
-            normalUser.setEmail(userEmail);
-            normalUser.setPassword(passwordEncoder.encode("123456789"));
-            normalUser.setRole(Role.ROLE_USER);
-            normalUser.setDescripcion("Aventurero con ganas de descubrir nuevos destinos.");
-            normalUser.setFoto("/images/default_user.png");
-            
-            userRepository.save(normalUser);
-            System.out.println("Normal user created automatically.");
+            User user = new User();
+            user.setNombre("pg");
+            user.setEmail(userEmail);
+            user.setPassword(passwordEncoder.encode("123456789"));
+            user.setRole(Role.ROLE_USER);
+            user.setDescripcion(
+                    "Tripulante experto en la expedición El Loco David.");
+            user.setFoto("/images/2969933.png");
+
+            userRepository.save(user);
+            System.out.println("User user created automatically.");
         }
     }
+
 }
