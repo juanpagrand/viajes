@@ -35,4 +35,10 @@ public class User {
 
     @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean activo = true;
+
+    @Column
+    private String confirmationCode;
+
+    @Column
+    private java.time.LocalDateTime confirmationCodeExpiresAt;
 }

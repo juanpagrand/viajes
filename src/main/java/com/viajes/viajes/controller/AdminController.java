@@ -65,6 +65,10 @@ public class AdminController {
 
     @GetMapping("/register")
     public String showAdminRegistrationForm(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User admin = userService.findUserByEmail(auth.getName());
+        model.addAttribute("admin", admin);
+
         UserDto user = new UserDto();
         model.addAttribute("adminDto", user);
         return "admin-register";

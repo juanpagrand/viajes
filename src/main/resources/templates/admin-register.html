@@ -15,7 +15,25 @@
 </head>
 
 <body
-    class="antialiased selection:bg-accent selection:text-background min-h-screen flex items-center justify-center relative overflow-hidden bg-background py-20">
+    class="antialiased selection:bg-accent selection:text-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-background py-20">
+
+    <!-- Navegación Admin -->
+    <nav class="absolute top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
+                    </div>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-300 hidden sm:inline-block">Capitán <span th:text="${admin.nombre}" class="text-white ml-1"></span></span>
+            </div>
+        </div>
+    </nav>
 
     <!-- Iluminación del fondo -->
     <div
@@ -23,7 +41,7 @@
     </div>
 
     <!-- Contenedor del Formulario -->
-    <div class="relative z-10 w-full max-w-md px-6">
+    <div class="relative z-10 w-full max-w-md px-6 mt-10">
         <div class="glass-panel p-8 sm:p-10 rounded-3xl w-full relative overflow-hidden">
             <!-- Detalles decorativos -->
             <div class="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-bl-full blur-2xl"></div>
@@ -92,6 +110,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
 
     <!-- Inicializar iconos -->
     <script>

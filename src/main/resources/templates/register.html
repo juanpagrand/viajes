@@ -28,21 +28,14 @@
     <!-- Navegación -->
     <nav class="absolute top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a th:href="@{/}" class="flex items-center gap-3 group">
-                <div
-                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg group-hover:shadow-primary/40 transition-shadow">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/}" class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg group-hover:shadow-primary/40 transition-shadow cursor-pointer">
                     <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
-                        <i data-lucide="ship"
-                            class="text-primary w-5 h-5 transition-transform group-hover:rotate-12"></i>
+                        <i data-lucide="arrow-left" class="text-primary w-5 h-5"></i>
                     </div>
-                </div>
-                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span
-                        class="text-primary font-light">DAVID</span></div>
-            </a>
-            <a th:href="@{/}"
-                class="text-slate-400 hover:text-white transition-colors flex items-center gap-2 text-sm font-medium">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver al Inicio
-            </a>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
+            </div>
         </div>
     </nav>
 
@@ -57,8 +50,8 @@
                     class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <i data-lucide="user-plus" class="text-accent w-7 h-7"></i>
                 </div>
-                <h2 class="text-3xl font-bold text-white mb-2">Unirse a la Flota</h2>
-                <p class="text-slate-400 text-sm">Crea tu cuenta de tripulante</p>
+                <h2 class="text-3xl font-bold text-white mb-2" data-i18n="title-register">Unirse a la Flota</h2>
+                <p class="text-slate-400 text-sm" data-i18n="subtitle-register">Crea tu cuenta de tripulante</p>
             </div>
 
             <!-- Error message if email exists -->
@@ -88,49 +81,52 @@
                 <!-- Campo Nombre -->
                 <div>
                     <label for="nombre" class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
-                        <i data-lucide="user" class="w-4 h-4 text-slate-400"></i> Nombre Completo
+                        <i data-lucide="user" class="w-4 h-4 text-slate-400"></i> <span data-i18n="label-fullname">Nombre Completo</span>
                     </label>
                     <input type="text" id="nombre" th:field="*{nombre}" required
                         class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 focus:ring-0"
-                        placeholder="Capitán Ahab">
+                        placeholder="Capitán Ahab" data-i18n="placeholder-name">
                 </div>
 
                 <!-- Campo Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
-                        <i data-lucide="mail" class="w-4 h-4 text-slate-400"></i> Correo Electrónico
+                        <i data-lucide="mail" class="w-4 h-4 text-slate-400"></i> <span data-i18n="label-email">Correo Electrónico</span>
                     </label>
                     <input type="email" id="email" th:field="*{email}" required
                         class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 focus:ring-0"
-                        placeholder="tu.correo@ejemplo.com">
+                        placeholder="tu.correo@ejemplo.com" data-i18n="placeholder-email">
                 </div>
 
                 <!-- Campo Password -->
                 <div>
                     <label for="password"
                         class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
-                        <i data-lucide="lock" class="w-4 h-4 text-slate-400"></i> Contraseña
+                        <i data-lucide="lock" class="w-4 h-4 text-slate-400"></i> <span data-i18n="label-password">Contraseña</span>
                     </label>
                     <input type="password" id="password" th:field="*{password}" required
                         class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 focus:ring-0"
-                        placeholder="Mínimo 8 caracteres">
+                        placeholder="Mínimo 8 caracteres" data-i18n="placeholder-password">
                 </div>
 
                 <!-- Submit -->
                 <button type="submit"
-                    class="w-full bg-accent hover:bg-blue-400 text-white font-bold px-4 py-3 rounded-xl transition-all duration-300 transform active:scale-[0.98] shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(96,165,250,0.5)] flex justify-center items-center gap-2 mt-4">
+                    class="w-full bg-accent hover:bg-blue-400 text-white font-bold px-4 py-3 rounded-xl transition-all duration-300 transform active:scale-[0.98] shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(96,165,250,0.5)] flex justify-center items-center gap-2 mt-4" data-i18n="btn-register">
                     Completar Registro <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
             </form>
 
             <div class="mt-8 text-center text-sm text-slate-400 relative z-10">
-                ¿Ya eres parte de la expedición?
+                <span data-i18n="login-prompt">¿Ya eres parte de la expedición?</span>
                 <a th:href="@{/login}"
-                    class="text-accent font-semibold hover:text-white transition-colors ml-1 border-b border-accent/30 hover:border-white">Inicia
+                    class="text-accent font-semibold hover:text-white transition-colors ml-1 border-b border-accent/30 hover:border-white" data-i18n="login-link">Inicia
                     Sesión</a>
             </div>
         </div>
     </div>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
 
     <!-- Inicializar iconos -->
     <script>

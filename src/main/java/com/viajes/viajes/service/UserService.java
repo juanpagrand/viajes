@@ -14,4 +14,7 @@ public interface UserService {
     User findUserById(Long id);
     void toggleUserStatus(Long id);
     void updateUserById(Long id, UserDto userDto);
+    void generateResetPasswordCode(String email);
+    boolean verifyResetCode(String email, String code);
+    void resetPassword(String email, String code, String newPassword);
 }

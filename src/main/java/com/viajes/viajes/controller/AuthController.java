@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
@@ -54,4 +55,58 @@ public class AuthController {
         return "redirect:/register?success";
     }
 
+    @GetMapping("/forgot-password")
+    public String showForgotPasswordForm() {
+        return "forgot-password";
+    }
+
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam("email") String email, Model model) {
+        User existingUser = userService.findUserByEmail(email);
+        if (existingUser == null) {
+            model.addAttribute("error", "El correo electrónico no está registrado");
+            return "forgot-password";
+        }
+
+        try {
+            userService.generateResetPasswordCode(email);
+            return "redirect:/reset-password?email=" + email + "&sent";
+        } catch (Exception e) {
+            model.addAttribute("error", "Ocurrió un error al enviar el código de confirmación: " + e.getMessage());
+            return "forgot-password";
+        }
+    }
+
+    @GetMapping("/reset-password")
+    public String showResetPasswordForm(@RequestParam(value = "email", required = false) String email, Model model) {
+        model.addAttribute("email", email);
+        return "reset-password";
+    }
+
+    @PostMapping("/reset-password")
+    public String processResetPassword(@RequestParam("email") String email,
+                                      @RequestParam("code") String code,
+                                      @RequestParam("password") String password,
+                                      @RequestParam("confirmPassword") String confirmPassword,
+                                      Model model) {
+        model.addAttribute("email", email);
+        
+        if (password == null || password.isEmpty()) {
+            model.addAttribute("error", "La contraseña no puede estar vacía");
+            return "reset-password";
+        }
+
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("error", "Las contraseñas no coinciden");
+            return "reset-password";
+        }
+
+        try {
+            userService.resetPassword(email, code, password);
+            return "redirect:/login?resetSuccess";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "reset-password";
+        }
+    }
 }

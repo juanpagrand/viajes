@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/user/**").authenticated()
                 .requestMatchers("/register/**").permitAll()
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/forgot-password", "/reset-password").permitAll()
                 .requestMatchers("/").permitAll()
                 // Donaciones públicas — sin login
                 .requestMatchers("/donar", "/donar/procesar", "/donar/exito").permitAll()

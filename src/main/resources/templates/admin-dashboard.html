@@ -23,11 +23,11 @@
     <nav class="sticky top-0 w-full z-50 glass-panel border-b-0 border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20">
+                <a th:href="@{/}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
                     <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
-                        <i data-lucide="anchor" class="text-accent w-5 h-5"></i>
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
                     </div>
-                </div>
+                </a>
                 <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
             </div>
 
@@ -152,6 +152,9 @@
         </div>
 
     </main>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
 
     <script>
         lucide.createIcons();
