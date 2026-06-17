@@ -11,18 +11,21 @@
     <link rel="stylesheet" th:href="@{/css/barco.css}">
     <script th:src="@{/js/tailwind-config.js}"></script>
     <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        body, html {
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
 </head>
 
-<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col items-center justify-center">
-
-    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-accent/5 to-background pointer-events-none z-0"></div>
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen relative flex flex-col items-center justify-center">
 
     <div class="w-full max-w-lg relative z-10 p-6">
-        <a th:href="@{/admin/sponsors}" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-6 font-medium">
+        <a th:href="@{/admin/sponsors}" class="inline-flex items-center gap-2 text-[#1f3d47] hover:text-[#1f3d47]/80 transition-colors mb-6 font-medium">
             <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver a Sponsors
         </a>
 
-        <div class="glass-panel p-8 md:p-10 rounded-3xl relative overflow-hidden">
+        <div class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 md:p-10 rounded-3xl relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-full pointer-events-none"></div>
 
             <div class="flex items-center gap-4 mb-8">

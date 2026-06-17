@@ -24,7 +24,7 @@ public class ViajeController {
 
     @GetMapping("/")
     public String inicio(Model model) {
-        model.addAttribute("bitacoras", bitacoraRepository.findAll(Sort.by(Sort.Direction.DESC, "fecha")));
+        model.addAttribute("bitacoras", bitacoraRepository.findTop10ByActivoTrueOrderByFechaDescIdDesc());
         model.addAttribute("sponsors", sponsorRepository.findByActivoTrue());
         model.addAttribute("destinos", destinoRepository.findByActivoTrue());
         
@@ -46,5 +46,15 @@ public class ViajeController {
         }
 
         return "viaje"; // busca index.html en templates
+    }
+
+    @GetMapping("/politicas")
+    public String politicas() {
+        return "politicas";
+    }
+
+    @GetMapping("/sobre-nosotros")
+    public String sobreNosotros() {
+        return "sobre-nosotros";
     }
 }

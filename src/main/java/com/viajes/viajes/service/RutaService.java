@@ -88,6 +88,8 @@ public class RutaService {
         Optional<Ruta> activa = rutaRepository.findByActivaTrue();
         activa.ifPresent(r -> {
             r.setActiva(false);
+            r.setFinalizada(true);
+            r.setFechaFin(LocalDateTime.now());
             rutaRepository.save(r);
         });
 
@@ -117,6 +119,8 @@ public class RutaService {
         Optional<Ruta> activa = rutaRepository.findByActivaTrue();
         activa.ifPresent(r -> {
             r.setActiva(false);
+            r.setFinalizada(true);
+            r.setFechaFin(LocalDateTime.now());
             rutaRepository.save(r);
         });
     }

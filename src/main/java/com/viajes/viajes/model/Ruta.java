@@ -23,6 +23,11 @@ public class Ruta {
     @Column(columnDefinition = "boolean default false")
     private boolean activa;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean finalizada;
+
+    private LocalDateTime fechaFin;
+
     // Coordenadas simuladas para el mapa
     private Double latitudOrigen;
     private Double longitudOrigen;
@@ -110,5 +115,21 @@ public class Ruta {
 
     public void setLongitudDestino(Double longitudDestino) {
         this.longitudDestino = longitudDestino;
+    }
+
+    public boolean isFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(boolean finalizada) {
+        this.finalizada = finalizada;
+    }
+
+    public LocalDateTime getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDateTime fechaFin) {
+        this.fechaFin = fechaFin;
     }
 }

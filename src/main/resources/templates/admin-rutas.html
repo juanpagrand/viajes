@@ -12,17 +12,19 @@
     <link rel="stylesheet" th:href="@{/css/barco.css}">
     <script th:src="@{/js/tailwind-config.js}"></script>
     <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        body, html {
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
-<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col">
-
-    <!-- Iluminación del fondo -->
-    <div class="absolute top-[0%] left-[-10%] w-[50%] h-[50%] bg-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen relative flex flex-col">
 
     <!-- Navegación Admin -->
-    <nav class="sticky top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+    <nav class="sticky top-0 w-full z-50 glass-nav border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <a th:href="@{/admin}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
@@ -44,10 +46,10 @@
         
         <div class="flex items-center justify-between mb-8">
             <div>
-                <h1 class="text-3xl font-bold text-white flex items-center gap-3">
+                <h1 class="text-3xl font-bold text-[#1f3d47] flex items-center gap-3">
                     <i data-lucide="navigation" class="text-accent w-8 h-8"></i> Monitor de Ruta
                 </h1>
-                <p class="text-slate-400 mt-2 text-sm">Gestiona la ruta actual del navío y calcula estimaciones.</p>
+                <p class="text-[#1f3d47]/80 mt-2 text-sm">Gestiona la ruta actual del navío y calcula estimaciones.</p>
             </div>
         </div>
 
@@ -55,7 +57,7 @@
             
             <!-- Panel Izquierdo: Ruta Activa y Simulación -->
             <div class="lg:col-span-7 space-y-6">
-                <div class="glass-panel p-8 rounded-3xl h-full flex flex-col">
+                <div class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 rounded-3xl h-full flex flex-col">
                     <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 border-b border-white/10 pb-4">
                         <i data-lucide="activity" class="w-5 h-5 text-emerald-400"></i> Estado Actual
                     </h2>
@@ -113,7 +115,7 @@
 
             <!-- Panel Derecho: Formulario Nueva Ruta -->
             <div class="lg:col-span-5 space-y-6">
-                <div class="glass-panel p-8 rounded-3xl">
+                <div class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 rounded-3xl">
                     <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 border-b border-white/10 pb-4">
                         <i data-lucide="play-circle" class="w-5 h-5 text-accent"></i> Iniciar Travesía
                     </h2>
@@ -163,6 +165,46 @@
                 </div>
             </div>
 
+        </div>
+
+        <!-- Historial de Travesías -->
+        <div class="mt-8">
+            <div class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 rounded-3xl">
+                <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 border-b border-white/10 pb-4">
+                    <i data-lucide="history" class="w-5 h-5 text-accent"></i> Historial de Travesías
+                </h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="border-b border-white/10 text-slate-400 font-medium">
+                                <th class="py-3 px-4">Origen</th>
+                                <th class="py-3 px-4">Destino</th>
+                                <th class="py-3 px-4">Fecha de Inicio</th>
+                                <th class="py-3 px-4">Fecha de Fin</th>
+                                <th class="py-3 px-4">Tiempo Estimado</th>
+                                <th class="py-3 px-4">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
+                            <tr th:each="r : ${rutas}" class="hover:bg-white/5 transition-colors">
+                                <td class="py-3 px-4 font-semibold text-white" th:text="${r.origen}">Origen</td>
+                                <td class="py-3 px-4 font-semibold text-white" th:text="${r.destino}">Destino</td>
+                                <td class="py-3 px-4 text-slate-300" th:text="${#temporals.format(r.fechaInicio, 'dd/MM/yyyy HH:mm')}">Fecha Inicio</td>
+                                <td class="py-3 px-4 text-slate-300" th:text="${r.fechaFin != null ? #temporals.format(r.fechaFin, 'dd/MM/yyyy HH:mm') : '-'}">Fecha Fin</td>
+                                <td class="py-3 px-4 text-slate-300" th:text="${r.tiempoEstimadoHoras} + ' hrs'">0 hrs</td>
+                                <td class="py-3 px-4">
+                                    <span th:if="${r.activa}" class="bg-emerald-400/20 text-emerald-300 border border-emerald-400/30 text-[10px] uppercase font-bold px-2 py-0.5 rounded">En Navegación</span>
+                                    <span th:unless="${r.activa}" class="bg-blue-400/20 text-blue-300 border border-blue-400/30 text-[10px] uppercase font-bold px-2 py-0.5 rounded">Finalizada</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(rutas)}">
+                                <td colspan="6" class="py-8 text-center text-slate-400">No hay travesías registradas en el historial.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 

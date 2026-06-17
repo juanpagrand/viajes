@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BitacoraRepository extends JpaRepository<Bitacora, Long> {
+    java.util.List<Bitacora> findTop10ByOrderByFechaDescIdDesc();
+    java.util.List<Bitacora> findTop10ByActivoTrueOrderByFechaDescIdDesc();
 }

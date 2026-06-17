@@ -30,4 +30,7 @@ public class Bitacora {
 
     @Column
     private String fotoAdjunta; // Ruta de la foto cargada
+
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private boolean activo = true;
 }

@@ -31,7 +31,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         model.addAttribute("usuario", user);
-        model.addAttribute("bitacoras", bitacoraRepository.findAll(Sort.by(Sort.Direction.DESC, "fecha")));
+        model.addAttribute("bitacoras", bitacoraRepository.findTop10ByActivoTrueOrderByFechaDescIdDesc());
         
         java.util.Optional<com.viajes.viajes.model.Ruta> rutaActivaOpt = rutaService.getRutaActiva();
         if (rutaActivaOpt.isPresent()) {
@@ -58,7 +58,7 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         model.addAttribute("usuario", user);
-        model.addAttribute("bitacoras", bitacoraRepository.findAll(Sort.by(Sort.Direction.DESC, "fecha")));
+        model.addAttribute("bitacoras", bitacoraRepository.findTop10ByActivoTrueOrderByFechaDescIdDesc());
         return "user-bitacora";
     }
 
@@ -68,6 +68,12 @@ public class UserController {
         User user = userService.findUserByEmail(auth.getName());
         model.addAttribute("usuario", user);
         model.addAttribute("destinos", destinoRepository.findByActivoTrue());
+        
+        java.util.List<com.viajes.viajes.model.Ruta> rutasFinalizadas = rutaService.findAll().stream()
+                .filter(r -> !r.isActiva())
+                .sorted((r1, r2) -> r2.getFechaInicio().compareTo(r1.getFechaInicio()))
+                .collect(java.util.stream.Collectors.toList());
+        model.addAttribute("rutasFinalizadas", rutasFinalizadas);
         
         java.util.Optional<com.viajes.viajes.model.Ruta> rutaActivaOpt = rutaService.getRutaActiva();
         if (rutaActivaOpt.isPresent()) {

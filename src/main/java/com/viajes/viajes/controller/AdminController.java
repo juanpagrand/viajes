@@ -343,5 +343,26 @@ public class AdminController {
         rutaService.finalizarRutaActiva();
         return "redirect:/admin/rutas?successStop";
     }
+
+    @GetMapping("/bitacora")
+    public String gestionarBitacora(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User admin = userService.findUserByEmail(auth.getName());
+        model.addAttribute("admin", admin);
+        
+        List<Bitacora> bitacoras = bitacoraRepository.findAll(org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.DESC, "fecha", "id"));
+        model.addAttribute("bitacoras", bitacoras);
+        return "admin-bitacora";
+    }
+
+    @PostMapping("/bitacora/toggle/{id}")
+    public String toggleBitacoraStatus(@PathVariable Long id) {
+        Bitacora bitacora = bitacoraRepository.findById(id).orElse(null);
+        if (bitacora != null) {
+            bitacora.setActivo(!bitacora.isActivo());
+            bitacoraRepository.save(bitacora);
+        }
+        return "redirect:/admin/bitacora?successStatus";
+    }
 }
 

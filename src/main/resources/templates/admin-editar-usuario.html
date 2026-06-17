@@ -11,15 +11,17 @@
     <link rel="stylesheet" th:href="@{/css/barco.css}">
     <script th:src="@{/js/tailwind-config.js}"></script>
     <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        body, html {
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
 </head>
 
-<body class="antialiased selection:bg-accent selection:text-white min-h-screen bg-background relative flex flex-col">
-
-    <!-- Iluminación del fondo -->
-    <div class="absolute top-[0%] left-[-10%] w-[50%] h-[50%] bg-accent/15 rounded-full blur-[140px] pointer-events-none"></div>
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen relative flex flex-col">
 
     <!-- Navegación Admin -->
-    <nav class="sticky top-0 w-full z-50 glass-panel border-b-0 border-white/5">
+    <nav class="sticky top-0 w-full z-50 glass-nav border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <a th:href="@{/admin/tripulacion}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
@@ -39,7 +41,7 @@
     <!-- Content -->
     <main class="flex-grow w-full max-w-3xl mx-auto px-6 py-10 relative z-10">
         
-        <div class="glass-panel p-8 md:p-10 rounded-3xl">
+        <div class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 md:p-10 rounded-3xl">
             <div class="flex items-center gap-3 mb-8 pb-4 border-b border-white/10">
                 <i data-lucide="edit" class="text-accent w-6 h-6"></i>
                 <h2 class="text-2xl font-bold text-white">Editar Información del Usuario</h2>

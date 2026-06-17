@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .requestMatchers("/forgot-password", "/reset-password").permitAll()
                 .requestMatchers("/").permitAll()
                 // Donaciones públicas — sin login
-                .requestMatchers("/donar", "/donar/procesar", "/donar/exito").permitAll()
+                .requestMatchers("/donar", "/donar/procesar", "/donar/exito", "/politicas", "/sobre-nosotros").permitAll()
                 // Webhook protegido por firma HMAC, no por sesión
                 .requestMatchers("/vipps/webhook").permitAll()
                 // Solo demo local — quitar en producción

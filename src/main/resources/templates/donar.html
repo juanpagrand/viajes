@@ -14,12 +14,20 @@
     <link rel="stylesheet" th:href="@{/css/theme.css}">
 </head>
 
-<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col bg-background">
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col bg-[#d5e0df]">
     <!-- Luz ambiental -->
     <div class="aurora-glow"></div>
 
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Left: Volver -->
+            <div>
+                <a href="/" class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver
+                </a>
+            </div>
+
+            <!-- Center: Logo -->
             <a href="/" class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
                     <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
@@ -28,10 +36,29 @@
                 </div>
                 <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
             </a>
-            <div>
-                <a href="/" class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver
-                </a>
+
+            <!-- Right: Dropdown de Idioma (estático para alinearlo a la derecha) -->
+            <div class="relative group" id="lang-dropdown-container">
+                <button
+                    class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer text-sm font-medium py-2 pr-0 pl-2 focus:outline-none"
+                    id="lang-btn">
+                    <i data-lucide="globe" class="w-4 h-4 text-primaryLight"></i>
+                    <span id="current-lang" class="font-bold tracking-wider">ES</span>
+                    <i data-lucide="chevron-down"
+                        class="w-3 h-3 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                </button>
+                <div
+                    class="absolute right-0 top-full mt-2 w-36 bg-surfaceLight/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] transform origin-top-right group-hover:scale-100 scale-95 flex flex-col overflow-hidden before:absolute before:-top-4 before:right-0 before:w-full before:h-4 before:bg-transparent">
+                    <button onclick="changeLanguage('es')"
+                        class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">Español
+                        <span class="text-[10px] font-bold text-primary">ES</span></button>
+                    <button onclick="changeLanguage('en')"
+                        class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">English
+                        <span class="text-[10px] font-bold text-primary">EN</span></button>
+                    <button onclick="changeLanguage('no')"
+                        class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between font-medium">Norsk
+                        <span class="text-[10px] font-bold text-primary">NO</span></button>
+                </div>
             </div>
         </div>
     </nav>
@@ -42,14 +69,20 @@
                 <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#ff5b24]/20 text-[#ff5b24] mb-4 border border-[#ff5b24]/30">
                     <i data-lucide="heart-handshake" class="w-8 h-8"></i>
                 </div>
-                <h1 class="text-4xl font-bold text-white mb-3">Apoya la Expedición</h1>
-                <p class="text-slate-300">Las futuras aventuras dependen de tripulantes y donantes como tú.</p>
+                <h1 class="text-4xl font-bold text-slate-800 mb-3" data-i18n="donar-title">Ayuda a Construir el Próximo Capítulo</h1>
+                <p class="text-slate-600 font-medium" data-i18n="donar-desc">
+                    Cada contribución ayuda a mantener el barco, mejorar los sistemas, documentar el proceso y preparar futuras travesías.
+                    <br/><br/>
+                    No estás financiando una aventura turística.
+                    <br/><br/>
+                    Estás ayudando a construir un proyecto real.
+                </p>
             </div>
 
             <div class="bento-box p-8 border-t-4 border-t-[#ff5b24]">
                 <form th:action="@{/donar/procesar}" method="post" class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-4 text-center">Selecciona una cantidad a donar (NOK)</label>
+                        <label class="block text-sm font-medium text-slate-300 mb-4 text-center" data-i18n="donar-select-amount">Selecciona una cantidad a donar (NOK)</label>
                         
                         <div class="grid grid-cols-3 gap-4 mb-4">
                             <label class="cursor-pointer">
@@ -76,7 +109,7 @@
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <span class="text-slate-400 font-bold">kr</span>
                             </div>
-                            <input type="number" name="custom_amount" placeholder="Otra cantidad..." min="1" step="1"
+                            <input type="number" name="custom_amount" placeholder="Otra cantidad..." data-i18n="donar-other-amount" min="1" step="1"
                                 class="w-full input-dark pl-12 pr-4 py-3 rounded-xl text-white placeholder-slate-500 border border-white/10 focus:border-[#ff5b24] focus:ring-1 focus:ring-[#ff5b24] transition-colors"
                                 onchange="if(this.value){document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false); document.getElementById('amount-hidden').value=this.value;}">
                         </div>
@@ -85,13 +118,13 @@
 
                     <div class="bg-surfaceLight p-4 rounded-xl border border-white/5 flex gap-3 items-start mt-8">
                         <i data-lucide="info" class="w-5 h-5 text-slate-400 shrink-0 mt-0.5"></i>
-                        <p class="text-xs text-slate-400 leading-relaxed">
+                        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="donar-vipps-info">
                             Serás redirigido de forma segura a Vipps para completar tu pago. Vipps es el método de pago más popular de Noruega.
                         </p>
                     </div>
 
                     <button type="submit" class="w-full bg-[#ff5b24] hover:bg-[#ff5b24]/90 text-white font-bold py-4 rounded-xl text-lg shadow-lg shadow-[#ff5b24]/30 transition-all flex items-center justify-center gap-3">
-                        Continuar con Vipps <i data-lucide="external-link" class="w-5 h-5"></i>
+                        <span data-i18n="donar-submit">Continuar con Vipps</span> <i data-lucide="external-link" class="w-5 h-5"></i>
                     </button>
                 </form>
             </div>
@@ -105,6 +138,70 @@
             </div>
         </div>
     </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-10">
+            <!-- Branding -->
+            <div class="text-center md:text-left">
+                <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></h4>
+                <p class="text-slate-400 mb-4" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <div class="mb-6">
+                    <a th:href="@{/politicas}" class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white" data-i18n="foot-policies">Políticas de Privacidad y Vipps</a>
+                </div>
+                <!-- Redes Sociales -->
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <a href="https://www.instagram.com/ellocodavidexpeditions?igsh=NDJra2UzOHU3Ymhq" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@elcolombonoruego" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-zinc-700/50 flex items-center justify-center text-slate-400 hover:text-white transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contacto Estilo Bento -->
+            <div
+                class="flex flex-col sm:flex-row items-center gap-8 md:gap-12 bg-[#0f172a]/50 px-10 py-6 rounded-3xl border border-white/5 shadow-inner">
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-contact">Contáctanos</div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> 937 665 458
+                    </div>
+                </div>
+                <!-- Divisor -->
+                <div class="hidden sm:block w-px h-12 bg-white/10"></div>
+                <div class="block sm:hidden h-px w-24 bg-white/10"></div>
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-email">Correo Electrónico
+                    </div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i> alberto@ellocodavid.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Script de Traducción -->
     <script th:src="@{/js/translations.js}"></script>
