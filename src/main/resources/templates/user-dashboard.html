@@ -48,7 +48,7 @@
             <div class="flex items-center gap-4">
                 <div class="hidden sm:flex items-center gap-3 mr-4">
                     <i data-lucide="user" class="text-primaryLight w-4 h-4"></i>
-                    <span class="text-sm font-medium text-white" th:text="${usuario.nombre}">Tripulante</span>
+                    <span class="text-sm font-medium text-white notranslate" th:text="${usuario.nombre}">Tripulante</span>
                 </div>
                 <form th:action="@{/logout}" method="post">
                     <button type="submit"
@@ -84,7 +84,7 @@
 
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 drop-shadow-xl leading-tight">
                 <span data-i18n="hero-title-1">BIENVENIDO</span> <br />
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primaryLight to-accent"
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primaryLight to-accent notranslate"
                     th:text="${usuario.nombre}">
                     TRIPULANTE
                 </span>
@@ -126,7 +126,7 @@
                 <div class="flex justify-between items-center mb-5 border-b border-white/10 pb-4">
                     <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
                         <i data-lucide="book-open" class="w-4 h-4 text-slate-300"></i>
-                        <span>Bitácora</span>
+                        <span data-i18n="log-title">Bitácora</span>
                     </h3>
                     <a th:href="@{/user/bitacora}"
                         class="text-xs text-primary hover:text-white transition-colors flex items-center gap-1 font-bold">Ver
@@ -159,10 +159,65 @@
 
     <!-- Footer -->
     <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
-            <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
-                    class="text-primary font-light">DAVID</span></h4>
-            <p class="text-slate-400">Portal de Tripulación.</p>
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-10">
+            <!-- Branding -->
+            <div class="text-center md:text-left">
+                <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></h4>
+                <p class="text-slate-400 mb-4" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <div class="mb-6">
+                    <a th:href="@{/politicas}" class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white" data-i18n="foot-policies">Políticas de Privacidad y Vipps</a>
+                </div>
+                <!-- Redes Sociales -->
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <a href="https://www.instagram.com/ellocodavidexpeditions?igsh=NDJra2UzOHU3Ymhq" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@elcolombonoruego" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-zinc-700/50 flex items-center justify-center text-slate-400 hover:text-white transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contacto Estilo Bento -->
+            <div
+                class="flex flex-col sm:flex-row items-center gap-8 md:gap-12 bg-[#0f172a]/50 px-10 py-6 rounded-3xl border border-white/5 shadow-inner">
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-contact">Contáctanos</div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> 937 665 458
+                    </div>
+                </div>
+                <!-- Divisor -->
+                <div class="hidden sm:block w-px h-12 bg-white/10"></div>
+                <div class="block sm:hidden h-px w-24 bg-white/10"></div>
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-email">Correo Electrónico
+                    </div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i> alberto@ellocodavid.com
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 

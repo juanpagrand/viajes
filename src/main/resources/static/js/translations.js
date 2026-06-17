@@ -7,10 +7,10 @@ const translations = {
         'nav-logbook': 'Bitácora',
         'login': 'Acceder',
         'logout': 'Salir',
-        'hero-tag': 'Expedición 2026/2027 Abierta',
-        'hero-title-1': 'DOMINA LOS MARES',
+        'hero-tag': 'Expedición Abierta',
+        'hero-title-1': 'NAVEGA EL ABISMO AZUL',
         'hero-title-2': 'DEL FIN DEL MUNDO',
-        'hero-subtitle': 'Navega hacia lo desconocido...',
+        'hero-subtitle': 'Un sueño no tiene fecha de vencimiento.',
         'hero-btn': 'Comenzar la Aventura',
         'route-title': 'Ruta Actual',
         'route-status': 'EN CURSO',
@@ -29,15 +29,17 @@ const translations = {
         'log-3-text': 'Mantenimiento preventivo en cubierta completado exitosamente antes de la tormenta.',
         'story-title': 'El Navío y su Historia',
         'story-subtitle': 'Conoce el corazón de nuestra expedición',
-        'story-h3': 'Un Legado en los Mares',
-        'story-p1': 'El barco fue diseñado específicamente para soportar las condiciones más extremas del Círculo Polar Ártico. Con un casco reforzado doble y tecnología de navegación de última generación, es más que un simple medio de transporte: es nuestro refugio seguro en el fin del mundo.',
+        'story-h3': 'Motiva 49 – Acero danés, espíritu oceánico',
+        'story-p1': 'El corazón del proyecto es un Motiva 49 construido en Dinamarca en 1996. No fue elegido por lujo. Fue elegido por resistencia. Actualmente se encuentra en un proceso continuo de modernización y preparación para futuras travesías oceánicas. Cada sistema instalado y cada mejora completada representan un paso más hacia el próximo capítulo de esta historia. El barco no es el destino. Es la herramienta que hace posible el viaje.',
         'story-p2': 'Su historia comenzó hace más de dos décadas cruzando el recóndito paso del noroeste. Hoy en día, ha sido completamente remodelado para combinar el romanticismo de la navegación clásica con las comodidades modernas necesarias para exploraciones científicas a largo plazo.',
         'story-link': 'Leer bitácora de construcción',
+        'story-btn': 'Sobre nosotros',
+        'donate-float-btn': 'Donar con Vipps',
         'cap-tag': 'Capitán',
-        'cap-title': 'Capitán',
+        'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MÁSTER MARINER & LÍDER DE EXPEDICIÓN',
-        'cap-p1': 'Con más de 30 años de experiencia navegando las aguas más traicioneras del planeta, David no es solo un capitán; es un estratega del mar. capaz de leer las corrientes y anticipar los cambios del clima.',
-        'cap-p2': 'Su liderazgo férreo a bordo garantiza la asombrosa seguridad de la tripulación y convierte cada travesía en una clase maestra de auténtica exploración oceánica.',
+        'cap-p1': 'Nací en Colombia y he vivido gran parte de mi vida en Noruega. He servido en la Infantería de Marina, trabajado en la marina mercante, cruzado el Atlántico en múltiples ocasiones y participado durante años en navegación de altura. Hoy, a los 66 años, decidí emprender el proyecto más ambicioso de mi vida. No porque sea fácil. Sino porque todavía creo que algunos sueños merecen ser perseguidos. El Loco David no es la historia de un héroe. Es la historia de una persona común que se niega a dejar de intentarlo.',
+        'cap-p2': '',
         'foot-desc': 'Exploración polar de élite.',
         'foot-contact': 'Contáctanos',
         'foot-email': 'Correo Electrónico',
@@ -92,7 +94,62 @@ const translations = {
         'btn-edit': 'Editar',
         'btn-deactivate': 'Desactivar',
         'btn-activate': 'Activar',
-        'own-account': 'Es tu cuenta'
+        'own-account': 'Es tu cuenta',
+        'join-expedition-title': 'Únete a la Expedición',
+        'join-expedition-desc': 'Apóyanos para nuestras futuras expediciones. Tu contribución hace posible que sigamos explorando los límites del mundo.',
+        'donate-vipps-btn': 'Donar ahora con Vipps',
+        'empty-logbook-feed': 'Aún no hay registros en la bitácora. Las noticias de la expedición aparecerán aquí pronto.',
+        'foot-policies': 'Políticas de Privacidad y Vipps',
+        'donar-title': 'Ayuda a Construir el Próximo Capítulo',
+        'donar-desc': 'Cada contribución ayuda a mantener el barco, mejorar los sistemas, documentar el proceso y preparar futuras travesías.<br/><br/>No estás financiando una aventura turística.<br/><br/>Estás ayudando a construir un proyecto real.',
+        'donar-select-amount': 'Selecciona una cantidad a donar (NOK)',
+        'donar-other-amount': 'Otra cantidad...',
+        'donar-vipps-info': 'Serás redirigido de forma segura a Vipps para completar tu pago. Vipps es el método de pago más popular de Noruega.',
+        'donar-submit': 'Continuar con Vipps',
+        'donar-exito-gracias': '(¡Muchas Gracias!)',
+        'donar-exito-desc': 'Hemos recibido tu donación correctamente. Tu apoyo incondicional es el motor que nos impulsa a seguir explorando.',
+        'donar-exito-ref': 'Referencia',
+        'donar-exito-back': 'Volver al inicio',
+        'policies-title': 'Políticas de Privacidad y Vipps',
+        'policies-subtitle': 'Información legal sobre el uso del sitio web y donaciones con Vipps',
+        'policies-terms-title': '1. Términos y Condiciones Generales',
+        'policies-terms-p1': 'Estas políticas regulan el uso de la plataforma "El Loco David". Al navegar por nuestro sitio web o registrarse como usuario, acepta cumplir con las condiciones aquí descritas.',
+        'policies-privacy-title': '2. Política de Privacidad',
+        'policies-privacy-p1': 'Nos comprometemos a proteger sus datos personales. Cuando realiza una donación o se registra, recopilamos información como su nombre, correo electrónico y número de teléfono. Estos datos se procesan de forma segura y solo se comparten con terceros necesarios para completar la transacción (como Vipps MobilePay AS).',
+        'policies-vipps-title': '3. Donaciones mediante Vipps',
+        'policies-vipps-p1': 'Las donaciones realizadas a través de la plataforma Vipps son voluntarias y se destinan íntegramente a financiar las expediciones del velero "El Loco David". De acuerdo con la normativa noruega, las donaciones no son reembolsables, salvo en casos demostrados de error técnico o transacciones no autorizadas.',
+        'policies-vipps-p2': 'Vipps es un servicio de pago seguro. Sus credenciales de pago son procesadas exclusivamente por Vipps y nunca se almacenan en nuestros servidores. Para más información, consulte la política de privacidad oficial de Vipps.',
+        'forgot-title': 'Recuperar Clave',
+        'forgot-desc': 'Introduce tu correo para solicitar un código de confirmación',
+        'forgot-submit': 'Enviar Código',
+        'forgot-remembered': '¿Recordaste tu contraseña?',
+        'forgot-back-login': 'Volver al Login',
+        'reset-title': 'Nueva Contraseña',
+        'reset-desc': 'Introduce el código recibido por correo y tu nueva clave',
+        'reset-label-code': 'Código de Confirmación',
+        'reset-label-newpass': 'Nueva Contraseña',
+        'reset-label-confpass': 'Confirmar Contraseña',
+        'reset-submit': 'Restablecer Contraseña',
+        'status-docked': 'EN PUERTO',
+        'no-upcoming-departures': 'No hay próximas salidas programadas',
+        'upcoming-planned-title': 'Próximos Destinos Planificados',
+        'nav-about': 'Sobre Nosotros',
+        'about-title-1': '¿Qué es el "Loco David"?',
+        'about-p1-1': 'El Loco David no es una expedición.',
+        'about-p1-2': 'Es el proceso real de transformar un velero de acero en una plataforma para futuras travesías oceánicas.',
+        'about-p1-3': 'Aquí compartimos avances, errores, reparaciones, aprendizajes y desafíos.',
+        'about-p1-4': 'Porque los grandes viajes comienzan mucho antes de abandonar el puerto.',
+        'about-title-2': 'Cómo empezó esta Historia',
+        'about-p2-1': 'Después de una vida ligada al mar entre Colombia y Noruega, decidí reconstruir un velero de acero para volver a cruzar océanos.',
+        'about-p2-2': 'No soy una gran organización.',
+        'about-p2-3': 'No tengo patrocinadores multimillonarios.',
+        'about-p2-4': 'Solo tengo un barco, un objetivo y la determinación de seguir adelante.',
+        'about-title-3': 'Una visión que nos impulsa',
+        'about-p3-1': 'No sabemos exactamente qué puertos visitaremos dentro de cinco años.',
+        'about-p3-2': 'Pero sí sabemos una cosa:',
+        'about-p3-3': 'Seguiremos avanzando.',
+        'about-p3-4': 'Cada milla comienza mucho antes de levantar el ancla.',
+        'about-p3-5': 'El Loco David existe para demostrar que nunca es tarde para construir algo extraordinario.'
     },
     'en': {
         'nav-home': 'Home',
@@ -102,10 +159,10 @@ const translations = {
         'nav-logbook': 'Logbook',
         'login': 'Login',
         'logout': 'Logout',
-        'hero-tag': '2026/2027 Expedition Open',
-        'hero-title-1': 'MASTER THE SEAS',
+        'hero-tag': 'Expedition Open',
+        'hero-title-1': 'NAVIGATE THE BLUE ABYSS',
         'hero-title-2': "OF THE WORLD'S END",
-        'hero-subtitle': 'Sail into the unknown...',
+        'hero-subtitle': 'A dream has no expiration date.',
         'hero-btn': 'Start the Adventure',
         'route-title': 'Current Route',
         'route-status': 'ONGOING',
@@ -124,15 +181,17 @@ const translations = {
         'log-3-text': 'Preventive deck maintenance completed successfully before the storm.',
         'story-title': 'The Ship and its History',
         'story-subtitle': 'Discover the heart of our expedition',
-        'story-h3': 'A Legacy on the Seas',
-        'story-p1': 'The ship was specifically designed to withstand the most extreme conditions of the Arctic Circle. With a double reinforced hull and state-of-the-art navigation technology, it is more than just a means of transport: it is our safe haven at the end of the world.',
+        'story-h3': 'Motiva 49 – Danish steel, ocean spirit',
+        'story-p1': 'The heart of the project is a Motiva 49 built in Denmark in 1996. It was not chosen for luxury; it was chosen for endurance. It is currently undergoing a continuous process of modernization and preparation for future ocean voyages. Each installed system and completed improvement represents a step closer to the next chapter of this story. The ship is not the destination; it is the tool that makes the journey possible.',
         'story-p2': 'Its history began over two decades ago crossing the remote Northwest Passage. Today, it has been completely remodeled to combine the romance of classic navigation with the modern amenities necessary for long-term scientific explorations.',
         'story-link': 'Read construction logbook',
+        'story-btn': 'About us',
+        'donate-float-btn': 'Donate with Vipps',
         'cap-tag': 'Captain',
-        'cap-title': 'Captain',
+        'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MASTER MARINER & EXPEDITION LEADER',
-        'cap-p1': 'With over 30 years of experience navigating the most treacherous waters on the planet, David is not just a captain; he is a strategist of the sea, capable of reading currents and anticipating weather changes.',
-        'cap-p2': 'His ironclad leadership on board ensures the astonishing safety of the crew and turns every voyage into a masterclass of authentic ocean exploration.',
+        'cap-p1': 'I was born in Colombia and have lived a large part of my life in Norway. I served in the Marine Corps, worked in the merchant marine, crossed the Atlantic multiple times, and participated in deep-sea navigation for years. Today, at 66, I decided to embark on the most ambitious project of my life. Not because it is easy, but because I still believe some dreams are worth chasing. El Loco David is not the story of a hero; it is the story of an ordinary person who refuses to stop trying.',
+        'cap-p2': '',
         'foot-desc': 'Elite polar exploration.',
         'foot-contact': 'Contact Us',
         'foot-email': 'Email',
@@ -187,7 +246,62 @@ const translations = {
         'btn-edit': 'Edit',
         'btn-deactivate': 'Deactivate',
         'btn-activate': 'Activate',
-        'own-account': 'This is your account'
+        'own-account': 'This is your account',
+        'join-expedition-title': 'Join the Expedition',
+        'join-expedition-desc': 'Support our future expeditions. Your contribution makes it possible for us to continue exploring the limits of the world.',
+        'donate-vipps-btn': 'Donate now with Vipps',
+        'empty-logbook-feed': 'There are no entries in the logbook yet. Expedition news will appear here soon.',
+        'foot-policies': 'Privacy & Vipps Policies',
+        'donar-title': 'Help Build the Next Chapter',
+        'donar-desc': 'Every contribution helps maintain the boat, improve systems, document the process, and prepare future voyages.<br/><br/>You are not funding a tourist adventure.<br/><br/>You are helping to build a real project.',
+        'donar-select-amount': 'Select a donation amount (NOK)',
+        'donar-other-amount': 'Other amount...',
+        'donar-vipps-info': 'You will be securely redirected to Vipps to complete your payment. Vipps is the most popular payment method in Norway.',
+        'donar-submit': 'Continue with Vipps',
+        'donar-exito-gracias': '(Thank you very much!)',
+        'donar-exito-desc': 'We have received your donation successfully. Your unconditional support is the engine that drives us to keep exploring.',
+        'donar-exito-ref': 'Reference',
+        'donar-exito-back': 'Back to home',
+        'policies-title': 'Privacy and Vipps Policies',
+        'policies-subtitle': 'Legal information regarding website usage and Vipps donations',
+        'policies-terms-title': '1. General Terms and Conditions',
+        'policies-terms-p1': 'These policies regulate the use of the "El Loco David" platform. By browsing our website or registering as a user, you agree to comply with the conditions described here.',
+        'policies-privacy-title': '2. Privacy Policy',
+        'policies-privacy-p1': 'We are committed to protecting your personal data. When you make a donation or register, we collect information such as your name, email, and phone number. This data is processed securely and is only shared with third parties necessary to complete the transaction (such as Vipps MobilePay AS).',
+        'policies-vipps-title': '3. Donations via Vipps',
+        'policies-vipps-p1': 'Donations made through the Vipps platform are voluntary and are used entirely to fund the expeditions of the sailboat "El Loco David". In accordance with Norwegian regulations, donations are non-refundable, except in proven cases of technical error or unauthorized transactions.',
+        'policies-vipps-p2': 'Vipps is a secure payment service. Your payment credentials are processed exclusively by Vipps and are never stored on our servers. For more information, please consult the official Vipps privacy policy.',
+        'forgot-title': 'Recover Password',
+        'forgot-desc': 'Enter your email to request a confirmation code',
+        'forgot-submit': 'Send Code',
+        'forgot-remembered': 'Remembered your password?',
+        'forgot-back-login': 'Back to Login',
+        'reset-title': 'New Password',
+        'reset-desc': 'Enter the code received by email and your new password',
+        'reset-label-code': 'Confirmation Code',
+        'reset-label-newpass': 'New Password',
+        'reset-label-confpass': 'Confirm Password',
+        'reset-submit': 'Reset Password',
+        'status-docked': 'IN PORT',
+        'no-upcoming-departures': 'No upcoming departures scheduled',
+        'upcoming-planned-title': 'Upcoming Planned Destinations',
+        'nav-about': 'About Us',
+        'about-title-1': 'What is the "Loco David"?',
+        'about-p1-1': 'El Loco David is not just an expedition.',
+        'about-p1-2': 'It is the real process of transforming a steel sailboat into a platform for future ocean voyages.',
+        'about-p1-3': 'Here we share progress, mistakes, repairs, learning, and challenges.',
+        'about-p1-4': 'Because great journeys begin long before leaving port.',
+        'about-title-2': 'How this Story Began',
+        'about-p2-1': 'After a life connected to the sea between Colombia and Norway, I decided to rebuild a steel sailboat to cross oceans again.',
+        'about-p2-2': 'I am not a big organization.',
+        'about-p2-3': 'I do not have multi-million dollar sponsors.',
+        'about-p2-4': 'I only have a boat, a goal, and the determination to move forward.',
+        'about-title-3': 'A vision that drives us',
+        'about-p3-1': 'We don\'t know exactly which ports we will visit in five years.',
+        'about-p3-2': 'But we do know one thing:',
+        'about-p3-3': 'We will keep moving forward.',
+        'about-p3-4': 'Every mile begins long before raising the anchor.',
+        'about-p3-5': 'El Loco David exists to prove that it is never too late to build something extraordinary.'
     },
     'no': {
         'nav-home': 'Hjem',
@@ -197,10 +311,10 @@ const translations = {
         'nav-logbook': 'Loggbok',
         'login': 'Logg inn',
         'logout': 'Logg ut',
-        'hero-tag': '2026/2027 Ekspedisjon Åpen',
-        'hero-title-1': 'MESTRE HAVENE',
+        'hero-tag': 'Ekspedisjon Åpen',
+        'hero-title-1': 'NAVIGER DEN BLÅ AVGRUNNEN',
         'hero-title-2': 'VED VERDENS ENDE',
-        'hero-subtitle': 'Seil inn i det ukjente...',
+        'hero-subtitle': 'En drøm har ingen utløpsdato.',
         'hero-btn': 'Start Eventyret',
         'route-title': 'Nåværende Rute',
         'route-status': 'PÅGÅR',
@@ -219,15 +333,17 @@ const translations = {
         'log-3-text': 'Forebyggende dekkvedlikehold fullført før stormen.',
         'story-title': 'Skipet og dets Historie',
         'story-subtitle': 'Oppdag hjertet av vår ekspedisjon',
-        'story-h3': 'En Arv på Havet',
-        'story-p1': 'Skipet ble spesielt designet for å tåle de mest ekstreme forholdene i polarsirkelen. Med et dobbelt forsterket skrog og toppmoderne navigasjonsteknologi er det mer enn bare et transportmiddel: det er vår trygge havn ved verdens ende.',
+        'story-h3': 'Motiva 49 – Dansk stål, havsjel',
+        'story-p1': 'Hjertet av prosjektet er en Motiva 49 bygget i Danmark i 1996. Den ble ikke valgt for luksus; den ble valgt for slitestyrke. Den er for tiden i en kontinuerlig prosess med modernisering og forberedelse til fremtidige havseilaser. Hvert installerte system og hver fullførte forbedring representerer et skritt nærmere neste kapittel i denne historien. Skipet er ikke målet; det er verktøyet som gjør reisen mulig.',
         'story-p2': 'Dets historie begynte for over to tiår siden ved å krysse den avsidesliggende Nordvestpassasjen. I dag er fullstendig pusset opp for å kombinere romantikken ved klassisk navigasjon med moderne fasiliteter som er nødvendige for langsiktige vitenskapelige utforskninger.',
         'story-link': 'Les konstruksjonsloggbok',
+        'story-btn': 'Om oss',
+        'donate-float-btn': 'Doner med Vipps',
         'cap-tag': 'Kaptein',
-        'cap-title': 'Kaptein',
+        'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MASTER MARINER OG EKSPEDISJONSLEDER',
-        'cap-p1': 'Med over 30 års erfaring med å navigere de farligste farvannene på planeten, er David ikke bare en kaptein; han er en havets strateg, i stand til å lese strømmer og forutse værforandringer.',
-        'cap-p2': 'Hans jernharde lederskap om bord sikrer mannskapets enestående sikkerhet og gjør hver reise til en mesterklasse i autentisk havutforskning.',
+        'cap-p1': 'Jeg ble født i Colombia og har bodd store deler av livet mitt i Norge. Jeg har tjenestegjort i infanteriet, jobbet i handelsflåten, krysset Atlanterhavet flere ganger og deltatt i havseilas i mange år. I dag, i en alder av 66 år, bestemte jeg meg for å starte mitt livs mest ambisiøse prosjekt. Ikke fordi det er lett, men fordi jeg fortsatt tror at noen drømmer er verdt å forfølge. El Loco David er ikke historien om en helt; det er historien om en vanlig person som nekter å gi opp.',
+        'cap-p2': '',
         'foot-desc': 'Elite polarutforskning.',
         'foot-contact': 'Kontakt Oss',
         'foot-email': 'E-post',
@@ -282,7 +398,62 @@ const translations = {
         'btn-edit': 'Rediger',
         'btn-deactivate': 'Deaktiver',
         'btn-activate': 'Aktiver',
-        'own-account': 'Dette er din konto'
+        'own-account': 'Dette er din konto',
+        'join-expedition-title': 'Bli med på ekspedisjonen',
+        'join-expedition-desc': 'Støtt våre fremtidige ekspedisjoner. Ditt bidrag gjør det mulig for oss å fortsette å utforske verdens grenser.',
+        'donate-vipps-btn': 'Doner nå med Vipps',
+        'empty-logbook-feed': 'Det er ingen innlegg i loggboken ennå. Ekspedisjonsnyheter vil vises her snart.',
+        'foot-policies': 'Retningslinjer for personvern og Vipps',
+        'donar-title': 'Hjelp til med å bygge neste kapittel',
+        'donar-desc': 'Hvert bidrag hjelper til med å vedlikeholde båten, forbedre systemene, dokumentere prosessen og forberede fremtidige reiser.<br/><br/>Du finansierer ikke et turisteventyr.<br/><br/>Du hjelper til med å bygge et reelt prosjekt.',
+        'donar-select-amount': 'Velg et donasjonsbeløp (NOK)',
+        'donar-other-amount': 'Annet beløp...',
+        'donar-vipps-info': 'Du vil bli videresendt til Vipps for å fullføre betalingen. Vipps er Norges mest populære betalingsmetode.',
+        'donar-submit': 'Fortsett med Vipps',
+        'donar-exito-gracias': '(Tusen takk!)',
+        'donar-exito-desc': 'Vi har mottatt donasjonen din. Din betingelsesløse støtte er motoren som driver oss til å fortsette å utforske.',
+        'donar-exito-ref': 'Referanse',
+        'donar-exito-back': 'Tilbake til hjem',
+        'policies-title': 'Retningslinjer for personvern og Vipps',
+        'policies-subtitle': 'Juridisk informasjon om bruk av nettstedet og Vipps-donasjoner',
+        'policies-terms-title': '1. Generelle vilkår og betingelser',
+        'policies-terms-p1': 'Disse retningslinjene regulerer bruken av "El Loco David"-plattformen. Ved å bruke nettstedet vårt eller registrere deg som bruker, godtar du å overholde betingelsene som er beskrevet her.',
+        'policies-privacy-title': '2. Personvernerklæring',
+        'policies-privacy-p1': 'Vi er forpliktet til å beskytte dine personopplysninger. Når du donerer eller registrerer deg, samler vi inn informasjon som navn, e-post og telefonnummer. Disse dataene behandles på en sikker måte og deles kun med tredjeparter som er nødvendige for å fullføre transaksjonen (som Vipps MobilePay AS).',
+        'policies-vipps-title': '3. Donasjoner via Vipps',
+        'policies-vipps-p1': 'Donasjoner som gjøres via Vipps-plattformen er frivillige og går i sin helhet til å finansiere ekspedisjonene til seilbåten "El Loco David". I henhold til norske regler er donasjoner ikke-refunderbare, unntatt i påviste tilfeller av teknisk feil eller uautoriserte transaksjoner.',
+        'policies-vipps-p2': 'Vipps er en sikker betalingstjeneste. Dine betalingsopplysninger behandles utelukkende av Vipps og lagres aldri på våre servere. For mer informasjon, se de offisielle retningslinjene for personvern til Vipps.',
+        'forgot-title': 'Gjenopprett Passord',
+        'forgot-desc': 'Skriv inn din e-post for å be om en bekreftelseskode',
+        'forgot-submit': 'Send Kode',
+        'forgot-remembered': 'Husket du passordet ditt?',
+        'forgot-back-login': 'Tilbake til Logg inn',
+        'reset-title': 'Nytt Passord',
+        'reset-desc': 'Skriv inn koden mottatt på e-post og ditt nye passord',
+        'reset-label-code': 'Bekreftelseskode',
+        'reset-label-newpass': 'Nytt Passord',
+        'reset-label-confpass': 'Bekreft Passord',
+        'reset-submit': 'Tilbakestill Passord',
+        'status-docked': 'I HAVN',
+        'no-upcoming-departures': 'Ingen kommende avganger planlagt',
+        'upcoming-planned-title': 'Kommende Planlagte Destinasjoner',
+        'nav-about': 'Om Oss',
+        'about-title-1': 'Hva er "Loco David"?',
+        'about-p1-1': 'El Loco David er ikke en ekspedisjon.',
+        'about-p1-2': 'Det er den virkelige prosessen med å transformere en stålseilbåt til en plattform for fremtidige havcruise.',
+        'about-p1-3': 'Her deler vi fremgang, feil, reparasjoner, læring og utfordringer.',
+        'about-p1-4': 'Fordi store reiser begynner lenge før man forlater havnen.',
+        'about-title-2': 'Hvordan denne historien startet',
+        'about-p2-1': 'Etter et liv knyttet til havet mellom Colombia og Norge, bestemte jeg meg for å gjenoppbygge en stålseilbåt for å krysse hav igjen.',
+        'about-p2-2': 'Jeg er ikke en stor organisasjon.',
+        'about-p2-3': 'Jeg har ikke millionærsponsorer.',
+        'about-p2-4': 'Jeg har bare en båt, et mål og viljen til å gå videre.',
+        'about-title-3': 'En visjon som driver oss',
+        'about-p3-1': 'Vi vet ikke nøyaktig hvilke havner vi vil besøke om fem år.',
+        'about-p3-2': 'Men vi vet én ting:',
+        'about-p3-3': 'Vi vil fortsette å gå fremover.',
+        'about-p3-4': 'Hver mil begynner lenge før ankeret heves.',
+        'about-p3-5': 'El Loco David eksisterer for å bevise at det aldri er for sent å bygge noe ekstraordinært.'
     }
 };
 
@@ -771,28 +942,130 @@ const textReplacements = {
 };
 
 function changeLanguage(lang) {
-    document.documentElement.lang = lang;
+    const isGoogleTranslatePage = !!document.getElementById('google_translate_element');
+    
+    // Guardar en localStorage
     localStorage.setItem('preferred-language', lang);
+    
     const currentLangEl = document.getElementById('current-lang');
     if (currentLangEl) {
         currentLangEl.innerText = lang.toUpperCase();
     }
     
-    // 1. Translate data-i18n attributes
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) {
-            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = translations[lang][key];
-            } else {
-                el.innerHTML = translations[lang][key];
+    if (isGoogleTranslatePage) {
+        document.documentElement.lang = 'es';
+        
+        // Comprobar cookie de traducción actual para evitar bucles infinitos de recarga
+        const getCookie = (name) => {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        };
+        
+        const currentTrans = getCookie('googtrans');
+        const targetLang = lang === 'es' ? 'es' : lang;
+        const targetTrans = "/es/" + targetLang;
+        
+        // Si el idioma actual no coincide con el objetivo, sincronizamos la cookie y recargamos
+        const isSpanishClean = !currentTrans && targetLang === 'es';
+        const isMatched = currentTrans === targetTrans || (currentTrans === '/es/es' && targetLang === 'es');
+        
+        if (!isMatched && !isSpanishClean) {
+            syncGoogleTranslate(lang);
+            window.location.reload();
+            return;
+        }
+    } else {
+        document.documentElement.lang = lang;
+        
+        // 1. Translate data-i18n attributes
+        const elements = document.querySelectorAll('[data-i18n]');
+        elements.forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = translations[lang][key];
+                } else {
+                    el.innerHTML = translations[lang][key];
+                }
+            }
+        });
+
+        // 2. Translate raw text nodes that match exact Spanish strings
+        translateTextNodes(document.body, lang);
+    }
+}
+
+function syncGoogleTranslate(lang) {
+    let attempts = 0;
+    const maxAttempts = 20; // 5 segundos max
+
+    // Configurar la cookie googtrans de manera robusta y sin duplicados
+    try {
+        const targetLang = lang === 'es' ? 'es' : lang;
+        const value = "/es/" + targetLang;
+        const host = window.location.hostname;
+        const domains = ["", host, "." + host];
+        
+        if (host.includes('.') && !/^[0-9.]+$/.test(host) && host !== 'localhost') {
+            const parts = host.split('.');
+            if (parts.length >= 2) {
+                domains.push("." + parts.slice(-2).join('.'));
             }
         }
-    });
+        
+        domains.forEach(dom => {
+            const domStr = dom ? "; domain=" + dom : "";
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/" + domStr;
+            document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/" + domStr + ";";
+        });
 
-    // 2. Translate raw text nodes that match exact Spanish strings
-    translateTextNodes(document.body, lang);
+        document.cookie = "googtrans=" + value + "; path=/;";
+        
+        if (host !== 'localhost' && host !== '127.0.0.1' && !/^[0-9.]+$/.test(host)) {
+            const parts = host.split('.');
+            if (parts.length >= 2) {
+                const parentDomain = "." + parts.slice(-2).join('.');
+                document.cookie = "googtrans=" + value + "; path=/; domain=" + parentDomain + ";";
+            }
+        }
+    } catch (e) {
+        console.error("Error al configurar cookie de Google Translate:", e);
+    }
+    
+    function trySync() {
+        try {
+            const googleCombo = document.querySelector('.goog-te-combo');
+            if (googleCombo) {
+                let targetValue = lang;
+                if (lang === 'es') {
+                    const hasEsOption = Array.from(googleCombo.options).some(opt => opt.value === 'es');
+                    targetValue = hasEsOption ? 'es' : '';
+                }
+                
+                // Forzamos el valor y disparamos eventos con propagación (bubbles: true)
+                googleCombo.value = targetValue;
+                
+                // Evento estándar moderno con propagación
+                googleCombo.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+                
+                // Fallback para navegadores antiguos o de compatibilidad
+                try {
+                    const event = document.createEvent('HTMLEvents');
+                    event.initEvent('change', true, true);
+                    googleCombo.dispatchEvent(event);
+                } catch (e) {}
+            } else if (attempts < maxAttempts) {
+                attempts++;
+                setTimeout(trySync, 250);
+            }
+        } catch (e) {
+            console.error("Error sincronizando Google Translate:", e);
+        }
+    }
+    
+    trySync();
 }
 
 function translateTextNodes(rootNode, lang) {
@@ -841,6 +1114,21 @@ function translateTextNodes(rootNode, lang) {
 
 // Automatically check localStorage and load preferred language, plus inject the language selector dynamically into navbars
 document.addEventListener('DOMContentLoaded', () => {
+    // Inyectar estilo CSS personalizado para asegurar que el dropdown hover funcione correctamente sin depender de Tailwind
+    try {
+        const hoverStyle = document.createElement('style');
+        hoverStyle.innerHTML = `
+            #lang-dropdown-container:hover > div {
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: scale(1) !important;
+            }
+        `;
+        document.head.appendChild(hoverStyle);
+    } catch (e) {
+        console.error("Error al inyectar estilo de traducción:", e);
+    }
+
     // 1. Inject dropdown if not present
     if (!document.getElementById('lang-dropdown-container') && !document.getElementById('lang-btn')) {
         const targetContainer = document.querySelector('nav .flex.items-center.gap-4') || 
@@ -897,7 +1185,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Initialize saved language
+    // 2. Inject floating Vipps button if not on excluded pages
+    const path = window.location.pathname.toLowerCase();
+    const isExcluded = path.includes('admin') ||
+                       path.includes('login') ||
+                       path.includes('register') ||
+                       path.includes('forgot') ||
+                       path.includes('reset') ||
+                       path.includes('donar');
+
+    if (!isExcluded && !document.getElementById('vipps-floating-btn')) {
+        const vippsBtn = document.createElement('a');
+        vippsBtn.id = 'vipps-floating-btn';
+        vippsBtn.href = '/donar';
+        vippsBtn.className = 'fixed bottom-6 right-6 z-[99] flex items-center gap-2 bg-[#ff5b24] hover:bg-[#e04a16] text-white font-bold py-3.5 px-6 rounded-full shadow-[0_10px_25px_rgba(255,91,36,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-1';
+        
+        vippsBtn.innerHTML = `
+            <i data-lucide="heart-handshake" class="w-5 h-5 text-white"></i>
+            <span data-i18n="donate-float-btn">Donar con Vipps</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+        `;
+        
+        document.body.appendChild(vippsBtn);
+        
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    }
+
+    // 3. Initialize saved language
     const savedLang = localStorage.getItem('preferred-language') || document.documentElement.lang || 'es';
     changeLanguage(savedLang);
 });

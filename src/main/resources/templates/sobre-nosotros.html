@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Sobre Nosotros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        /* Ocultar barra superior e iframe de Google Translate si se cargara */
+        .skiptranslate,
+        .goog-te-banner-frame,
+        iframe.goog-te-banner-frame,
+        #goog-gt-tt {
+            display: none !important;
+            visibility: hidden !important;
+        }
+
+        body,
+        html {
+            top: 0px !important;
+            position: static !important;
+            margin-top: 0px !important;
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='/'">
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="ship" class="text-primary w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
+                <a th:href="@{/}" class="hover:text-white transition-colors" data-i18n="nav-home">Inicio</a>
+                <a href="#"
+                    class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full"
+                    data-i18n="nav-about">Sobre Nosotros</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <!-- Dropdown de Idioma -->
+                <div class="relative group" id="lang-dropdown-container">
+                    <button
+                        class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer text-sm font-medium py-2 pr-0 pl-2 focus:outline-none"
+                        id="lang-btn">
+                        <i data-lucide="globe" class="w-4 h-4 text-primaryLight"></i>
+                        <span id="current-lang" class="font-bold tracking-wider">ES</span>
+                        <i data-lucide="chevron-down"
+                            class="w-3 h-3 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                    </button>
+                    <!-- Menú desplegable -->
+                    <div
+                        class="absolute right-0 top-full mt-2 w-36 bg-surfaceLight/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] transform origin-top-right group-hover:scale-100 scale-95 flex flex-col overflow-hidden before:absolute before:-top-4 before:right-0 before:w-full before:h-4 before:bg-transparent">
+                        <button onclick="changeLanguage('es')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">Español
+                            <span class="text-[10px] font-bold text-primary">ES</span></button>
+                        <button onclick="changeLanguage('en')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">English
+                            <span class="text-[10px] font-bold text-primary">EN</span></button>
+                        <button onclick="changeLanguage('no')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between font-medium">Norsk
+                            <span class="text-[10px] font-bold text-primary">NO</span></button>
+                    </div>
+                </div>
+
+                <a th:href="@{/login}" class="btn-outline flex items-center gap-2 text-sm justify-center">
+                    <i data-lucide="user" class="w-4 h-4"></i> <span data-i18n="login"
+                        class="hidden sm:inline">Acceder</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Imagen Banner Superior -->
+    <header class="w-full h-[35vh] min-h-[250px] relative overflow-hidden">
+        <img th:src="@{/images/fto.jpeg}" alt="El Loco David Navegando"
+            class="w-full h-full object-cover object-center opacity-95">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#d5e0df] via-black/20 to-black/45"></div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main
+        class="w-full flex-grow py-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto flex flex-col gap-16 relative z-10 -mt-10">
+
+        <!-- SECCIÓN 1: Cómo empezó esta Historia y Video -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            <!-- Columna Izquierda: Textos (span 7) -->
+            <div class="lg:col-span-7 flex flex-col justify-between gap-6">
+                <div class="space-y-4">
+                    <h2 class="text-2xl md:text-3xl font-bold text-[#1f3d47]" data-i18n="about-title-2">Cómo empezó esta Historia</h2>
+                    <div class="bg-[#1f3d47] p-8 md:p-10 rounded-3xl shadow-xl border border-white/5 text-white">
+                        <div class="space-y-4 text-base md:text-lg text-slate-100 leading-relaxed font-light">
+                            <p data-i18n="about-p2-1">Después de una vida ligada al mar entre Colombia y Noruega, decidí reconstruir un velero de acero para volver a cruzar océanos.</p>
+                            <p data-i18n="about-p2-2">No soy una gran organización.</p>
+                            <p data-i18n="about-p2-3">No tengo patrocinadores multimillonarios.</p>
+                            <p data-i18n="about-p2-4">Solo tengo un barco, un objetivo y la determinación de seguir adelante.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#1f3d47] p-8 md:p-10 rounded-3xl shadow-xl border border-white/5 text-white">
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-accent" data-i18n="about-title-1">¿Qué es el "Loco David"?</h3>
+                    <div class="space-y-4 text-base md:text-lg text-slate-100 leading-relaxed font-light">
+                        <p data-i18n="about-p1-1">El Loco David no es una expedición.</p>
+                        <p data-i18n="about-p1-2">Es el proceso real de transformar un velero de acero en una plataforma para futuras travesías oceánicas.</p>
+                        <p data-i18n="about-p1-3">Aquí compartimos avances, errores, reparaciones, aprendizajes y desafíos.</p>
+                        <p data-i18n="about-p1-4">Porque los grandes viajes comienzan mucho antes de abandonar el puerto.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Video (span 5) -->
+            <div class="lg:col-span-5 flex items-center justify-center">
+                <div class="w-full max-w-[520px] aspect-[1080/1332] rounded-3xl overflow-hidden shadow-2xl border border-white/5 bg-[#1f3d47]/20">
+                    <video controls preload="metadata" class="w-full h-full object-cover">
+                        <source th:src="@{/images/NuestraHistoria.mp4}" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: Foto Círculo y Una visión que nos impulsa -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6">
+            <!-- Columna Izquierda: Círculo con Imagen (span 5) -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] rounded-full overflow-hidden border-4 border-[#1f3d47] shadow-xl hover:scale-105 transition-transform duration-500 bg-white/5">
+                    <img th:src="@{/images/barco de fondo.png}" alt="Barco de fondo" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <!-- Columna Derecha: Texto (span 7) -->
+            <div class="lg:col-span-7 space-y-4">
+                <h2 class="text-2xl md:text-3xl font-bold text-[#1f3d47]" data-i18n="about-title-3">Una visión que nos impulsa</h2>
+                <div class="bg-[#1f3d47] p-8 md:p-10 rounded-3xl shadow-xl border border-white/5 text-white">
+                    <div class="space-y-4 text-base md:text-lg text-slate-100 leading-relaxed font-light">
+                        <p data-i18n="about-p3-1">No sabemos exactamente qué puertos visitaremos dentro de cinco años.</p>
+                        <p data-i18n="about-p3-2">Pero sí sabemos una cosa:</p>
+                        <p data-i18n="about-p3-3" class="font-bold text-accent">Seguiremos avanzando.</p>
+                        <p data-i18n="about-p3-4">Cada milla comienza mucho antes de levantar el ancla.</p>
+                        <p data-i18n="about-p3-5">El Loco David existe para demostrar que nunca es tarde para construir algo extraordinario.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-10">
+            <!-- Branding -->
+            <div class="text-center md:text-left">
+                <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></h4>
+                <p class="text-slate-400 mb-4" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <div class="mb-6">
+                    <a th:href="@{/politicas}"
+                        class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white"
+                        data-i18n="foot-policies">Políticas de Privacidad y Vipps</a>
+                </div>
+                <!-- Redes Sociales -->
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <a href="https://www.instagram.com/ellocodavidexpeditions?igsh=NDJra2UzOHU3Ymhq" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@elcolombonoruego" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-zinc-700/50 flex items-center justify-center text-slate-400 hover:text-white transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contacto Estilo Bento -->
+            <div
+                class="flex flex-col sm:flex-row items-center gap-8 md:gap-12 bg-[#0f172a]/50 px-10 py-6 rounded-3xl border border-white/5 shadow-inner">
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-contact">Contáctanos</div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> 937 665 458
+                    </div>
+                </div>
+                <!-- Divisor -->
+                <div class="hidden sm:block w-px h-12 bg-white/10"></div>
+                <div class="block sm:hidden h-px w-24 bg-white/10"></div>
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-email">Correo Electrónico
+                    </div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i> alberto@ellocodavid.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
+
+    <!-- Inicializar iconos -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

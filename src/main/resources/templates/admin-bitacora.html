@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Bitácora | Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        body, html {
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen relative flex flex-col">
+
+    <!-- Navegación Admin -->
+    <nav class="sticky top-0 w-full z-50 glass-nav border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
+                    </div>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-300 hidden sm:inline-block">Capitán <span th:text="${admin.nombre}" class="text-white ml-1"></span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-6 py-10 relative z-10">
+        
+        <div class="flex justify-between items-center mb-8 pb-4 border-b border-[#1f3d47]/20">
+            <div class="flex items-center gap-3">
+                <i data-lucide="book-open" class="text-accent w-8 h-8"></i>
+                <h2 class="text-3xl font-bold text-[#1f3d47]">Gestionar Bitácora</h2>
+            </div>
+            <a th:href="@{/admin/bitacora/nueva}" class="bg-accent hover:bg-blue-400 text-white font-bold px-4 py-2.5 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center gap-2 text-sm">
+                <i data-lucide="plus" class="w-4 h-4"></i> Nueva Entrada
+            </a>
+        </div>
+
+        <!-- Success Messages -->
+        <div th:if="${param.successStatus}" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+            <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+            <p>Estado de la entrada de bitácora actualizado correctamente.</p>
+        </div>
+
+        <div th:if="${#lists.isEmpty(bitacoras)}" class="text-center py-12 bg-[#1f3d47] text-white rounded-3xl border border-white/5 shadow-xl">
+            <i data-lucide="book" class="w-12 h-12 text-slate-400 mx-auto mb-3 opacity-50"></i>
+            <h3 class="text-lg font-medium text-slate-200">No hay entradas en la bitácora</h3>
+            <p class="text-sm text-slate-400 mt-1">Comienza añadiendo una nueva entrada usando el botón de arriba.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div th:each="bitacora : ${bitacoras}" class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-6 rounded-3xl relative overflow-hidden flex flex-col justify-between transition-all duration-300" th:classappend="${!bitacora.activo ? 'opacity-65 grayscale hover:grayscale-0 hover:opacity-100' : ''}">
+                
+                <div>
+                    <!-- Header Info -->
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                            <i th:data-lucide="${bitacora.icono}" class="w-5 h-5 text-accent"></i>
+                        </div>
+                        <span th:if="${bitacora.activo}" class="bg-primary/20 text-primaryLight text-[10px] uppercase tracking-wider px-2 py-1 rounded font-bold border border-primary/30">Activa</span>
+                        <span th:unless="${bitacora.activo}" class="bg-red-500/20 text-red-400 text-[10px] uppercase tracking-wider px-2 py-1 rounded font-bold border border-red-500/30">Inactiva</span>
+                    </div>
+
+                    <!-- Date & Title -->
+                    <span class="text-[10px] text-slate-400 font-mono tracking-widest block uppercase mb-1" th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
+                    <h3 class="text-lg font-bold text-white mb-2 line-clamp-1" th:text="${bitacora.titulo}">Título</h3>
+                    
+                    <!-- Description preview -->
+                    <p class="text-sm text-slate-300 line-clamp-3 mb-6" th:text="${bitacora.descripcion}">Descripción...</p>
+                </div>
+
+                <!-- Toggle Actions -->
+                <div class="flex gap-2 border-t border-white/10 pt-4 mt-auto">
+                    <form th:action="@{/admin/bitacora/toggle/{id}(id=${bitacora.id})}" method="post" class="w-full">
+                        <button type="submit" class="w-full text-center py-2.5 rounded-xl text-sm transition-colors border flex items-center justify-center gap-2 font-medium"
+                                th:classappend="${bitacora.activo ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'}">
+                            <i th:data-lucide="${bitacora.activo ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>
+                            <span th:text="${bitacora.activo ? 'Desactivar' : 'Activar'}"></span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

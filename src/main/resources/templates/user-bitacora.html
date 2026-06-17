@@ -11,9 +11,42 @@
     <link rel="stylesheet" th:href="@{/css/barco.css}">
     <script th:src="@{/js/tailwind-config.js}"></script>
     <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        /* Ocultar barra superior e iframe de Google Translate */
+        .skiptranslate,
+        .goog-te-banner-frame,
+        .goog-te-banner-frame.skiptranslate,
+        iframe.goog-te-banner-frame,
+        .goog-te-banner,
+        .goog-te-gadget,
+        #goog-gt-tt,
+        .goog-te-balloon-frame,
+        .goog-tooltip,
+        .goog-tooltip:hover {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+        }
+        
+        /* Evitar desplazamiento del contenido */
+        body, html {
+            top: 0px !important;
+            position: static !important;
+            margin-top: 0px !important;
+        }
+        
+        /* Ocultar resaltado de texto traducido de Google */
+        .goog-text-highlight {
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+    </style>
 </head>
 
-<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col" style="background-color: #020617;">
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col" style="background-color: rgb(213, 224, 223) !important;">
 
     <!-- Luz ambiental simulando Aurora Boreal -->
     <div class="aurora-glow"></div>
@@ -31,14 +64,15 @@
             </div>
 
             <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
-                <a th:href="@{/user}" class="hover:text-white transition-colors">Volver al Panel</a>
-                <a href="#" class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full">Bitácora</a>
+                <a th:href="@{/user}" class="hover:text-white transition-colors" data-i18n="nav-home">Inicio</a>
+                <a th:href="@{/user/rutas}" class="hover:text-white transition-colors" data-i18n="nav-routes">Rutas</a>
+                <a href="#" class="text-white relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full" data-i18n="nav-logbook">Bitácora</a>
             </div>
 
             <div class="flex items-center gap-4">
                 <div class="hidden sm:flex items-center gap-3 mr-4">
                     <i data-lucide="user" class="text-primaryLight w-4 h-4"></i>
-                    <span class="text-sm font-medium text-white" th:text="${usuario.nombre}">Tripulante</span>
+                    <span class="text-sm font-medium text-white notranslate" th:text="${usuario.nombre}">Tripulante</span>
                 </div>
                 <form th:action="@{/logout}" method="post">
                     <button type="submit" class="btn-outline hidden sm:inline-flex items-center gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 hover:border-red-400">
@@ -49,44 +83,48 @@
         </div>
     </nav>
 
-    <!-- Contenedor Principal (Estilo Periódico pero Moderno/Dark) -->
+    <!-- Contenedor Principal (Estilo Periódico pero Moderno/Light) -->
     <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 flex-grow relative z-30">
         
         <!-- Cabecera -->
         <header class="text-center mb-16 relative">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 text-sm text-primaryLight font-medium">
-                <div class="w-2 h-2 rounded-full bg-primaryLight animate-pulse"></div>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1f3d47]/10 border border-[#1f3d47]/20 mb-6 text-sm text-[#1f3d47] font-medium">
+                <div class="w-2 h-2 rounded-full bg-[#1f3d47] animate-pulse"></div>
                 <span th:text="${#temporals.format(#temporals.createNow(), 'dd MMMM yyyy')}">FECHA ACTUAL</span>
             </div>
             
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 drop-shadow-xl leading-tight uppercase tracking-wide">
-                BITÁCORA <span class="bg-clip-text text-transparent bg-gradient-to-r from-primaryLight to-accent">OFICIAL</span>
+            <h1 class="text-5xl md:text-7xl font-bold text-[#1f3d47] mb-6 drop-shadow-xl leading-tight uppercase tracking-wide">
+                BITÁCORA <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">OFICIAL</span>
             </h1>
-            <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto drop-shadow-md font-light">
+            <p class="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto font-light">
                 Reportes y memorias directas desde el Círculo Polar Ártico.
             </p>
         </header>
 
         <!-- Mensaje de Vacío -->
-        <div th:if="${#lists.isEmpty(bitacoras)}" class="bento-box p-10 text-center text-slate-400 text-lg">
-            <i data-lucide="clock" class="w-12 h-12 mx-auto mb-4 opacity-50"></i>
-            Aún no hay registros en la bitácora. Las noticias de la expedición aparecerán aquí pronto.
+        <div th:if="${#lists.isEmpty(bitacoras)}" class="bg-[#1f3d47] p-10 rounded-3xl text-center text-slate-300 text-lg flex flex-col items-center justify-center shadow-xl border border-white/5">
+            <i data-lucide="clock" class="w-12 h-12 mb-4 opacity-50"></i>
+            <span data-i18n="empty-logbook-feed">Aún no hay registros en la bitácora. Las noticias de la expedición aparecerán aquí pronto.</span>
         </div>
 
-        <!-- Diseño Cuadrícula (Newspaper style but glassmorphic) -->
+        <!-- Diseño Cuadrícula (Newspaper style but light bg / dark cards) -->
         <div th:if="${!#lists.isEmpty(bitacoras)}" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             <!-- NOTICIA PRINCIPAL (Abarca 8 columnas) -->
-            <article class="lg:col-span-8 bento-box p-8 md:p-10 flex flex-col relative overflow-hidden group" th:with="mainItem=${bitacoras[0]}">
+            <article class="lg:col-span-8 bg-[#1f3d47] p-8 md:p-10 rounded-3xl shadow-xl border border-white/5 flex flex-col relative overflow-hidden group cursor-pointer transition-all hover:scale-[1.01] duration-300" 
+                     th:with="mainItem=${bitacoras[0]}"
+                     th:data-icono="${mainItem.icono}"
+                     th:data-foto="${mainItem.fotoAdjunta}"
+                     onclick="abrirDetalle(this)">
                 <!-- Decoración -->
                 <div class="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
                 
                 <div class="mb-6 relative z-10">
-                    <div class="flex items-center gap-2 mb-4 text-primaryLight uppercase tracking-widest text-xs font-bold bg-primary/10 inline-flex px-3 py-1 rounded-lg border border-primary/20">
+                    <div class="flex items-center gap-2 mb-4 text-primaryLight uppercase tracking-widest text-xs font-bold bg-white/5 inline-flex px-3 py-1 rounded-lg border border-white/10">
                         <i th:data-lucide="${mainItem.icono}" class="w-4 h-4"></i>
-                        <span th:text="${#temporals.format(mainItem.fecha, 'dd MMMM, yyyy')}">FECHA</span>
+                        <span class="bitacora-date" th:text="${#temporals.format(mainItem.fecha, 'dd MMMM, yyyy')}">FECHA</span>
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-bold leading-tight text-white mb-6 drop-shadow-lg" th:text="${mainItem.titulo}">Título de la Noticia Principal</h2>
+                    <h2 class="bitacora-title text-4xl md:text-5xl font-bold leading-tight text-white mb-6 drop-shadow-lg" th:text="${mainItem.titulo}">Título de la Noticia Principal</h2>
                 </div>
                 
                 <!-- Imagen Destacada -->
@@ -96,7 +134,7 @@
                 </figure>
                 
                 <!-- Contenido -->
-                <div class="text-lg text-slate-300 leading-relaxed relative z-10" th:text="${mainItem.descripcion}">
+                <div class="bitacora-desc text-lg text-slate-200 leading-relaxed relative z-10 line-clamp-6" th:text="${mainItem.descripcion}">
                     Texto detallado de la noticia principal...
                 </div>
             </article>
@@ -104,29 +142,33 @@
             <!-- COLUMNA LATERAL (Abarca 4 columnas) -->
             <aside class="lg:col-span-4 flex flex-col gap-6">
                 
-                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-white/10">
+                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-[#1f3d47]/20">
                     <i data-lucide="history" class="w-5 h-5 text-accent"></i>
-                    <h3 class="text-white font-bold tracking-widest uppercase text-sm">Entradas Anteriores</h3>
+                    <h3 class="text-[#1f3d47] font-bold tracking-widest uppercase text-sm">Entradas Anteriores</h3>
                 </div>
 
                 <!-- Iterar el resto de las noticias -->
-                <article th:each="bitacora, iterStat : ${bitacoras}" th:if="${iterStat.index > 0}" class="bento-box p-6 hover:border-primary/30 transition-all cursor-pointer group flex flex-col">
+                <article th:each="bitacora, iterStat : ${bitacoras}" th:if="${iterStat.index > 0}" 
+                         class="bg-[#1f3d47] p-6 rounded-3xl shadow-xl border border-white/5 hover:border-primaryLight/30 transition-all cursor-pointer group flex flex-col hover:scale-[1.02] duration-300"
+                         th:data-icono="${bitacora.icono}"
+                         th:data-foto="${bitacora.fotoAdjunta}"
+                         onclick="abrirDetalle(this)">
                     
                     <!-- Imagen Secundaria (Si existe) -->
                     <figure th:if="${bitacora.fotoAdjunta != null && !bitacora.fotoAdjunta.isEmpty()}" class="w-full mb-4 rounded-xl overflow-hidden border border-white/10">
                         <img th:src="${bitacora.fotoAdjunta}" class="w-full h-40 object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" alt="Fotografía">
                     </figure>
                     
-                    <div class="flex items-center gap-2 mb-3 text-slate-400 uppercase tracking-widest text-[10px] font-bold">
+                    <div class="flex items-center gap-2 mb-3 text-slate-300 uppercase tracking-widest text-[10px] font-bold">
                         <div class="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
                             <i th:data-lucide="${bitacora.icono}" class="w-3 h-3 text-primaryLight"></i>
                         </div>
-                        <span th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
+                        <span class="bitacora-date" th:text="${#temporals.format(bitacora.fecha, 'dd/MM/yyyy')}">FECHA</span>
                     </div>
                     
-                    <h4 class="text-xl font-bold leading-snug text-white mb-3 group-hover:text-primaryLight transition-colors" th:text="${bitacora.titulo}">Título Secundario</h4>
+                    <h4 class="bitacora-title text-xl font-bold leading-snug text-white mb-3 group-hover:text-primaryLight transition-colors" th:text="${bitacora.titulo}">Título Secundario</h4>
                     
-                    <p class="text-slate-400 text-sm leading-relaxed line-clamp-3" th:text="${bitacora.descripcion}">
+                    <p class="bitacora-desc text-slate-300 text-sm leading-relaxed line-clamp-3" th:text="${bitacora.descripcion}">
                         Breve extracto de la noticia secundaria...
                     </p>
                 </article>
@@ -138,19 +180,171 @@
 
     <!-- Footer -->
     <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
-        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
-            <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span class="text-primary font-light">DAVID</span></h4>
-            <p class="text-slate-400">Portal de Tripulación.</p>
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-10">
+            <!-- Branding -->
+            <div class="text-center md:text-left">
+                <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></h4>
+                <p class="text-slate-400 mb-4" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <div class="mb-6">
+                    <a th:href="@{/politicas}" class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white" data-i18n="foot-policies">Políticas de Privacidad y Vipps</a>
+                </div>
+                <!-- Redes Sociales -->
+                <div class="flex items-center justify-center md:justify-start gap-4">
+                    <a href="https://www.instagram.com/ellocodavidexpeditions?igsh=NDJra2UzOHU3Ymhq" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                        </svg>
+                    </a>
+                    <a href="https://www.tiktok.com/@elcolombonoruego" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 hover:bg-zinc-700/50 flex items-center justify-center text-slate-400 hover:text-white transition-colors border border-white/10">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contacto Estilo Bento -->
+            <div
+                class="flex flex-col sm:flex-row items-center gap-8 md:gap-12 bg-[#0f172a]/50 px-10 py-6 rounded-3xl border border-white/5 shadow-inner">
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-contact">Contáctanos</div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> 937 665 458
+                    </div>
+                </div>
+                <!-- Divisor -->
+                <div class="hidden sm:block w-px h-12 bg-white/10"></div>
+                <div class="block sm:hidden h-px w-24 bg-white/10"></div>
+                <div class="text-center">
+                    <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
+                        data-i18n="foot-email">Correo Electrónico
+                    </div>
+                    <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
+                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i> alberto@ellocodavid.com
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <!-- Modal de Vista Detallada de Bitácora -->
+    <div id="bitacora-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="w-full max-w-3xl bg-[#1f3d47] border border-white/5 rounded-3xl overflow-hidden shadow-2xl transform scale-95 transition-all duration-300 max-h-[85vh] flex flex-col text-white">
+            <!-- Header del Modal -->
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-[#182f37]">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                        <i id="modal-icon" data-lucide="clock" class="w-4 h-4 text-primaryLight"></i>
+                    </div>
+                    <span id="modal-date" class="text-xs uppercase tracking-widest font-bold text-slate-300">FECHA</span>
+                </div>
+                <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors border border-white/10">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            
+            <!-- Contenido del Modal (Scrollable) -->
+            <div class="p-6 md:p-8 overflow-y-auto space-y-6 flex-grow custom-scrollbar">
+                <h2 id="modal-title" class="text-2xl md:text-4xl font-bold leading-tight text-white">Título</h2>
+                
+                <figure id="modal-img-container" class="w-full rounded-2xl overflow-hidden border border-white/10 hidden">
+                    <img id="modal-img" src="" class="w-full h-auto max-h-[400px] object-cover" alt="Fotografía adjunta">
+                </figure>
+                
+                <div id="modal-desc" class="text-base md:text-lg text-slate-200 leading-relaxed font-light whitespace-pre-line">
+                    Contenido
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Script de Traducción -->
     <script th:src="@{/js/translations.js}"></script>
 
-    <!-- Inicializar iconos -->
+    <!-- Google Translate Container (Hidden) -->
+    <div id="google_translate_element" style="display: none !important;"></div>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'es', 
+                includedLanguages: 'en,no', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Modal and Icon initialization scripts -->
     <script>
+        function abrirDetalle(element) {
+            const titulo = element.querySelector('.bitacora-title').innerText;
+            const fecha = element.querySelector('.bitacora-date').innerText;
+            const desc = element.querySelector('.bitacora-desc').textContent;
+            const icono = element.getAttribute('data-icono');
+            const foto = element.getAttribute('data-foto');
+            
+            document.getElementById('modal-title').innerText = titulo;
+            document.getElementById('modal-date').innerText = fecha;
+            document.getElementById('modal-desc').innerText = desc;
+            
+            // Set icon
+            const iconEl = document.getElementById('modal-icon');
+            iconEl.setAttribute('data-lucide', icono || 'clock');
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+            
+            // Set image
+            const imgContainer = document.getElementById('modal-img-container');
+            const imgEl = document.getElementById('modal-img');
+            if (foto && foto.trim() !== '') {
+                imgEl.src = foto;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgEl.src = '';
+                imgContainer.classList.add('hidden');
+            }
+            
+            // Open modal
+            const modal = document.getElementById('bitacora-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-95');
+            modal.querySelector('div').classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bitacora-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+        }
+
+        // Close on click outside
+        document.getElementById('bitacora-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize icons
         lucide.createIcons();
     </script>
 </body>
-
 </html>

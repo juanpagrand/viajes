@@ -35,9 +35,10 @@
                 </div>
             </div>
 
-            <!-- Navigation hidden for public visitors -->
+            <!-- Navigation links for landing page -->
             <div class="hidden md:flex items-center gap-10 text-sm font-medium text-slate-300">
-                <!-- Se mostrarán solo en el panel -->
+                <a th:href="@{/sobre-nosotros}" class="hover:text-white transition-colors" data-i18n="nav-about">Sobre
+                    Nosotros</a>
             </div>
 
             <div class="flex items-center gap-4">
@@ -93,19 +94,16 @@
             <div
                 class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 text-sm text-primaryLight font-medium">
                 <div class="w-2 h-2 rounded-full bg-primaryLight animate-pulse"></div>
-                <span data-i18n="hero-tag">Expedición 2026/2027 Abierta</span>
+                <span data-i18n="hero-tag">Expedición Abierta</span>
             </div>
 
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 drop-shadow-xl leading-tight">
-                <span data-i18n="hero-title-1">DOMINA LOS MARES</span> <br />
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primaryLight to-accent"
-                    data-i18n="hero-title-2">
-                    DEL FIN DEL MUNDO
-                </span>
+                <span data-i18n="hero-title-1">NAVEGA EL ABISMO AZUL</span> <br />
+
             </h1>
 
             <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mb-10 drop-shadow-md" data-i18n="hero-subtitle">
-                Navega hacia lo desconocido...
+                Un sueño no tiene fecha de vencimiento.
             </p>
 
             <a href="login.html" class="btn-aurora flex items-center gap-3 text-lg" data-i18n="hero-btn">
@@ -149,7 +147,8 @@
                     <div th:unless="${rutaActiva != null}"
                         class="absolute inset-0 w-full h-full flex flex-col items-center justify-center opacity-50 bg-slate-900">
                         <i data-lucide="anchor" class="w-12 h-12 text-slate-500 mb-2"></i>
-                        <span class="text-slate-400 text-sm font-mono tracking-widest">EN PUERTO</span>
+                        <span class="text-slate-400 text-sm font-mono tracking-widest" data-i18n="status-docked">EN
+                            PUERTO</span>
                     </div>
                 </div>
 
@@ -201,7 +200,7 @@
                     <div th:if="${#lists.isEmpty(destinos)}"
                         class="w-full shrink-0 h-64 border border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center text-slate-500 snap-center">
                         <i data-lucide="map" class="w-8 h-8 mb-2 opacity-50"></i>
-                        <p class="text-sm">No hay próximas salidas programadas</p>
+                        <p class="text-sm" data-i18n="no-upcoming-departures">No hay próximas salidas programadas</p>
                     </div>
 
                     <!-- Viaje(s) Dinámico(s) -->
@@ -276,55 +275,35 @@
 
         </div>
     </main>
-
-    <!-- Sección Donaciones CTA -->
-    <section class="w-full max-w-7xl mx-auto px-4 sm:px-8 xl:px-12 mt-12 mb-8 relative z-30">
-        <div
-            class="bg-gradient-to-br from-[#ff5b24]/90 to-[#ff5b24] border border-[#ff5b24]/50 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden flex flex-col items-center justify-center shadow-2xl">
-            <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
-            <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-
-            <i data-lucide="heart-handshake" class="w-16 h-16 text-black mb-4 relative z-10"></i>
-            <h2 class="text-3xl md:text-4xl font-bold text-black mb-3 relative z-10">Únete a la Expedición</h2>
-            <p class="text-black text-lg font-medium max-w-2xl mx-auto mb-8 relative z-10">Apóyanos para nuestras
-                futuras expediciones. Tu contribución hace posible que sigamos explorando los límites del mundo.</p>
-
-            <a th:href="@{/donar}"
-                class="relative z-10 bg-black hover:bg-black/80 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl shadow-black/30 transition-all hover:scale-105 flex items-center gap-3">
-                Donar ahora con Vipps <i data-lucide="arrow-right" class="w-5 h-5"></i>
-            </a>
-        </div>
-    </section>
-
     <!-- Carrusel de Patrocinadores (Full Width horizontal slider) -->
     <section th:if="${!#lists.isEmpty(sponsors)}"
-        class="w-full bg-[#0f172a]/40 border-y border-white/5 py-10 mt-20 overflow-hidden relative">
+        class="w-full bg-[#1f2937] border-y border-white/10 py-10 mt-20 overflow-hidden relative shadow-lg">
         <div
-            class="absolute inset-0 w-full h-full bg-gradient-to-r from-background via-transparent to-background z-20 pointer-events-none">
+            class="absolute inset-0 w-full h-full bg-gradient-to-r from-[#1f2937] via-transparent to-[#1f2937] z-20 pointer-events-none">
         </div>
 
         <div class="flex w-max animate-carousel">
             <!-- Grupo 1 -->
             <div class="flex items-center gap-12 px-6">
                 <div th:each="sponsor : ${sponsors}"
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
+                    class="w-48 h-20 bg-black/25 border border-white/10 rounded-2xl flex items-center justify-center shadow-md overflow-hidden group hover:border-primaryLight/40 hover:bg-black/35 hover:-translate-y-0.5 transition-all duration-300">
                     <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}"
                         th:alt="${sponsor.descripcion}"
                         class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
                     <span th:unless="${sponsor.logoPath != null}"
-                        class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2"
+                        class="text-slate-300 font-bold tracking-widest uppercase text-xs text-center px-2 group-hover:text-primaryLight transition-colors"
                         th:text="${sponsor.descripcion}">SPONSOR</span>
                 </div>
             </div>
             <!-- Grupo 2 (Repetición exacta para loop infinito) -->
             <div class="flex items-center gap-12 px-6">
                 <div th:each="sponsor : ${sponsors}"
-                    class="w-48 h-20 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden group hover:border-white/20 transition-colors">
+                    class="w-48 h-20 bg-black/25 border border-white/10 rounded-2xl flex items-center justify-center shadow-md overflow-hidden group hover:border-primaryLight/40 hover:bg-black/35 hover:-translate-y-0.5 transition-all duration-300">
                     <img th:if="${sponsor.logoPath != null}" th:src="${sponsor.logoPath}"
                         th:alt="${sponsor.descripcion}"
                         class="w-full h-full object-contain p-2 opacity-70 group-hover:opacity-100 transition-opacity">
                     <span th:unless="${sponsor.logoPath != null}"
-                        class="text-slate-400 font-bold tracking-widest uppercase text-xs text-center px-2"
+                        class="text-slate-300 font-bold tracking-widest uppercase text-xs text-center px-2 group-hover:text-primaryLight transition-colors"
                         th:text="${sponsor.descripcion}">SPONSOR</span>
                 </div>
             </div>
@@ -344,46 +323,55 @@
                     expedición</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
-                <!-- Columna Izquierda: 3 Fotos (Flex Staggered) -->
-                <div class="lg:col-span-5 flex flex-col gap-6 justify-between h-full">
-                    <!-- Foto 1 (Arriba Izquierda) -->
+            <div class="flex flex-col gap-8">
+                <!-- Grilla de Imágenes: 3 Imágenes Responsivas lado a lado -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Foto 1 -->
                     <div
-                        class="w-[70%] aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-lg self-start group">
+                        class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-lg group transition-all duration-500 hover:scale-110 hover:z-40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] cursor-zoom-in">
                         <img th:src="@{/images/WhatsApp Image 2026-03-21 at 8.17.20 AM (3).jpeg}" alt="Barco detalle 1"
                             class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
                     </div>
-                    <!-- Foto 2 (Medio Derecha) -->
+                    <!-- Foto 2 -->
                     <div
-                        class="w-[70%] aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-lg self-end group -my-10 relative z-10">
+                        class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-lg group transition-all duration-500 hover:scale-110 hover:z-40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] cursor-zoom-in">
                         <img th:src="@{/images/fto.jpeg}" alt="Barco detalle 2"
                             class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
                     </div>
-                    <!-- Foto 3 (Abajo Izquierda) -->
+                    <!-- Foto 3 -->
                     <div
-                        class="w-[70%] aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-lg self-start group">
+                        class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-lg group transition-all duration-500 hover:scale-110 hover:z-40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] cursor-zoom-in">
                         <img th:src="@{/images/Captura de pantalla 2026-03-21 192859.png}" alt="Barco detalle 3"
                             class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
                     </div>
                 </div>
 
-                <!-- Columna Derecha: Historia -->
-                <div class="lg:col-span-7 h-full">
-                    <div class="bento-box p-8 md:p-12 h-full flex flex-col justify-center">
-                        <h3 class="text-2xl text-primaryLight font-bold mb-6" data-i18n="story-h3">Un Legado en los
-                            Mares</h3>
-                        <div class="space-y-6 text-slate-300 text-lg leading-relaxed">
-                            <p data-i18n="story-p1">El Loco David es un velero de acero de 49 pies, construido en un
-                                astillero danés en 1996. No es un barco de producción en serie, sino una embarcación
-                                sólida diseñada para navegación exigente.
+                <!-- Tarjeta de Historia de Ancho Completo -->
+                <div class="bento-box p-8 md:p-12 flex flex-col justify-center">
+                    <h3 class="text-2xl text-primaryLight font-bold mb-6" data-i18n="story-h3">Motiva 49 – Acero danés,
+                        espíritu oceánico
 
-                                Con un casco robusto y preparado para largas travesías, está </p>
-                            <p data-i18n="story-p2">pensado para operar en
-                                condiciones extremas, incluyendo navegación en aguas frías y remotas.
+                    </h3>
+                    <div class="space-y-6 text-slate-300 text-lg leading-relaxed">
+                        <p data-i18n="story-p1">El corazón del proyecto es un Motiva 49 construido en Dinamarca en 1996.
+                            No fue elegido por lujo.
+                            Fue elegido por resistencia.
+                            Actualmente se encuentra en un proceso continuo de modernización y preparación para futuras
+                            travesías oceánicas.
+                            Cada sistema instalado y cada mejora completada representan un paso más hacia el próximo
+                            capítulo de esta historia.
+                            El barco no es el destino.
+                            Es la herramienta que hace posible el viaje.
+                        </p>
 
-                                Actualmente se encuentra en proceso de preparación para una expedición que incluye cruce
-                                del Atlántico en solitario y navegación en alta latitud hacia el Ártico.</p>
-                        </div>
+                    </div>
+                    <!-- Botón "Sobre nosotros" -->
+                    <div class="flex justify-center mt-8">
+                        <a th:href="@{/sobre-nosotros}"
+                            class="inline-block bg-[#10b981] hover:bg-[#0d9488] text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:scale-[1.02]"
+                            data-i18n="story-btn">
+                            Sobre nosotros
+                        </a>
                     </div>
                 </div>
             </div>
@@ -401,30 +389,29 @@
                         <!-- Foto del capitán -->
                         <div
                             class="w-40 h-40 md:w-56 md:h-56 shrink-0 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-[0_0_30px_rgba(16,185,129,0.15)] group">
-                            <img th:src="@{/images/2969933.png}" alt="Capitán"
-                                class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                            <img th:src="@{/images/capitan.jpeg}" alt="Capitán"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
                         </div>
                         <!-- Descripción -->
                         <div>
-                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-2" data-i18n="cap-title">Capitán
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-2" data-i18n="cap-title">Alberto –
+                                El Loco David
                             </h3>
                             <p class="text-accent font-mono text-sm mb-6 tracking-wider" data-i18n="cap-role">MÁSTER
                                 MARINER & LÍDER DE
                                 EXPEDICIÓN</p>
                             <p class="text-slate-300 text-lg leading-relaxed mb-4" data-i18n="cap-p1">
-                                Alberto Sierra Cortes es un navegante colombiano radicado en Noruega y creador del
-                                proyecto El Loco David.
+                                Nací en Colombia y he vivido gran parte de mi vida en Noruega.
+                                He servido en la Infantería de Marina, trabajado en la marina mercante, cruzado el
+                                Atlántico en múltiples ocasiones y participado durante años en navegación de altura.
+                                Hoy, a los 66 años, decidí emprender el proyecto más ambicioso de mi vida.
+                                No porque sea fácil.
+                                Sino porque todavía creo que algunos sueños merecen ser perseguidos.
+                                El Loco David no es la historia de un héroe.
+                                Es la historia de una persona común que se niega a dejar de intentarlo.
 
-                                Cuenta con experiencia en la Infantería de Marina colombiana y en la marina mercante,
-                                además de varias travesías oceánicas.
                             </p>
-                            <p class="text-slate-300 text-lg leading-relaxed" data-i18n="cap-p2">
-                                Actualmente lidera la preparación del velero para una expedición que incluye el cruce
-                                del Atlántico en solitario y navegación en alta latitud hacia el Ártico.
 
-                                El proyecto refleja una combinación de experiencia marítima, preparación técnica y
-                                determinación personal.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -440,7 +427,12 @@
             <div class="text-center md:text-left">
                 <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
                         class="text-primary font-light">DAVID</span></h4>
-                <p class="text-slate-400 mb-6" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <p class="text-slate-400 mb-4" data-i18n="foot-desc">Exploración polar de élite.</p>
+                <div class="mb-6">
+                    <a th:href="@{/politicas}"
+                        class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white"
+                        data-i18n="foot-policies">Políticas de Privacidad y Vipps</a>
+                </div>
                 <!-- Redes Sociales -->
                 <div class="flex items-center justify-center md:justify-start gap-4">
                     <a href="https://www.instagram.com/ellocodavidexpeditions?igsh=NDJra2UzOHU3Ymhq" target="_blank"
@@ -476,7 +468,7 @@
                     <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
                         data-i18n="foot-contact">Contáctanos</div>
                     <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
-                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> ########
+                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> 937 665 458
                     </div>
                 </div>
                 <!-- Divisor -->
@@ -487,12 +479,75 @@
                         data-i18n="foot-email">Correo Electrónico
                     </div>
                     <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
-                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i> ########
+                        <i data-lucide="mail" class="w-5 h-5 text-accent"></i> alberto@ellocodavid.com
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal"
+        class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-md flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <button id="lightbox-close"
+            class="absolute top-6 right-6 text-white/70 hover:text-white p-2 focus:outline-none transition-colors cursor-pointer"
+            aria-label="Cerrar">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="max-w-[90vw] max-h-[85vh] relative flex items-center justify-center">
+            <img id="lightbox-img" src="" alt="Imagen del barco"
+                class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl transform scale-95 transition-transform duration-300">
+        </div>
+    </div>
+
+    <!-- Script para Lightbox -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('lightbox-modal');
+            const modalImg = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            // Buscar todas las imágenes de la grilla del barco
+            const images = document.querySelectorAll('#barco .grid img');
+
+            images.forEach(img => {
+                img.addEventListener('click', () => {
+                    const src = img.getAttribute('src');
+                    modalImg.setAttribute('src', src);
+                    modal.classList.remove('hidden');
+                    // Forzar reflow
+                    void modal.offsetWidth;
+                    modal.classList.add('opacity-100');
+                    modalImg.classList.remove('scale-95');
+                    modalImg.classList.add('scale-100');
+                    document.body.classList.add('overflow-hidden');
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.remove('opacity-100');
+                modalImg.classList.remove('scale-100');
+                modalImg.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.classList.remove('overflow-hidden');
+                }, 300);
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal || e.target.closest('.max-w-\\[90vw\\]') === null) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
 
     <!-- Script de Traducción -->
     <script th:src="@{/js/translations.js}"></script>
