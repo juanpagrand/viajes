@@ -22,7 +22,8 @@
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <!-- Left: Volver -->
             <div>
-                <a href="/" class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                <a href="#" onclick="if (document.referrer && document.referrer.includes(window.location.host) && !document.referrer.includes('/donar')) { history.back(); } else { window.location.href = '/'; } return false;"
+                   class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i> Volver
                 </a>
             </div>
@@ -66,8 +67,9 @@
     <main class="flex-grow flex items-center justify-center pt-32 pb-20 px-4 relative z-20">
         <div class="w-full max-w-lg">
             <div class="text-center mb-10">
-                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#ff5b24]/20 text-[#ff5b24] mb-4 border border-[#ff5b24]/30">
-                    <i data-lucide="heart-handshake" class="w-8 h-8"></i>
+                <div id="top-icon-badge" class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#ff5b24]/20 text-[#ff5b24] mb-4 border border-[#ff5b24]/30 transition-all duration-300">
+                    <i id="top-icon-vipps" data-lucide="heart-handshake" class="w-8 h-8"></i>
+                    <i id="top-icon-paypal" data-lucide="credit-card" class="w-8 h-8 hidden"></i>
                 </div>
                 <h1 class="text-4xl font-bold text-slate-800 mb-3" data-i18n="donar-title">Ayuda a Construir el Próximo Capítulo</h1>
                 <p class="text-slate-600 font-medium" data-i18n="donar-desc">
@@ -81,39 +83,77 @@
 
             <div class="bento-box p-8 border-t-4 border-t-[#ff5b24]">
                 <form th:action="@{/donar/procesar}" method="post" class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-300 mb-4 text-center" data-i18n="donar-select-amount">Selecciona una cantidad a donar (NOK)</label>
-                        
-                        <div class="grid grid-cols-3 gap-4 mb-4">
+                    <!-- Tabs de Métodos de Pago -->
+                    <div class="flex border-b border-white/10 mb-6">
+                        <button type="button" id="tab-vipps" onclick="selectMethod('vipps')" class="flex-1 py-3.5 text-center font-bold text-sm border-b-2 border-[#ff5b24] text-white transition-all focus:outline-none">
+                            Vipps (NOK)
+                        </button>
+                        <button type="button" id="tab-paypal" onclick="selectMethod('paypal')" class="flex-1 py-3.5 text-center font-bold text-sm border-b-2 border-transparent text-slate-400 hover:text-white transition-all focus:outline-none">
+                            PayPal (USD)
+                        </button>
+                    </div>
+
+                    <!-- Hidden inputs for method and final amount -->
+                    <input type="hidden" id="payment-method-input" name="paymentMethod" value="vipps">
+                    <input type="hidden" id="amount-final" name="amount" value="500">
+
+                    <!-- Sección de montos Vipps -->
+                    <div id="section-amount-vipps" class="space-y-4">
+                        <label class="block text-sm font-medium text-slate-300 mb-4 text-center" data-i18n="donar-select-amount-vipps">Selecciona una cantidad a donar (NOK)</label>
+                        <div class="grid grid-cols-3 gap-4">
                             <label class="cursor-pointer">
-                                <input type="radio" name="amount" value="100" class="peer sr-only" required>
+                                <input type="radio" name="amount_vipps" value="100" class="peer sr-only">
                                 <div class="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-center text-white font-bold transition-all peer-checked:bg-[#ff5b24] peer-checked:border-[#ff5b24] peer-checked:shadow-lg peer-checked:shadow-[#ff5b24]/30 hover:border-white/30">
                                     100 kr
                                 </div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="radio" name="amount" value="500" class="peer sr-only" checked>
+                                <input type="radio" name="amount_vipps" value="500" class="peer sr-only" checked>
                                 <div class="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-center text-white font-bold transition-all peer-checked:bg-[#ff5b24] peer-checked:border-[#ff5b24] peer-checked:shadow-lg peer-checked:shadow-[#ff5b24]/30 hover:border-white/30">
                                     500 kr
                                 </div>
                             </label>
                             <label class="cursor-pointer">
-                                <input type="radio" name="amount" value="1000" class="peer sr-only">
+                                <input type="radio" name="amount_vipps" value="1000" class="peer sr-only">
                                 <div class="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-center text-white font-bold transition-all peer-checked:bg-[#ff5b24] peer-checked:border-[#ff5b24] peer-checked:shadow-lg peer-checked:shadow-[#ff5b24]/30 hover:border-white/30">
                                     1000 kr
                                 </div>
                             </label>
                         </div>
-                        
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <span class="text-slate-400 font-bold">kr</span>
-                            </div>
-                            <input type="number" name="custom_amount" placeholder="Otra cantidad..." data-i18n="donar-other-amount" min="1" step="1"
-                                class="w-full input-dark pl-12 pr-4 py-3 rounded-xl text-white placeholder-slate-500 border border-white/10 focus:border-[#ff5b24] focus:ring-1 focus:ring-[#ff5b24] transition-colors"
-                                onchange="if(this.value){document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false); document.getElementById('amount-hidden').value=this.value;}">
+                    </div>
+
+                    <!-- Sección de montos PayPal -->
+                    <div id="section-amount-paypal" class="space-y-4 hidden">
+                        <label class="block text-sm font-medium text-slate-300 mb-4 text-center" data-i18n="donar-select-amount-paypal">Selecciona una cantidad a donar (USD)</label>
+                        <div class="grid grid-cols-3 gap-4">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="amount_paypal" value="10" class="peer sr-only">
+                                <div class="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-center text-white font-bold transition-all peer-checked:bg-[#0070ba] peer-checked:border-[#0070ba] peer-checked:shadow-lg peer-checked:shadow-[#0070ba]/30 hover:border-white/30">
+                                    $10
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="amount_paypal" value="50" class="peer sr-only">
+                                <div class="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-center text-white font-bold transition-all peer-checked:bg-[#0070ba] peer-checked:border-[#0070ba] peer-checked:shadow-lg peer-checked:shadow-[#0070ba]/30 hover:border-white/30">
+                                    $50
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="amount_paypal" value="100" class="peer sr-only">
+                                <div class="px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-center text-white font-bold transition-all peer-checked:bg-[#0070ba] peer-checked:border-[#0070ba] peer-checked:shadow-lg peer-checked:shadow-[#0070ba]/30 hover:border-white/30">
+                                    $100
+                                </div>
+                            </label>
                         </div>
-                        <input type="hidden" id="amount-hidden" name="amount" value="500" disabled>
+                    </div>
+
+                    <!-- Custom Amount Input -->
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <span id="currency-symbol" class="text-slate-400 font-bold">kr</span>
+                        </div>
+                        <input type="number" name="custom_amount" placeholder="Otra cantidad..." data-i18n="donar-other-amount" min="1" step="1"
+                            class="w-full input-dark pl-12 pr-4 py-3 rounded-xl text-white placeholder-slate-500 border border-white/10 focus:border-[#ff5b24] focus:ring-1 focus:ring-[#ff5b24] transition-colors">
                     </div>
 
                     <div class="bg-surfaceLight p-4 rounded-xl border border-white/5 flex gap-3 items-start mt-8">
@@ -131,10 +171,14 @@
             
             <div class="text-center mt-8">
                 <!-- SVG Logo genérico de Vipps simulado -->
-                <svg width="100" height="40" viewBox="0 0 100 40" class="mx-auto opacity-50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg id="logo-vipps-bottom" width="100" height="40" viewBox="0 0 100 40" class="mx-auto opacity-50 transition-all duration-300" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="100" height="40" rx="20" fill="#FF5B24"/>
                     <path d="M30 25C30 25 35 15 40 15C45 15 50 25 50 25M50 25C50 25 55 15 60 15C65 15 70 25 70 25" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
+                <!-- SVG Logo genérico de PayPal simulado -->
+                <div id="logo-paypal-bottom" class="hidden flex justify-center items-center gap-1 text-2xl select-none opacity-50 font-black italic transition-all duration-300">
+                    <span class="text-[#003087] tracking-tighter">Pay</span><span class="text-[#0070ba] tracking-tighter">Pal</span>
+                </div>
             </div>
         </div>
     </main>
@@ -209,28 +253,167 @@
     <script>
         lucide.createIcons();
         
-        // Script para manejar radios vs custom input
-        const radios = document.querySelectorAll('input[type="radio"][name="amount"]');
+        const radiosVipps = document.querySelectorAll('input[name="amount_vipps"]');
+        const radiosPaypal = document.querySelectorAll('input[name="amount_paypal"]');
         const customInput = document.querySelector('input[name="custom_amount"]');
-        const hiddenAmount = document.getElementById('amount-hidden');
         
-        radios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
+        const amountFinal = document.getElementById('amount-final');
+        const paymentMethodInput = document.getElementById('payment-method-input');
+        const currencySymbol = document.getElementById('currency-symbol');
+        
+        const sectionVipps = document.getElementById('section-amount-vipps');
+        const sectionPaypal = document.getElementById('section-amount-paypal');
+        const tabVipps = document.getElementById('tab-vipps');
+        const tabPaypal = document.getElementById('tab-paypal');
+        const bentoBox = document.querySelector('.bento-box');
+        
+        const infoText = document.querySelector('[data-i18n="donar-vipps-info"]');
+        const submitBtn = document.querySelector('button[type="submit"]');
+        const submitText = document.querySelector('[data-i18n="donar-submit"]');
+
+        function updateFinalAmount() {
+            const method = paymentMethodInput.value;
+            if (customInput.value) {
+                amountFinal.value = customInput.value;
+            } else if (method === 'vipps') {
+                const checked = document.querySelector('input[name="amount_vipps"]:checked');
+                amountFinal.value = checked ? checked.value : '500';
+            } else {
+                const checked = document.querySelector('input[name="amount_paypal"]:checked');
+                amountFinal.value = checked ? checked.value : '50';
+            }
+        }
+
+        function selectMethod(method) {
+            paymentMethodInput.value = method;
+            customInput.value = ''; // Reset custom input when switching
+            
+            if (method === 'paypal') {
+                // Actualizar Tabs
+                tabPaypal.className = 'flex-1 py-3.5 text-center font-bold text-sm border-b-2 border-[#0070ba] text-white transition-all focus:outline-none';
+                tabVipps.className = 'flex-1 py-3.5 text-center font-bold text-sm border-b-2 border-transparent text-slate-400 hover:text-white transition-all focus:outline-none';
+                
+                // Actualizar Secciones
+                sectionVipps.classList.add('hidden');
+                sectionPaypal.classList.remove('hidden');
+                
+                // Toggle logos
+                document.getElementById('logo-vipps-bottom').classList.add('hidden');
+                document.getElementById('logo-paypal-bottom').classList.remove('hidden');
+                
+                // Actualizar Icono Superior
+                const topBadge = document.getElementById('top-icon-badge');
+                topBadge.className = 'inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#0070ba]/20 text-[#0070ba] mb-4 border border-[#0070ba]/30 transition-all duration-300';
+                document.getElementById('top-icon-vipps').classList.add('hidden');
+                document.getElementById('top-icon-paypal').classList.remove('hidden');
+                
+                // Actualizar Símbolo Moneda e Input Custom
+                currencySymbol.innerText = '$';
+                customInput.classList.remove('focus:border-[#ff5b24]', 'focus:ring-[#ff5b24]');
+                customInput.classList.add('focus:border-[#0070ba]', 'focus:ring-[#0070ba]');
+                
+                // Actualizar Borde Bento Box
+                bentoBox.classList.remove('border-t-[#ff5b24]');
+                bentoBox.classList.add('border-t-[#0070ba]');
+                
+                // Seleccionar radio de PayPal por defecto
+                const checkedRadio = document.querySelector('input[name="amount_paypal"]:checked');
+                if (!checkedRadio) {
+                    radiosPaypal[1].checked = true; // default $50
+                }
+                
+                // Texto de ayuda
+                infoText.innerText = 'Serás redirigido de forma segura a PayPal para completar tu pago. PayPal permite pagar con tu cuenta o tarjeta.';
+                infoText.setAttribute('data-i18n', 'donar-paypal-info');
+                
+                // Botón
+                submitText.innerText = 'Continuar con PayPal';
+                submitText.setAttribute('data-i18n', 'donar-paypal-submit');
+                submitBtn.className = 'w-full bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-4 rounded-xl text-lg shadow-lg shadow-[#0070ba]/30 transition-all flex items-center justify-center gap-3';
+            } else {
+                // Actualizar Tabs
+                tabVipps.className = 'flex-1 py-3.5 text-center font-bold text-sm border-b-2 border-[#ff5b24] text-white transition-all focus:outline-none';
+                tabPaypal.className = 'flex-1 py-3.5 text-center font-bold text-sm border-b-2 border-transparent text-slate-400 hover:text-white transition-all focus:outline-none';
+                
+                // Actualizar Secciones
+                sectionPaypal.classList.add('hidden');
+                sectionVipps.classList.remove('hidden');
+                
+                // Toggle logos
+                document.getElementById('logo-paypal-bottom').classList.add('hidden');
+                document.getElementById('logo-vipps-bottom').classList.remove('hidden');
+                
+                // Actualizar Icono Superior
+                const topBadge = document.getElementById('top-icon-badge');
+                topBadge.className = 'inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#ff5b24]/20 text-[#ff5b24] mb-4 border border-[#ff5b24]/30 transition-all duration-300';
+                document.getElementById('top-icon-vipps').classList.remove('hidden');
+                document.getElementById('top-icon-paypal').classList.add('hidden');
+                
+                // Actualizar Símbolo Moneda e Input Custom
+                currencySymbol.innerText = 'kr';
+                customInput.classList.remove('focus:border-[#0070ba]', 'focus:ring-[#0070ba]');
+                customInput.classList.add('focus:border-[#ff5b24]', 'focus:ring-[#ff5b24]');
+                
+                // Actualizar Borde Bento Box
+                bentoBox.classList.remove('border-t-[#0070ba]');
+                bentoBox.classList.add('border-t-[#ff5b24]');
+                
+                // Seleccionar radio de Vipps por defecto
+                const checkedRadio = document.querySelector('input[name="amount_vipps"]:checked');
+                if (!checkedRadio) {
+                    radiosVipps[1].checked = true; // default 500 kr
+                }
+                
+                // Texto de ayuda
+                infoText.innerText = 'Serás redirigido de forma segura a Vipps para completar tu pago. Vipps es el método de pago más popular de Noruega.';
+                infoText.setAttribute('data-i18n', 'donar-vipps-info');
+                
+                // Botón
+                submitText.innerText = 'Continuar con Vipps';
+                submitText.setAttribute('data-i18n', 'donar-submit');
+                submitBtn.className = 'w-full bg-[#ff5b24] hover:bg-[#ff5b24]/90 text-white font-bold py-4 rounded-xl text-lg shadow-lg shadow-[#ff5b24]/30 transition-all flex items-center justify-center gap-3';
+            }
+            updateFinalAmount();
+        }
+
+        // Event Listeners para Radios
+        radiosVipps.forEach(radio => {
+            radio.addEventListener('change', () => {
                 customInput.value = '';
-                hiddenAmount.disabled = true; // El form enviará el value del radio
+                updateFinalAmount();
             });
         });
-        
-        customInput.addEventListener('input', (e) => {
-            if(e.target.value) {
-                radios.forEach(r => r.checked = false);
-                hiddenAmount.disabled = false;
-                hiddenAmount.value = e.target.value;
-            } else {
-                radios[1].checked = true; // Default 500
-                hiddenAmount.disabled = true;
-            }
+
+        radiosPaypal.forEach(radio => {
+            radio.addEventListener('change', () => {
+                customInput.value = '';
+                updateFinalAmount();
+            });
         });
+
+        // Event Listener para Custom Input
+        customInput.addEventListener('input', () => {
+            if (customInput.value) {
+                radiosVipps.forEach(r => r.checked = false);
+                radiosPaypal.forEach(r => r.checked = false);
+            } else {
+                if (paymentMethodInput.value === 'vipps') {
+                    radiosVipps[1].checked = true;
+                } else {
+                    radiosPaypal[1].checked = true;
+                }
+            }
+            updateFinalAmount();
+        });
+
+        // Autoselección según el query param 'method'
+        const urlParams = new URLSearchParams(window.location.search);
+        const methodParam = urlParams.get('method');
+        if (methodParam === 'paypal') {
+            selectMethod('paypal');
+        } else {
+            selectMethod('vipps');
+        }
     </script>
 </body>
 </html>

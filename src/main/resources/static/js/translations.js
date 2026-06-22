@@ -35,6 +35,9 @@ const translations = {
         'story-link': 'Leer bitácora de construcción',
         'story-btn': 'Sobre nosotros',
         'donate-float-btn': 'Donar con Vipps',
+        'donate-float-paypal-btn': 'Donar con PayPal',
+        'donar-select-method': 'Selecciona tu método de pago',
+        'donar-paypal-submit': 'Continuar con PayPal',
         'cap-tag': 'Capitán',
         'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MÁSTER MARINER & LÍDER DE EXPEDICIÓN',
@@ -187,6 +190,9 @@ const translations = {
         'story-link': 'Read construction logbook',
         'story-btn': 'About us',
         'donate-float-btn': 'Donate with Vipps',
+        'donate-float-paypal-btn': 'Donate with PayPal',
+        'donar-select-method': 'Select your payment method',
+        'donar-paypal-submit': 'Continue with PayPal',
         'cap-tag': 'Captain',
         'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MASTER MARINER & EXPEDITION LEADER',
@@ -339,6 +345,9 @@ const translations = {
         'story-link': 'Les konstruksjonsloggbok',
         'story-btn': 'Om oss',
         'donate-float-btn': 'Doner med Vipps',
+        'donate-float-paypal-btn': 'Doner med PayPal',
+        'donar-select-method': 'Velg betalingsmetode',
+        'donar-paypal-submit': 'Fortsett med PayPal',
         'cap-tag': 'Kaptein',
         'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MASTER MARINER OG EKSPEDISJONSLEDER',
@@ -1185,7 +1194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Inject floating Vipps button if not on excluded pages
+    // 2. Inject floating Vipps & PayPal buttons if not on excluded pages
     const path = window.location.pathname.toLowerCase();
     const isExcluded = path.includes('admin') ||
                        path.includes('login') ||
@@ -1194,19 +1203,36 @@ document.addEventListener('DOMContentLoaded', () => {
                        path.includes('reset') ||
                        path.includes('donar');
 
-    if (!isExcluded && !document.getElementById('vipps-floating-btn')) {
-        const vippsBtn = document.createElement('a');
-        vippsBtn.id = 'vipps-floating-btn';
-        vippsBtn.href = '/donar';
-        vippsBtn.className = 'fixed bottom-6 right-6 z-[99] flex items-center gap-2 bg-[#ff5b24] hover:bg-[#e04a16] text-white font-bold py-3.5 px-6 rounded-full shadow-[0_10px_25px_rgba(255,91,36,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-1';
-        
-        vippsBtn.innerHTML = `
-            <i data-lucide="heart-handshake" class="w-5 h-5 text-white"></i>
-            <span data-i18n="donate-float-btn">Donar con Vipps</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
-        `;
-        
-        document.body.appendChild(vippsBtn);
+    if (!isExcluded) {
+        if (!document.getElementById('vipps-floating-btn')) {
+            const vippsBtn = document.createElement('a');
+            vippsBtn.id = 'vipps-floating-btn';
+            vippsBtn.href = '/donar';
+            vippsBtn.className = 'fixed bottom-6 right-6 z-[99] flex items-center gap-2 bg-[#ff5b24] hover:bg-[#e04a16] text-white font-bold py-3.5 px-6 rounded-full shadow-[0_10px_25px_rgba(255,91,36,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-1';
+            
+            vippsBtn.innerHTML = `
+                <i data-lucide="heart-handshake" class="w-5 h-5 text-white"></i>
+                <span data-i18n="donate-float-btn">Donar con Vipps</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+            `;
+            
+            document.body.appendChild(vippsBtn);
+        }
+
+        if (!document.getElementById('paypal-floating-btn')) {
+            const paypalBtn = document.createElement('a');
+            paypalBtn.id = 'paypal-floating-btn';
+            paypalBtn.href = '/donar?method=paypal';
+            paypalBtn.className = 'fixed bottom-[88px] right-6 z-[99] flex items-center gap-2 bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold py-3.5 px-6 rounded-full shadow-[0_10px_25px_rgba(0,112,186,0.4)] transition-all duration-300 hover:scale-105 hover:-translate-y-1';
+            
+            paypalBtn.innerHTML = `
+                <i data-lucide="credit-card" class="w-5 h-5 text-white"></i>
+                <span data-i18n="donate-float-paypal-btn">Donar con PayPal</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+            `;
+            
+            document.body.appendChild(paypalBtn);
+        }
         
         if (window.lucide) {
             window.lucide.createIcons();

@@ -27,8 +27,17 @@ public class Donacion {
     @Column(nullable = false)
     private String estado; // PENDIENTE | COMPLETADA | FALLIDA
 
+    @Column(nullable = true)
+    private String metodoPago; // VIPPS | PAYPAL
+
+    @Column(nullable = true)
+    private String paypalOrderId;
+
     @PrePersist
     public void prePersist() {
         this.fecha = LocalDateTime.now();
+        if (this.metodoPago == null) {
+            this.metodoPago = "VIPPS"; // default method
+        }
     }
 }

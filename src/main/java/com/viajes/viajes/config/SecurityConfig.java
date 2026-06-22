@@ -36,11 +36,11 @@ public class SecurityConfig {
                 .requestMatchers("/forgot-password", "/reset-password").permitAll()
                 .requestMatchers("/").permitAll()
                 // Donaciones públicas — sin login
-                .requestMatchers("/donar", "/donar/procesar", "/donar/exito", "/politicas", "/sobre-nosotros").permitAll()
+                .requestMatchers("/donar", "/donar/procesar", "/donar/exito", "/donar/paypal/exito", "/politicas", "/sobre-nosotros").permitAll()
                 // Webhook protegido por firma HMAC, no por sesión
                 .requestMatchers("/vipps/webhook").permitAll()
                 // Solo demo local — quitar en producción
-                .requestMatchers("/vipps/checkout/simulado").permitAll()
+                .requestMatchers("/vipps/checkout/simulado", "/paypal/checkout/simulado").permitAll()
                 .requestMatchers("/css/**", "/images/**", "/js/**", "/uploads/**").permitAll()
                 .anyRequest().authenticated())
 
