@@ -34,10 +34,10 @@ const translations = {
         'story-p2': 'Su historia comenzó hace más de dos décadas cruzando el recóndito paso del noroeste. Hoy en día, ha sido completamente remodelado para combinar el romanticismo de la navegación clásica con las comodidades modernas necesarias para exploraciones científicas a largo plazo.',
         'story-link': 'Leer bitácora de construcción',
         'story-btn': 'Sobre nosotros',
-        'donate-float-btn': 'Donar con Vipps',
-        'donate-float-paypal-btn': 'Donar con PayPal',
+        'donate-float-btn': 'Apoyo al proyecto con Vipps',
+        'donate-float-paypal-btn': 'Apoyo al proyecto con PayPal',
         'donar-select-method': 'Selecciona tu método de pago',
-        'donar-paypal-submit': 'Continuar con PayPal',
+        'donar-paypal-submit': 'Apoyo al proyecto',
         'cap-tag': 'Capitán',
         'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MÁSTER MARINER & LÍDER DE EXPEDICIÓN',
@@ -112,7 +112,7 @@ const translations = {
         'donar-select-amount': 'Selecciona una cantidad a donar (NOK)',
         'donar-other-amount': 'Otra cantidad...',
         'donar-vipps-info': 'Serás redirigido de forma segura a Vipps para completar tu pago. Vipps es el método de pago más popular de Noruega.',
-        'donar-submit': 'Continuar con Vipps',
+        'donar-submit': 'Apoyo al proyecto',
         'donar-exito-gracias': '(¡Muchas Gracias!)',
         'donar-exito-desc': 'Hemos recibido tu donación correctamente. Tu apoyo incondicional es el motor que nos impulsa a seguir explorando.',
         'donar-exito-ref': 'Referencia',
@@ -212,10 +212,10 @@ const translations = {
         'story-p2': 'Its history began over two decades ago crossing the remote Northwest Passage. Today, it has been completely remodeled to combine the romance of classic navigation with the modern amenities necessary for long-term scientific explorations.',
         'story-link': 'Read construction logbook',
         'story-btn': 'About us',
-        'donate-float-btn': 'Donate with Vipps',
-        'donate-float-paypal-btn': 'Donate with PayPal',
+        'donate-float-btn': 'Support the project with Vipps',
+        'donate-float-paypal-btn': 'Support the project with PayPal',
         'donar-select-method': 'Select your payment method',
-        'donar-paypal-submit': 'Continue with PayPal',
+        'donar-paypal-submit': 'Support the project',
         'cap-tag': 'Captain',
         'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MASTER MARINER & EXPEDITION LEADER',
@@ -290,7 +290,7 @@ const translations = {
         'donar-select-amount': 'Select a donation amount (NOK)',
         'donar-other-amount': 'Other amount...',
         'donar-vipps-info': 'You will be securely redirected to Vipps to complete your payment. Vipps is the most popular payment method in Norway.',
-        'donar-submit': 'Continue with Vipps',
+        'donar-submit': 'Support the project',
         'donar-exito-gracias': '(Thank you very much!)',
         'donar-exito-desc': 'We have received your donation successfully. Your unconditional support is the engine that drives us to keep exploring.',
         'donar-exito-ref': 'Reference',
@@ -390,10 +390,10 @@ const translations = {
         'story-p2': 'Dets historie begynte for over to tiår siden ved å krysse den avsidesliggende Nordvestpassasjen. I dag er fullstendig pusset opp for å kombinere romantikken ved klassisk navigasjon med moderne fasiliteter som er nødvendige for langsiktige vitenskapelige utforskninger.',
         'story-link': 'Les konstruksjonsloggbok',
         'story-btn': 'Om oss',
-        'donate-float-btn': 'Doner med Vipps',
-        'donate-float-paypal-btn': 'Doner med PayPal',
+        'donate-float-btn': 'Støtt prosjektet med Vipps',
+        'donate-float-paypal-btn': 'Støtt prosjektet med PayPal',
         'donar-select-method': 'Velg betalingsmetode',
-        'donar-paypal-submit': 'Fortsett med PayPal',
+        'donar-paypal-submit': 'Støtt prosjektet',
         'cap-tag': 'Kaptein',
         'cap-title': 'Alberto – El Loco David',
         'cap-role': 'MASTER MARINER OG EKSPEDISJONSLEDER',
@@ -468,7 +468,7 @@ const translations = {
         'donar-select-amount': 'Velg et donasjonsbeløp (NOK)',
         'donar-other-amount': 'Annet beløp...',
         'donar-vipps-info': 'Du vil bli videresendt til Vipps for å fullføre betalingen. Vipps er Norges mest populære betalingsmetode.',
-        'donar-submit': 'Fortsett med Vipps',
+        'donar-submit': 'Støtt prosjektet',
         'donar-exito-gracias': '(Tusen takk!)',
         'donar-exito-desc': 'Vi har mottatt donasjonen din. Din betingelsesløse støtte er motoren som driver oss til å fortsette å utforske.',
         'donar-exito-ref': 'Referanse',
@@ -1281,7 +1281,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             vippsBtn.innerHTML = `
                 <i data-lucide="heart-handshake" class="w-5 h-5 text-white"></i>
-                <span data-i18n="donate-float-btn">Donar con Vipps</span>
+                <span data-i18n="donate-float-btn">Apoyo al proyecto con Vipps</span>
                 <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
             `;
             
@@ -1296,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             paypalBtn.innerHTML = `
                 <i data-lucide="credit-card" class="w-5 h-5 text-white"></i>
-                <span data-i18n="donate-float-paypal-btn">Donar con PayPal</span>
+                <span data-i18n="donate-float-paypal-btn">Apoyo al proyecto con PayPal</span>
                 <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
             `;
             
