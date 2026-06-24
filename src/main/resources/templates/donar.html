@@ -14,7 +14,8 @@
     <link rel="stylesheet" th:href="@{/css/theme.css}">
 </head>
 
-<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col bg-[#d5e0df]">
+<body
+    class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col bg-[#d5e0df]">
     <!-- Luz ambiental -->
     <div class="aurora-glow"></div>
 
@@ -30,12 +31,14 @@
 
             <!-- Center: Logo -->
             <a href="/" class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
                     <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
                         <i data-lucide="ship" class="text-primary w-5 h-5"></i>
                     </div>
                 </div>
-                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></div>
             </a>
 
             <!-- Right: Dropdown de Idioma (estático para alinearlo a la derecha) -->
@@ -71,12 +74,14 @@
                     <i id="top-icon-vipps" data-lucide="heart-handshake" class="w-8 h-8"></i>
                     <i id="top-icon-paypal" data-lucide="credit-card" class="w-8 h-8 hidden"></i>
                 </div>
-                <h1 class="text-4xl font-bold text-slate-800 mb-3" data-i18n="donar-title">Ayuda a Construir el Próximo Capítulo</h1>
+                <h1 class="text-4xl font-bold text-slate-800 mb-3" data-i18n="donar-title">Ayuda a Construir el Próximo
+                    Capítulo</h1>
                 <p class="text-slate-600 font-medium" data-i18n="donar-desc">
-                    Cada contribución ayuda a mantener el barco, mejorar los sistemas, documentar el proceso y preparar futuras travesías.
-                    <br/><br/>
+                    Cada contribución ayuda a mantener el barco, mejorar los sistemas, documentar el proceso y preparar
+                    futuras travesías.
+                    <br /><br />
                     No estás financiando una aventura turística.
-                    <br/><br/>
+                    <br /><br />
                     Estás ayudando a construir un proyecto real.
                 </p>
             </div>
@@ -159,16 +164,19 @@
                     <div class="bg-surfaceLight p-4 rounded-xl border border-white/5 flex gap-3 items-start mt-8">
                         <i data-lucide="info" class="w-5 h-5 text-slate-400 shrink-0 mt-0.5"></i>
                         <p class="text-xs text-slate-400 leading-relaxed" data-i18n="donar-vipps-info">
-                            Serás redirigido de forma segura a Vipps para completar tu pago. Vipps es el método de pago más popular de Noruega.
+                            Serás redirigido de forma segura a Vipps para completar tu pago. Vipps es el método de pago
+                            más popular de Noruega.
                         </p>
                     </div>
 
-                    <button type="submit" class="w-full bg-[#ff5b24] hover:bg-[#ff5b24]/90 text-white font-bold py-4 rounded-xl text-lg shadow-lg shadow-[#ff5b24]/30 transition-all flex items-center justify-center gap-3">
-                        <span data-i18n="donar-submit">Continuar con Vipps</span> <i data-lucide="external-link" class="w-5 h-5"></i>
+                    <button type="submit"
+                        class="w-full bg-[#ff5b24] hover:bg-[#ff5b24]/90 text-white font-bold py-4 rounded-xl text-lg shadow-lg shadow-[#ff5b24]/30 transition-all flex items-center justify-center gap-3">
+                        <span data-i18n="donar-submit">Continuar con Vipps</span> <i data-lucide="external-link"
+                            class="w-5 h-5"></i>
                     </button>
                 </form>
             </div>
-            
+
             <div class="text-center mt-8">
                 <!-- SVG Logo genérico de Vipps simulado -->
                 <svg id="logo-vipps-bottom" width="100" height="40" viewBox="0 0 100 40" class="mx-auto opacity-50 transition-all duration-300" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,7 +200,9 @@
                         class="text-primary font-light">DAVID</span></h4>
                 <p class="text-slate-400 mb-4" data-i18n="foot-desc">Exploración polar de élite.</p>
                 <div class="mb-6">
-                    <a th:href="@{/politicas}" class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white" data-i18n="foot-policies">Políticas de Privacidad y Vipps</a>
+                    <a th:href="@{/politicas}"
+                        class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white"
+                        data-i18n="foot-policies">Información Legal y Política de Privacidad</a>
                 </div>
                 <!-- Redes Sociales -->
                 <div class="flex items-center justify-center md:justify-start gap-4">
@@ -229,7 +239,7 @@
                     <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
                         data-i18n="foot-contact">Contáctanos</div>
                     <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
-                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> 937 665 458
+                        <i data-lucide="phone" class="w-5 h-5 text-primary"></i> +47 907 06 318
                     </div>
                 </div>
                 <!-- Divisor -->
@@ -416,4 +426,5 @@
         }
     </script>
 </body>
+
 </html>
