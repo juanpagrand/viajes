@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 
 @Controller
 public class DonacionController {
@@ -27,7 +31,8 @@ public class DonacionController {
     }
 
     @GetMapping("/donar")
-    public String showDonationPage() {
+    public String showDonationPage(Model model) {
+        addBackUrlToModel(model);
         return "donar";
     }
 
@@ -39,6 +44,7 @@ public class DonacionController {
         
         if (amount < 1 || amount > 100000) {
             model.addAttribute("error", "Monto no válido");
+            addBackUrlToModel(model);
             return "donar";
         }
 
@@ -65,6 +71,7 @@ public class DonacionController {
                 donacion.setEstado("FALLIDA");
                 donacionRepository.save(donacion);
                 model.addAttribute("error", "Error al iniciar el pago con PayPal: " + e.getMessage());
+                addBackUrlToModel(model);
                 return "donar";
             }
         } else {
@@ -170,5 +177,22 @@ public class DonacionController {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    private void addBackUrlToModel(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String backUrl = "/";
+        if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
+            for (GrantedAuthority authority : auth.getAuthorities()) {
+                if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                    backUrl = "/admin";
+                    break;
+                } else if (authority.getAuthority().equals("ROLE_USER")) {
+                    backUrl = "/user";
+                    break;
+                }
+            }
+        }
+        model.addAttribute("backUrl", backUrl);
     }
 }

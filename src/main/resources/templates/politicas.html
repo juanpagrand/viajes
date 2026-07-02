@@ -23,8 +23,8 @@
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="/" class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
-                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
-                        <i data-lucide="ship" class="text-primary w-5 h-5"></i>
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center overflow-hidden">
+                        <img th:src="@{/images/logo-locodavid.jpg}" class="w-full h-full object-cover rounded-full" alt="Logo">
                     </div>
                 </div>
                 <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
@@ -43,7 +43,8 @@
                         <button onclick="changeLanguage('no')" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between font-medium">Norsk <span class="text-[10px] font-bold text-primary">NO</span></button>
                     </div>
                 </div>
-                <a href="/" class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                <a href="#" onclick="if (document.referrer && document.referrer.includes(window.location.host) && !document.referrer.includes('/politicas')) { history.back(); } else { window.location.href = '/'; } return false;"
+                   class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="Volver">Volver</span>
                 </a>
             </div>
