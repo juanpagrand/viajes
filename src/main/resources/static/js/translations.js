@@ -210,7 +210,10 @@ const translations = {
         'about-p3-2': 'Pero sí sabemos una cosa:',
         'about-p3-3': 'Seguiremos avanzando.',
         'about-p3-4': 'Cada milla comienza mucho antes de levantar el ancla.',
-        'about-p3-5': 'El Loco David existe para demostrar que nunca es tarde para construir algo extraordinario.'
+        'about-p3-5': 'El Loco David existe para demostrar que nunca es tarde para construir algo extraordinario.',
+        'foot-disclaimer-text-1': 'Nos esforzamos por mantener toda la información publicada en este sitio web actualizada y precisa. Sin embargo, los planes de navegación, rutas, fechas, itinerarios, actividades, disponibilidad de productos o servicios y demás contenidos pueden modificarse sin previo aviso debido a condiciones meteorológicas, factores técnicos, operativos, de seguridad o cualquier otra circunstancia fuera de nuestro control.',
+        'foot-disclaimer-text-2': 'Aunque procuramos ofrecer información confiable, no garantizamos que el contenido esté siempre completo, actualizado o libre de errores. El Loco David Expedition se reserva el derecho de modificar, actualizar o eliminar cualquier información del sitio web en cualquier momento y sin previo aviso.',
+        'foot-disclaimer-text-3': 'El uso de este sitio web implica la aceptación de nuestros <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Términos y Condiciones</a>, así como de nuestra <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Política de Privacidad</a>.'
     },
     'en': {
         'nav-home': 'Home',
@@ -423,7 +426,10 @@ const translations = {
         'about-p3-2': 'But we do know one thing:',
         'about-p3-3': 'We will keep moving forward.',
         'about-p3-4': 'Every mile begins long before raising the anchor.',
-        'about-p3-5': 'El Loco David exists to prove that it is never too late to build something extraordinary.'
+        'about-p3-5': 'El Loco David exists to prove that it is never too late to build something extraordinary.',
+        'foot-disclaimer-text-1': 'We strive to keep all information published on this website up to date and accurate. However, sailing plans, routes, dates, itineraries, activities, availability of products or services, and other content may change without prior notice due to weather conditions, technical, operational, or safety factors, or any other circumstances beyond our control.',
+        'foot-disclaimer-text-2': 'Although we endeavor to provide reliable information, we do not guarantee that the content is always complete, up-to-date, or error-free. El Loco David Expedition reserves the right to modify, update, or remove any information on the website at any time and without prior notice.',
+        'foot-disclaimer-text-3': 'Use of this website implies acceptance of our <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Terms and Conditions</a>, as well as our <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Privacy Policy</a>.'
     },
     'no': {
         'nav-home': 'Hjem',
@@ -636,7 +642,10 @@ const translations = {
         'about-p3-2': 'Men vi vet én ting:',
         'about-p3-3': 'Vi vil fortsette å gå fremover.',
         'about-p3-4': 'Hver mil begynner lenge før ankeret heves.',
-        'about-p3-5': 'El Loco David eksisterer for å bevise at det aldri er for sent å bygge noe ekstraordinært.'
+        'about-p3-5': 'El Loco David eksisterer for å bevise at det aldri er for sent å bygge noe ekstraordinært.',
+        'foot-disclaimer-text-1': 'Vi tilstreber å holde all informasjon på dette nettstedet oppdatert og nøyaktig. Likevel kan seilingsplaner, ruter, datoer, reiseruter, aktiviteter, tilgjengelighet av produkter eller tjenester og annet innhold endres uten forvarsel på grunn av værforhold, tekniske, operative eller sikkerhetsmessige faktorer, eller andre omstendigheter utenfor vår kontroll.',
+        'foot-disclaimer-text-2': 'Selv om vi prøver å gi pålitelig informasjon, garanterer vi ikke at innholdet alltid er fullstendig, oppdatert eller feilfritt. El Loco David Expedition forbeholder seg retten til å endre, oppdatere eller slette all informasjon på nettstedet når som helst og uten forvarsel.',
+        'foot-disclaimer-text-3': 'Bruk av dette nettstedet innebærer aksept av våre <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">vilkår og betingelser</a> samt våre <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">retningslinjer for personvern</a>.'
     }
 };
 
