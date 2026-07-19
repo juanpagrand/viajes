@@ -180,6 +180,11 @@ const translations = {
         'policies-pp-seller-delegated': 'Condiciones del vendedor de PayPal delegadas a la Plataforma',
         'policies-pp-infringement': 'Política de informes de infracción',
         'policies-pp-updates': 'Actualizaciones de las políticas',
+        'policies-vipps-p3': 'Las contribuciones voluntarias realizadas a través de Vipps o PayPal no constituyen la compra de un producto o servicio. Al realizar una contribución, el colaborador no adquiere derechos de propiedad, membresía, participación en la expedición ni acceso garantizado a beneficios futuros. Todos los fondos se destinan exclusivamente a la preparación, mantenimiento, equipamiento, navegación y desarrollo de El Loco David Expedition.',
+        'policies-vipps-doc-link-text': 'Vipps – Información sobre privacidad y condiciones de uso',
+        'policies-privacy-p2-new': 'Los datos personales serán tratados únicamente para gestionar consultas, comunicaciones y contribuciones realizadas a través de la plataforma, de conformidad con el Reglamento General de Protección de Datos (GDPR).',
+        'policies-paypal-official-title': 'Documentación oficial de PayPal',
+        'policies-paypal-link-text': 'PayPal – Acuerdos legales y Política de privacidad',
         'forgot-title': 'Recuperar Clave',
         'forgot-desc': 'Introduce tu correo para solicitar un código de confirmación',
         'forgot-submit': 'Enviar Código',
@@ -396,6 +401,11 @@ const translations = {
         'policies-pp-seller-delegated': 'PayPal Seller Terms Delegated to the Platform',
         'policies-pp-infringement': 'Infringement Reporting Policy',
         'policies-pp-updates': 'Policy Updates',
+        'policies-vipps-p3': 'Voluntary contributions made through Vipps or PayPal do not constitute the purchase of a product or service. By making a contribution, the contributor does not acquire ownership rights, membership, participation in the expedition, or guaranteed access to future benefits. All funds are allocated exclusively to the preparation, maintenance, equipping, navigation, and development of El Loco David Expedition.',
+        'policies-vipps-doc-link-text': 'Vipps – Privacy information and terms of use',
+        'policies-privacy-p2-new': 'Personal data will be processed solely to manage inquiries, communications, and contributions made through the platform, in compliance with the General Data Protection Regulation (GDPR).',
+        'policies-paypal-official-title': 'PayPal Official Documentation',
+        'policies-paypal-link-text': 'PayPal – Legal Agreements and Privacy Policy',
         'forgot-title': 'Recover Password',
         'forgot-desc': 'Enter your email to request a confirmation code',
         'forgot-submit': 'Send Code',
@@ -612,6 +622,11 @@ const translations = {
         'policies-pp-seller-delegated': 'Vilkår for PayPals selgere delegert til plattformen',
         'policies-pp-infringement': 'Retningslinjer for rapportering av brudd',
         'policies-pp-updates': 'Retningslinjer for oppdateringer',
+        'policies-vipps-p3': 'Frivillige bidrag gitt via Vipps eller PayPal utgjør ikke kjøp av et produkt eller en tjeneste. Ved å gi et bidrag oppnår ikke bidragsyteren eierrettigheter, medlemskap, deltakelse i ekspedisjonen eller garantert tilgang til fremtidige fordeler. Alle midler øremerkes utelukkende til forberedelse, vedlikehold, utrustning, navigering og utvikling av El Loco David Expedition.',
+        'policies-vipps-doc-link-text': 'Vipps – Informasjon om personvern og brukervilkår',
+        'policies-privacy-p2-new': 'Personopplysninger vil kun bli behandlet for å administrere henvendelser, kommunikasjon og bidrag gjort gjennom plattformen, i samsvar med personvernforordningen (GDPR).',
+        'policies-paypal-official-title': 'PayPals offisielle dokumentasjon',
+        'policies-paypal-link-text': 'PayPal – Juridiske avtaler og personvernerklæring',
         'forgot-title': 'Gjenopprett Passord',
         'forgot-desc': 'Skriv inn din e-post for å be om en bekreftelseskode',
         'forgot-submit': 'Send Kode',
@@ -1189,7 +1204,11 @@ function changeLanguage(lang) {
         const paypalLang = (lang === 'en') ? 'us' : lang;
         paypalLinks.forEach(link => {
             const path = link.getAttribute('data-paypal-path');
-            link.href = `https://www.paypal.com/${paypalLang}/legalhub/${path}`;
+            if (path === 'home') {
+                link.href = `https://www.paypal.com/${paypalLang}/webapps/mpp/ua/legalagreement-full`;
+            } else {
+                link.href = `https://www.paypal.com/${paypalLang}/legalhub/${path}`;
+            }
         });
 
         // 2. Translate raw text nodes that match exact Spanish strings

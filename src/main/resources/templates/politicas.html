@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -14,7 +14,8 @@
     <link rel="stylesheet" th:href="@{/css/theme.css}">
 </head>
 
-<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col bg-background">
+<body
+    class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col bg-background">
     <!-- Luz ambiental -->
     <div class="aurora-glow"></div>
 
@@ -22,29 +23,44 @@
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="/" class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
-                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center overflow-hidden">
-                        <img th:src="@{/images/logo-locodavid.jpg}" class="w-full h-full object-cover rounded-full" alt="Logo">
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                    <div
+                        class="w-full h-full bg-background rounded-full flex items-center justify-center overflow-hidden">
+                        <img th:src="@{/images/logo-locodavid.jpg}" class="w-full h-full object-cover rounded-full"
+                            alt="Logo">
                     </div>
                 </div>
-                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span
+                        class="text-primary font-light">DAVID</span></div>
             </a>
             <div class="flex items-center gap-4">
                 <!-- Dropdown de Idioma (Inyectado por translations.js si no se define aquí, pero lo definimos para control absoluto) -->
                 <div class="relative group" id="lang-dropdown-container">
-                    <button class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer text-sm font-medium py-2 pr-0 pl-2 focus:outline-none" id="lang-btn">
+                    <button
+                        class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer text-sm font-medium py-2 pr-0 pl-2 focus:outline-none"
+                        id="lang-btn">
                         <i data-lucide="globe" class="w-4 h-4 text-primaryLight"></i>
                         <span id="current-lang" class="font-bold tracking-wider">ES</span>
-                        <i data-lucide="chevron-down" class="w-3 h-3 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                        <i data-lucide="chevron-down"
+                            class="w-3 h-3 opacity-70 group-hover:rotate-180 transition-transform"></i>
                     </button>
-                    <div class="absolute right-0 top-full mt-2 w-36 bg-surfaceLight/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] transform origin-top-right group-hover:scale-100 scale-95 flex flex-col overflow-hidden before:absolute before:-top-4 before:right-0 before:w-full before:h-4 before:bg-transparent">
-                        <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">Español <span class="text-[10px] font-bold text-primary">ES</span></button>
-                        <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">English <span class="text-[10px] font-bold text-primary">EN</span></button>
-                        <button onclick="changeLanguage('no')" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between font-medium">Norsk <span class="text-[10px] font-bold text-primary">NO</span></button>
+                    <div
+                        class="absolute right-0 top-full mt-2 w-36 bg-surfaceLight/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] transform origin-top-right group-hover:scale-100 scale-95 flex flex-col overflow-hidden before:absolute before:-top-4 before:right-0 before:w-full before:h-4 before:bg-transparent">
+                        <button onclick="changeLanguage('es')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">Español
+                            <span class="text-[10px] font-bold text-primary">ES</span></button>
+                        <button onclick="changeLanguage('en')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">English
+                            <span class="text-[10px] font-bold text-primary">EN</span></button>
+                        <button onclick="changeLanguage('no')"
+                            class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between font-medium">Norsk
+                            <span class="text-[10px] font-bold text-primary">NO</span></button>
                     </div>
                 </div>
-                <a href="#" onclick="if (document.referrer && document.referrer.includes(window.location.host) && !document.referrer.includes('/politicas')) { history.back(); } else { window.location.href = '/'; } return false;"
-                   class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                <a href="#"
+                    onclick="if (document.referrer && document.referrer.includes(window.location.host) && !document.referrer.includes('/politicas')) { history.back(); } else { window.location.href = '/'; } return false;"
+                    class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
                     <i data-lucide="arrow-left" class="w-4 h-4"></i> <span data-i18n="Volver">Volver</span>
                 </a>
             </div>
@@ -54,299 +70,143 @@
     <!-- Contenido Principal -->
     <main class="flex-grow max-w-4xl mx-auto pt-32 pb-20 px-6 relative z-20 w-full">
         <div class="text-center mb-12">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary mb-4 border border-primary/30">
+            <div
+                class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary mb-4 border border-primary/30">
                 <i data-lucide="shield-check" class="w-8 h-8"></i>
             </div>
-            <h1 class="text-4xl font-bold text-white mb-3" data-i18n="policies-title">Información Legal y Política de Privacidad</h1>
-            <p class="text-slate-400 max-w-2xl mx-auto" data-i18n="policies-subtitle">Información legal sobre el uso del sitio web, privacidad y apoyo al proyecto.</p>
+            <h1 class="text-4xl font-bold text-white mb-3" data-i18n="policies-title">Información Legal y Política de
+                Privacidad</h1>
+            <p class="text-slate-400 max-w-2xl mx-auto" data-i18n="policies-subtitle">Información legal sobre el uso del
+                sitio web, privacidad y apoyo al proyecto.</p>
         </div>
 
-        <div class="bento-box p-8 md:p-10 space-y-10 border border-white/10 bg-surfaceLight/50 backdrop-blur-md rounded-3xl shadow-xl">
+        <div
+            class="bento-box p-8 md:p-10 space-y-10 border border-white/10 bg-surfaceLight/50 backdrop-blur-md rounded-3xl shadow-xl">
             <!-- Sección 1 -->
             <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="policies-terms-title">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3"
+                    data-i18n="policies-terms-title">
                     1. Términos y Condiciones Generales
                 </h2>
                 <p class="text-slate-300 leading-relaxed text-sm md:text-base" data-i18n="policies-terms-p1">
-                    Estas políticas regulan el uso de la plataforma "El Loco David". Al navegar por nuestro sitio web o registrarse como usuario, acepta cumplir con las condiciones aquí descritas.
+                    Estas políticas regulan el uso de la plataforma "El Loco David". Al navegar por nuestro sitio web o
+                    registrarse como usuario, acepta cumplir con las condiciones aquí descritas.
                 </p>
             </section>
 
             <!-- Sección 2 -->
             <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="policies-privacy-title">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3"
+                    data-i18n="policies-privacy-title">
                     2. Política de Privacidad
                 </h2>
                 <p class="text-slate-300 leading-relaxed text-sm md:text-base" data-i18n="policies-privacy-p1">
-                    Nos comprometemos a proteger sus datos personales. Cuando realiza un aporte voluntario o se registra, recopilamos información como su nombre, correo electrónico y número de teléfono. Estos datos se procesan de forma segura y solo se comparten con terceros necesarios para completar la transacción (como Vipps MobilePay AS).
+                    Nos comprometemos a proteger sus datos personales. Cuando realiza un aporte voluntario o se
+                    registra, recopilamos información como su nombre, correo electrónico y número de teléfono. Estos
+                    datos se procesan de forma segura y solo se comparten con terceros necesarios para completar la
+                    transacción (como Vipps MobilePay AS).
+                </p>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base" data-i18n="policies-privacy-p2-new">
+                    Los datos personales serán tratados únicamente para gestionar consultas, comunicaciones y
+                    contribuciones realizadas a través de la plataforma, de conformidad con el Reglamento General de
+                    Protección de Datos (GDPR).
                 </p>
             </section>
 
             <!-- Sección 3 -->
             <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="policies-vipps-title">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3"
+                    data-i18n="policies-vipps-title">
                     3. Aportes voluntarios mediante Vipps
                 </h2>
                 <p class="text-slate-300 leading-relaxed text-sm md:text-base mb-2" data-i18n="policies-vipps-p1">
-                    Los aportes voluntarios realizados a través de la plataforma Vipps son voluntarios y se destinan íntegramente a financiar la preparación, mantenimiento, equipamiento, navegación y expediciones de El Loco David. De acuerdo con la normativa noruega, las contribuciones voluntarias no son reembolsables, salvo en casos demostrados de error técnico o transacciones no autorizadas.
+                    Los aportes voluntarios realizados a través de la plataforma Vipps son voluntarios y se destinan
+                    íntegramente a financiar la preparación, mantenimiento, equipamiento, navegación y expediciones de
+                    El Loco David. De acuerdo con la normativa noruega, las contribuciones voluntarias no son
+                    reembolsables, salvo en casos demostrados de error técnico o transacciones no autorizadas.
                 </p>
-                <p class="text-slate-300 leading-relaxed text-sm md:text-base" data-i18n="policies-vipps-p2">
-                    Vipps es una plataforma de pago segura e independiente. Sus credenciales de pago son procesadas exclusivamente por Vipps y nunca se almacenan en nuestros servidores. Para más información, consulte la política de privacidad oficial de Vipps.
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base mb-2" data-i18n="policies-vipps-p2">
+                    Vipps es una plataforma de pago segura e independiente. Sus credenciales de pago son procesadas
+                    exclusivamente por Vipps y nunca se almacenan en nuestros servidores. Para más información, consulte
+                    la política de privacidad oficial de Vipps.
                 </p>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base mb-2" data-i18n="policies-vipps-p3">
+                    Las contribuciones voluntarias realizadas a través de Vipps o PayPal no constituyen la compra de un
+                    producto o servicio. Al realizar una contribución, el colaborador no adquiere derechos de propiedad,
+                    membresía, participación en la expedición ni acceso garantizado a beneficios futuros. Todos los
+                    fondos se destinan exclusivamente a la preparación, mantenimiento, equipamiento, navegación y
+                    desarrollo de El Loco David Expedition.
+                </p>
+                <div
+                    class="mt-4 bg-background/40 rounded-2xl border border-white/5 p-6 hover:border-primary/30 transition-all duration-300">
+                    <a href="https://www.vipps.no/vilkar/" target="_blank"
+                        class="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="file-text"
+                                class="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors"></i>
+                            <span
+                                class="text-sm md:text-base text-slate-300 font-medium group-hover:text-white transition-colors"
+                                data-i18n="policies-vipps-doc-link-text">Vipps – Información sobre privacidad y
+                                condiciones de uso</span>
+                        </div>
+                        <i data-lucide="external-link"
+                            class="w-4 h-4 text-slate-500 group-hover:text-white transition-colors"></i>
+                    </a>
+                </div>
             </section>
 
             <!-- Sección 4 -->
             <section class="space-y-4">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="policies-contact-title">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3"
+                    data-i18n="policies-contact-title">
                     4. Información de la Empresa
                 </h2>
                 <p class="text-slate-300 leading-relaxed text-sm md:text-base" data-i18n="policies-contact-p1">
-                    <strong>El Loco David AS</strong><br>Org.nr. 937 665 458<br>Erling Skjalgssons gate 16A<br>0267 Oslo, Noruega<br>Tel. +47 907 06 318<br>alberto@ellocodavid.com
+                    <strong>El Loco David AS</strong><br>Org.nr. 937 665 458<br>Erling Skjalgssons gate 16A<br>0267
+                    Oslo, Noruega<br>Tel. +47 907 06 318<br>alberto@ellocodavid.com
                 </p>
             </section>
 
             <!-- Sección 5 -->
             <section class="space-y-6">
-                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="policies-paypal-title">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3"
+                    data-i18n="policies-paypal-title">
                     5. Condiciones y Acuerdos Legales de PayPal
                 </h2>
                 <p class="text-slate-300 leading-relaxed text-sm md:text-base" data-i18n="policies-paypal-p1">
-                    Al realizar aportes a través de PayPal, usted acepta cumplir con las políticas y acuerdos legales correspondientes de PayPal. A continuación se presentan los enlaces oficiales de los acuerdos aplicables:
+                    Al realizar aportes a través de PayPal, usted acepta cumplir con las políticas y acuerdos legales
+                    correspondientes de PayPal. A continuación se presentan los enlaces oficiales de los acuerdos
+                    aplicables:
                 </p>
 
-                <!-- Acuerdos de PayPal -->
-                <div class="space-y-6">
-                    <!-- Categoría 1: Para todos los usuarios -->
-                    <div class="bg-background/40 rounded-2xl border border-white/5 p-6 hover:border-primary/30 transition-all duration-300">
-                        <h3 class="text-lg font-bold text-white flex items-center gap-2 mb-4">
-                            <i data-lucide="users" class="w-5 h-5 text-primary"></i>
-                            <span data-i18n="policies-paypal-cat1">Para todos los usuarios</span>
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <a href="#" target="_blank" data-paypal-path="useragreement-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-useragreement">Condiciones de uso del Servicio de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="buyerprotection-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-buyerprotection">Programa Protección del comprador de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="sellerprotection-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-sellerprotection">Programa Protección del vendedor de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="bcr-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-bcr">Normas corporativas vinculantes</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="fatca-crs" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-fatca-crs">Avisos de FATCA y CRS</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="privacy-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-noaccount">Condiciones de uso de los pagos sin cuenta PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="digitalwallet-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-digitalwallet">Términos y condiciones de la Cartera digital de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="privacy-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-privacy">Declaración de privacidad para los Servicios de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="paypalme-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-paypalme">Condiciones de PayPal.Me</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="fundraiser-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-fundraiser">Condiciones de PayPal Recaudación de Fondos</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="acceptableuse-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-acceptableuse">Política de uso aceptable de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="cookie-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-cookie">Política de cookies, balizas web y tecnologías similares</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="fees-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-fees">Documento de información sobre tarifas y glosario para consumidores</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="pools-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-pools">Condiciones de uso del Bote</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Categoría 2: Para vendedores y empresas -->
-                    <div class="bg-background/40 rounded-2xl border border-white/5 p-6 hover:border-accent/30 transition-all duration-300">
-                        <h3 class="text-lg font-bold text-white flex items-center gap-2 mb-4">
-                            <i data-lucide="store" class="w-5 h-5 text-accent"></i>
-                            <span data-i18n="policies-paypal-cat2">Para vendedores, empresas y organizaciones benéficas</span>
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <a href="#" target="_blank" data-paypal-path="merchagreement-full" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-merchagreement">Acuerdo de entidades comerciales</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="zettle-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-zettle-terms">Condiciones generales para el uso de Zettle by PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="debit-card-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-debitcard">Contrato de titulares de la tarjeta PayPal Business Debit Mastercard®</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="partner-fundraising" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-partner-fundraising">Condiciones de PayPal Partner Fundraising Program</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="card-payment-services" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-cardpayments">Acuerdo de Servicios de pago con tarjeta por Internet de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="zettle-payment-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-zettle-payments">Condiciones de pago para el uso de Zettle by PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="data-protection-addendum" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-dataprotection">Apéndice de Protección de datos para productos de procesamiento de tarjetas</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="campaign-fundraising" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-campaign-fundraiser">Condiciones de la recaudación de fondos de campaña de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="alternative-payment-methods" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-alternative-payments">Acuerdo de formas de pago alternativas de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="zettle-privacy" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-zettle-privacy">Política de privacidad para el servicio Zettle by PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="payouts-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-payouts">Condiciones de Pagos en serie de PayPal</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="seller-terms" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-accent transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-seller-delegated">Condiciones del vendedor de PayPal delegadas a la Plataforma</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Categoría 3: Información adicional -->
-                    <div class="bg-background/40 rounded-2xl border border-white/5 p-6 hover:border-emerald-500/30 transition-all duration-300">
-                        <h3 class="text-lg font-bold text-white flex items-center gap-2 mb-4">
-                            <i data-lucide="info" class="w-5 h-5 text-emerald-400"></i>
-                            <span data-i18n="policies-paypal-cat3">Información adicional</span>
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <a href="#" target="_blank" data-paypal-path="infringement-reporting" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-emerald-400 transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-infringement">Política de informes de infracción</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                            <a href="#" target="_blank" data-paypal-path="upcoming-policies-updates" class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
-                                <div class="flex items-center gap-3">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400 group-hover:text-emerald-400 transition-colors"></i>
-                                    <span class="text-xs md:text-sm text-slate-300 font-medium group-hover:text-white transition-colors" data-i18n="policies-pp-updates">Actualizaciones de las políticas</span>
-                                </div>
-                                <i data-lucide="external-link" class="w-3.5 h-3.5 text-slate-500 group-hover:text-white transition-colors opacity-0 group-hover:opacity-100 transition-opacity"></i>
-                            </a>
-                        </div>
+                <div
+                    class="bg-background/40 rounded-2xl border border-white/5 p-6 hover:border-primary/30 transition-all duration-300">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2 mb-4">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-primary"></i>
+                        <span data-i18n="policies-paypal-official-title">Documentación oficial de PayPal</span>
+                    </h3>
+                    <div class="flex flex-col gap-3">
+                        <a href="https://www.paypal.com/es/webapps/mpp/ua/legalagreement-full" target="_blank"
+                            data-paypal-path="home"
+                            class="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all group">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="file-text"
+                                    class="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors"></i>
+                                <span
+                                    class="text-sm md:text-base text-slate-300 font-medium group-hover:text-white transition-colors"
+                                    data-i18n="policies-paypal-link-text">PayPal – Acuerdos legales y Política de
+                                    privacidad</span>
+                            </div>
+                            <i data-lucide="external-link"
+                                class="w-4 h-4 text-slate-500 group-hover:text-white transition-colors"></i>
+                        </a>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-            <!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="w-full bg-[#1f2937] border-t border-white/10 py-16 mt-16 relative z-50">
         <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col gap-10">
             <div class="flex flex-col md:flex-row items-center justify-between gap-10">
@@ -364,8 +224,9 @@
                     <div class="flex items-center justify-center md:justify-start gap-4">
                         <a href="https://www.instagram.com/ellocodavidexpeditions?igsh=NDJra2UzOHU3Ymhq" target="_blank"
                             class="w-10 h-10 rounded-full bg-white/5 hover:bg-pink-500/20 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-colors border border-white/10">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
                                 <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                                 <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -373,15 +234,17 @@
                         </a>
                         <a href="https://facebook.com" target="_blank"
                             class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
                                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                             </svg>
                         </a>
                         <a href="https://www.tiktok.com/@elcolombonoruego" target="_blank"
                             class="w-10 h-10 rounded-full bg-white/5 hover:bg-zinc-700/50 flex items-center justify-center text-slate-400 hover:text-white transition-colors border border-white/10">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
                                 <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
                             </svg>
                         </a>
@@ -417,9 +280,21 @@
 
             <!-- Disclaimer -->
             <div class="text-[11px] text-slate-400/70 leading-relaxed text-justify space-y-3 max-w-7xl">
-                <p data-i18n="foot-disclaimer-text-1">Nos esforzamos por mantener toda la información publicada en este sitio web actualizada y precisa. Sin embargo, los planes de navegación, rutas, fechas, itinerarios, actividades, disponibilidad de productos o servicios y demás contenidos pueden modificarse sin previo aviso debido a condiciones meteorológicas, factores técnicos, operativos, de seguridad o cualquier otra circunstancia fuera de nuestro control.</p>
-                <p data-i18n="foot-disclaimer-text-2">Aunque procuramos ofrecer información confiable, no garantizamos que el contenido esté siempre completo, actualizado o libre de errores. El Loco David Expedition se reserva el derecho de modificar, actualizar o eliminar cualquier información del sitio web en cualquier momento y sin previo aviso.</p>
-                <p class="font-medium text-slate-300/90" data-i18n="foot-disclaimer-text-3">El uso de este sitio web implica la aceptación de nuestros <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Términos y Condiciones</a>, así como de nuestra <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Política de Privacidad</a>.</p>
+                <p data-i18n="foot-disclaimer-text-1">Nos esforzamos por mantener toda la información publicada en este
+                    sitio web actualizada y precisa. Sin embargo, los planes de navegación, rutas, fechas, itinerarios,
+                    actividades, disponibilidad de productos o servicios y demás contenidos pueden modificarse sin
+                    previo aviso debido a condiciones meteorológicas, factores técnicos, operativos, de seguridad o
+                    cualquier otra circunstancia fuera de nuestro control.</p>
+                <p data-i18n="foot-disclaimer-text-2">Aunque procuramos ofrecer información confiable, no garantizamos
+                    que el contenido esté siempre completo, actualizado o libre de errores. El Loco David Expedition se
+                    reserva el derecho de modificar, actualizar o eliminar cualquier información del sitio web en
+                    cualquier momento y sin previo aviso.</p>
+                <p class="font-medium text-slate-300/90" data-i18n="foot-disclaimer-text-3">El uso de este sitio web
+                    implica la aceptación de nuestros <a href="/politicas"
+                        class="text-primaryLight hover:text-white underline transition-colors">Términos y
+                        Condiciones</a>, así como de nuestra <a href="/politicas"
+                        class="text-primaryLight hover:text-white underline transition-colors">Política de
+                        Privacidad</a>.</p>
             </div>
         </div>
     </footer>
