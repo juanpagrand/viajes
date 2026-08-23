@@ -238,6 +238,11 @@
                 <p data-i18n="foot-disclaimer-text-1">Nos esforzamos por mantener toda la información publicada en este sitio web actualizada y precisa. Sin embargo, los planes de navegación, rutas, fechas, itinerarios, actividades, disponibilidad de productos o servicios y demás contenidos pueden modificarse sin previo aviso debido a condiciones meteorológicas, factores técnicos, operativos, de seguridad o cualquier otra circunstancia fuera de nuestro control.</p>
                 <p data-i18n="foot-disclaimer-text-2">Aunque procuramos ofrecer información confiable, no garantizamos que el contenido esté siempre completo, actualizado o libre de errores. El Loco David Expedition se reserva el derecho de modificar, actualizar o eliminar cualquier información del sitio web en cualquier momento y sin previo aviso.</p>
                 <p class="font-medium text-slate-300/90" data-i18n="foot-disclaimer-text-3">El uso de este sitio web implica la aceptación de nuestros <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Términos y Condiciones</a>, así como de nuestra <a href="/politicas" class="text-primaryLight hover:text-white underline transition-colors">Política de Privacidad</a>.</p>
+                <div class="mt-4 pt-4 border-t border-white/5 flex flex-wrap gap-4 text-xs">
+                    <a href="/politicas" class="text-slate-400 hover:text-white underline transition-colors" data-i18n="foot-policies">Información Legal y Política de Privacidad</a>
+                    <span class="text-slate-600">|</span>
+                    <a href="/condiciones-donacion" class="text-primaryLight hover:text-white underline transition-colors font-medium" data-i18n="foot-donation-terms">Condiciones de Donación (Vipps)</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -245,6 +250,23 @@
 
     <!-- Script de Traducción -->
     <script th:src="@{/js/translations.js}"></script>
+    <script th:inline="javascript">
+        (function() {
+            const custom = JSON.parse(/*[[${customTranslationsJson}]]*/ '{}');
+            if (typeof translations !== 'undefined' && custom) {
+                for (const lang in custom) {
+                    if (!translations[lang]) translations[lang] = {};
+                    for (const key in custom[lang]) {
+                        translations[lang][key] = custom[lang][key];
+                    }
+                }
+                const savedLang = localStorage.getItem('preferred-language') || document.documentElement.lang || 'es';
+                if (typeof changeLanguage === 'function') {
+                    changeLanguage(savedLang);
+                }
+            }
+        })();
+    </script>
 
     <!-- Inicializar iconos -->
     <script>

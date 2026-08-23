@@ -57,4 +57,9 @@ public class ViajeController {
     public String sobreNosotros() {
         return "sobre-nosotros";
     }
+
+    @GetMapping("/condiciones-donacion")
+    public String condicionesDonacion() {
+        return "condiciones-donacion";
+    }
 }

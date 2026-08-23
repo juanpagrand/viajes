@@ -96,7 +96,7 @@
             <h1 class="text-5xl md:text-7xl font-bold text-[#1f3d47] mb-6 drop-shadow-xl leading-tight uppercase tracking-wide">
                 BITÁCORA <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">OFICIAL</span>
             </h1>
-            <p class="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto font-light">
+            <p class="text-xl md:text-2xl text-slate-700 max-w-3xl mx-auto font-light" data-i18n="logbook-subtitle">
                 Reportes y memorias directas desde el Círculo Polar Ártico.
             </p>
         </header>
@@ -290,6 +290,23 @@
 
     <!-- Script de Traducción -->
     <script th:src="@{/js/translations.js}"></script>
+    <script th:inline="javascript">
+        (function() {
+            const custom = JSON.parse(/*[[${customTranslationsJson}]]*/ '{}');
+            if (typeof translations !== 'undefined' && custom) {
+                for (const lang in custom) {
+                    if (!translations[lang]) translations[lang] = {};
+                    for (const key in custom[lang]) {
+                        translations[lang][key] = custom[lang][key];
+                    }
+                }
+                const savedLang = localStorage.getItem('preferred-language') || document.documentElement.lang || 'es';
+                if (typeof changeLanguage === 'function') {
+                    changeLanguage(savedLang);
+                }
+            }
+        })();
+    </script>
 
     <!-- Google Translate Container (Hidden) -->
     <div id="google_translate_element" style="display: none !important;"></div>

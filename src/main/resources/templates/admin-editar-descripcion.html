@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Editar Descripción</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        body, html {
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen relative flex flex-col">
+
+    <!-- Navegación Admin -->
+    <nav class="sticky top-0 w-full z-50 glass-nav border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin/descripciones}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
+                    </div>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-300 hidden sm:inline-block">Capitán <span th:text="${admin.nombre}" class="text-white ml-1"></span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-4xl mx-auto px-6 py-10 relative z-10">
+        
+        <div class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 md:p-10 rounded-3xl">
+            <div class="flex items-center gap-3 mb-8 pb-4 border-b border-white/10">
+                <i data-lucide="edit-3" class="text-accent w-6 h-6"></i>
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Editar Descripción</h2>
+                    <p class="text-xs text-slate-400 font-mono mt-1" th:text="${'Clave: ' + customDescription.id}">Clave: about-p1-1</p>
+                </div>
+            </div>
+
+            <form th:action="@{/admin/descripciones/editar/{id}(id=${customDescription.id})}" th:object="${customDescription}" method="post" class="space-y-6">
+                <!-- Seccion / Label informativo -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white/5 p-4 rounded-2xl border border-white/5">
+                    <div>
+                        <span class="block text-xs text-slate-400 uppercase tracking-wider mb-1">Sección</span>
+                        <span class="text-sm font-semibold text-white" th:text="${customDescription.seccion}">Sobre Nosotros</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-slate-400 uppercase tracking-wider mb-1">Ubicación / Rol del Texto</span>
+                        <span class="text-sm font-semibold text-white" th:text="${customDescription.label}">¿Qué es el Loco David? - Párrafo 1</span>
+                    </div>
+                </div>
+
+                <!-- Textarea Español (ES) -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <span class="bg-primary/20 text-primaryLight text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border border-primary/30">ES</span>
+                        <span>Descripción en Español</span>
+                    </label>
+                    <textarea th:field="*{descripcionEs}" rows="4" required
+                              class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 resize-none font-sans"
+                              placeholder="Escribe la descripción en Español..."></textarea>
+                </div>
+
+                <!-- Textarea Inglés (EN) -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <span class="bg-accent/20 text-accent text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border border-accent/30">EN</span>
+                        <span>Descripción en Inglés</span>
+                    </label>
+                    <textarea th:field="*{descripcionEn}" rows="4" required
+                              class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 resize-none font-sans"
+                              placeholder="Escribe la descripción en Inglés..."></textarea>
+                </div>
+
+                <!-- Textarea Noruego (NO) -->
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1.5 flex items-center gap-2">
+                        <span class="bg-emerald-500/20 text-emerald-400 text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border border-emerald-500/30">NO</span>
+                        <span>Descripción en Noruego</span>
+                    </label>
+                    <textarea th:field="*{descripcionNo}" rows="4" required
+                              class="w-full input-dark px-4 py-3 rounded-xl placeholder-slate-600 resize-none font-sans"
+                              placeholder="Escribe la descripción en Noruego..."></textarea>
+                </div>
+
+                <!-- Botones -->
+                <div class="flex justify-end gap-4 pt-6 border-t border-white/10">
+                    <a th:href="@{/admin/descripciones}" class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/5 hover:border-white/10 text-sm font-bold transition-all flex items-center gap-2">
+                        Cancelar
+                    </a>
+                    <button type="submit" 
+                            class="bg-accent hover:bg-blue-400 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(96,165,250,0.4)] flex items-center gap-2">
+                        <i data-lucide="save" class="w-4 h-4"></i> Guardar Cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

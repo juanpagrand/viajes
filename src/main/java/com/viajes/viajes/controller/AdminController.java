@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import com.viajes.viajes.model.Destino;
 import com.viajes.viajes.repository.DestinoRepository;
+import com.viajes.viajes.model.CustomDescription;
+import com.viajes.viajes.service.CustomDescriptionService;
 
 @Controller
 @RequestMapping("/admin")
@@ -31,14 +33,16 @@ public class AdminController {
     private final com.viajes.viajes.repository.SponsorRepository sponsorRepository;
     private final DestinoRepository destinoRepository;
     private final com.viajes.viajes.service.RutaService rutaService;
+    private final CustomDescriptionService customDescriptionService;
 
-    public AdminController(UserService userService, BitacoraRepository bitacoraRepository, FileStorageService fileStorageService, com.viajes.viajes.repository.SponsorRepository sponsorRepository, DestinoRepository destinoRepository, com.viajes.viajes.service.RutaService rutaService) {
+    public AdminController(UserService userService, BitacoraRepository bitacoraRepository, FileStorageService fileStorageService, com.viajes.viajes.repository.SponsorRepository sponsorRepository, DestinoRepository destinoRepository, com.viajes.viajes.service.RutaService rutaService, CustomDescriptionService customDescriptionService) {
         this.userService = userService;
         this.bitacoraRepository = bitacoraRepository;
         this.fileStorageService = fileStorageService;
         this.sponsorRepository = sponsorRepository;
         this.destinoRepository = destinoRepository;
         this.rutaService = rutaService;
+        this.customDescriptionService = customDescriptionService;
     }
 
     @GetMapping
@@ -363,6 +367,47 @@ public class AdminController {
             bitacoraRepository.save(bitacora);
         }
         return "redirect:/admin/bitacora?successStatus";
+    }
+
+    @GetMapping("/descripciones")
+    public String gestionarDescripciones(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User admin = userService.findUserByEmail(auth.getName());
+        model.addAttribute("admin", admin);
+        
+        List<CustomDescription> descripciones = customDescriptionService.findAll();
+        model.addAttribute("descripciones", descripciones);
+        return "admin-descripciones";
+    }
+
+    @GetMapping("/descripciones/editar/{id}")
+    public String showEditDescripcionForm(@PathVariable String id, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User admin = userService.findUserByEmail(auth.getName());
+        model.addAttribute("admin", admin);
+        
+        java.util.Optional<CustomDescription> descOpt = customDescriptionService.findById(id);
+        if (descOpt.isEmpty()) {
+            return "redirect:/admin/descripciones?errorNotFound";
+        }
+        
+        model.addAttribute("customDescription", descOpt.get());
+        return "admin-editar-descripcion";
+    }
+
+    @PostMapping("/descripciones/editar/{id}")
+    public String updateDescripcion(@PathVariable String id, 
+                                    @ModelAttribute("customDescription") CustomDescription descUpdates) {
+        java.util.Optional<CustomDescription> descOpt = customDescriptionService.findById(id);
+        if (descOpt.isPresent()) {
+            CustomDescription existing = descOpt.get();
+            existing.setDescripcionEs(descUpdates.getDescripcionEs());
+            existing.setDescripcionEn(descUpdates.getDescripcionEn());
+            existing.setDescripcionNo(descUpdates.getDescripcionNo());
+            customDescriptionService.save(existing);
+            return "redirect:/admin/descripciones?successEdit";
+        }
+        return "redirect:/admin/descripciones?errorNotFound";
     }
 }
 

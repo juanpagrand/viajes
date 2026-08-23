@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condiciones de Donación - El Loco David</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        body, html {
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-primaryLight selection:text-background relative min-h-screen flex flex-col">
+    <!-- Luz ambiental -->
+    <div class="aurora-glow"></div>
+
+    <!-- Detección de idioma antes de que cargue translations.js -->
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            if (langParam && ['es', 'en', 'no'].includes(langParam)) {
+                localStorage.setItem('preferred-language', langParam);
+            }
+        })();
+    </script>
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center p-0.5 shadow-lg shadow-primary/20">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center overflow-hidden">
+                        <img th:src="@{/images/logo-locodavid.jpg}" class="w-full h-full object-cover rounded-full" alt="Logo">
+                    </div>
+                </div>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-primary font-light">DAVID</span></div>
+            </a>
+            
+            <div class="flex items-center gap-4">
+                <!-- Dropdown de Idioma -->
+                <div class="relative group" id="lang-dropdown-container">
+                    <button class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors cursor-pointer text-sm font-medium py-2 pr-0 pl-2 focus:outline-none" id="lang-btn">
+                        <i data-lucide="globe" class="w-4 h-4 text-primaryLight"></i>
+                        <span id="current-lang" class="font-bold tracking-wider">ES</span>
+                        <i data-lucide="chevron-down" class="w-3 h-3 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="absolute right-0 top-full mt-2 w-36 bg-surfaceLight/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] transform origin-top-right group-hover:scale-100 scale-95 flex flex-col overflow-hidden before:absolute before:-top-4 before:right-0 before:w-full before:h-4 before:bg-transparent">
+                        <button onclick="changeLanguage('es')" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">Español
+                            <span class="text-[10px] font-bold text-primary">ES</span></button>
+                        <button onclick="changeLanguage('en')" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between border-b border-white/5 font-medium">English
+                            <span class="text-[10px] font-bold text-primary">EN</span></button>
+                        <button onclick="changeLanguage('no')" class="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors flex items-center justify-between font-medium">Norsk
+                            <span class="text-[10px] font-bold text-primary">NO</span></button>
+                    </div>
+                </div>
+                <a href="#" onclick="if (document.referrer && document.referrer.includes(window.location.host)) { history.back(); } else { window.location.href = '/'; } return false;" class="text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> <span>Volver</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="flex-grow max-w-4xl mx-auto pt-32 pb-20 px-6 relative z-20 w-full">
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 text-primary mb-4 border border-primary/30">
+                <i data-lucide="file-text" class="w-8 h-8"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-[#1f3d47] mb-3" data-i18n="donation-terms-title">Condiciones de Donación</h1>
+            <p class="text-slate-600 max-w-2xl mx-auto" data-i18n="donation-terms-subtitle">Condiciones específicas para contribuciones voluntarias a través de Vipps Donaciones.</p>
+        </div>
+
+        <div class="bg-[#1f3d47] text-white p-8 md:p-10 space-y-10 border border-white/5 rounded-3xl shadow-xl">
+            <!-- Sección 1: Información de la Empresa -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="donation-terms-company-title">
+                    1. Información de la Empresa
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base font-light" data-i18n="donation-terms-company-p1">
+                    <strong>El Loco David AS</strong><br>Org. nr. 937 665 458<br>Dirección: Erling Skjalgssons gate 16A, 0267 Oslo, Noruega<br>Teléfono: +47 907 06 318<br>E-mail: alberto@ellocodavid.com
+                </p>
+            </section>
+
+            <!-- Sección 2: Propósito de Donaciones -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="donation-terms-purpose-title">
+                    2. ¿Para qué se utilizan las donaciones?
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base font-light" data-i18n="donation-terms-purpose-p1">
+                    Las donaciones recibidas se destinan exclusivamente a la preparación y realización de "El Loco David Expedition". Esto incluye: mantenimiento y preparación de la embarcación (velero de acero Motiva 49), adquisición de equipos de seguridad y navegación, adquisición de equipos técnicos y de comunicación, combustible, pago de tasas portuarias y oficiales, seguros de navegación, provisiones de viaje y demás gastos necesarios directamente relacionados con la preparación y ejecución de la expedición.
+                </p>
+            </section>
+
+            <!-- Sección 3: Naturaleza Voluntaria -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="donation-terms-nature-title">
+                    3. Naturaleza voluntaria y sin contraprestación
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base font-light" data-i18n="donation-terms-nature-p1">
+                    Toda contribución realizada es completamente voluntaria y de carácter no reembolsable. El donante declara y acepta expresamente que realiza esta aportación sin esperar ninguna contraprestación, bien, servicio o derecho a cambio. La persona que dona no está comprando ningún producto o servicio y no adquiere derechos de propiedad, participación accionaria, membresía, puesto en la tripulación de la expedición ni ningún otro beneficio presente o futuro garantizado en relación con El Loco David AS o la embarcación.
+                </p>
+            </section>
+
+            <!-- Sección 4: Cobro Único -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="donation-terms-charge-title">
+                    4. Cobro único (Donación única)
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base font-light" data-i18n="donation-terms-charge-p1">
+                    Por el momento, la plataforma ofrece únicamente la opción de donaciones de una sola vez (engangsdonasjoner). El importe seleccionado por el donante se cobrará una sola vez en el momento de realizar la transacción. Este cobro no genera suscripciones, renovaciones periódicas ni futuros cobros automáticos de ningún tipo.
+                </p>
+            </section>
+
+            <!-- Sección 5: Importes de Donación -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="donation-terms-amounts-title">
+                    5. Importes de donación disponibles
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base font-light" data-i18n="donation-terms-amounts-p1">
+                    En el proceso de donación a través de Vipps, se ofrecen importes sugeridos de 10 NOK, 20 NOK, 50 NOK y 100 NOK, además de la opción para que el donante introduzca un importe superior o personalizado de su elección. Todos estos importes están sujetos a las presentes condiciones de donación por igual.
+                </p>
+            </section>
+
+            <!-- Sección 6: Datos Personales -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="donation-terms-privacy-title">
+                    6. Tratamiento de Datos Personales
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base font-light" data-i18n="donation-terms-privacy-p1">
+                    Nos comprometemos a proteger su privacidad de acuerdo con el Reglamento General de Protección de Datos (GDPR). Los datos recopilados durante la donación se utilizan únicamente para procesar la transacción y cumplir con los requisitos fiscales aplicables. Puede obtener más detalles leyendo nuestra <a href="/politicas" class="text-primaryLight hover:underline">Política de Privacidad</a>.
+                </p>
+            </section>
+
+            <!-- Sección 7: Contacto -->
+            <section class="space-y-4">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3 border-b border-white/10 pb-3" data-i18n="donation-terms-contact-title">
+                    7. Atención al Colaborador y Contacto
+                </h2>
+                <p class="text-slate-300 leading-relaxed text-sm md:text-base font-light" data-i18n="donation-terms-contact-p1">
+                    Si tiene alguna pregunta, consulta o requiere aclaraciones sobre las condiciones de donación, puede comunicarse con nosotros por medio de los siguientes canales oficiales:<br>• Teléfono: +47 907 06 318<br>• Correo Electrónico: alberto@ellocodavid.com<br>• Dirección fiscal: Erling Skjalgssons gate 16A, 0267 Oslo, Noruega
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-[#1f2937] border-t border-white/10 py-12 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-400">
+            <div>
+                &copy; <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}"></span> EL LOCO DAVID.
+            </div>
+            <div class="flex gap-6">
+                <a th:href="@{/politicas}" class="hover:text-white transition-colors" data-i18n="foot-policies">Información Legal y Política de Privacidad</a>
+                <a th:href="@{/condiciones-donacion}" class="text-primaryLight hover:text-white transition-colors font-medium underline" data-i18n="foot-donation-terms">Condiciones de Donación (Vipps)</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
+    <script th:inline="javascript">
+        (function() {
+            const custom = JSON.parse(/*[[${customTranslationsJson}]]*/ '{}');
+            if (typeof translations !== 'undefined' && custom) {
+                for (const lang in custom) {
+                    if (!translations[lang]) translations[lang] = {};
+                    for (const key in custom[lang]) {
+                        translations[lang][key] = custom[lang][key];
+                    }
+                }
+                const savedLang = localStorage.getItem('preferred-language') || document.documentElement.lang || 'es';
+                if (typeof changeLanguage === 'function') {
+                    changeLanguage(savedLang);
+                }
+            }
+        })();
+    </script>
+
+    <!-- Inicializar iconos -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

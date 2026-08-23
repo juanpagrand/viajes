@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Loco David | Gestionar Descripciones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" th:href="@{/css/barco.css}">
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+    <style>
+        body, html {
+            background-color: rgb(213, 224, 223) !important;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-accent selection:text-white min-h-screen relative flex flex-col">
+
+    <!-- Navegación Admin -->
+    <nav class="sticky top-0 w-full z-50 glass-nav border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a th:href="@{/admin}" class="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center p-0.5 shadow-lg shadow-accent/20 cursor-pointer hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-background rounded-full flex items-center justify-center">
+                        <i data-lucide="arrow-left" class="text-accent w-5 h-5"></i>
+                    </div>
+                </a>
+                <div class="font-bold text-xl tracking-wide text-white">EL LOCO <span class="text-accent font-light">DAVID</span> <span class="text-[10px] uppercase text-slate-400 tracking-widest ml-2 border border-white/10 px-2 py-0.5 rounded backdrop-blur bg-white/5">Admin</span></div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-slate-300 hidden sm:inline-block">Capitán <span th:text="${admin.nombre}" class="text-white ml-1"></span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-6 py-10 relative z-10">
+        
+        <div class="flex justify-between items-center mb-8 pb-4 border-b border-[#1f3d47]/20">
+            <div class="flex items-center gap-3">
+                <i data-lucide="edit-3" class="text-accent w-8 h-8"></i>
+                <h2 class="text-3xl font-bold text-[#1f3d47]">Gestionar Descripciones</h2>
+            </div>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div th:if="${param.successEdit}" class="bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+            <i data-lucide="check-circle" class="w-5 h-5 shrink-0"></i>
+            <p>Descripción actualizada correctamente.</p>
+        </div>
+        <div th:if="${param.errorNotFound}" class="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl mb-6 flex items-center gap-3 text-sm">
+            <i data-lucide="alert-circle" class="w-5 h-5 shrink-0"></i>
+            <p>La descripción seleccionada no existe o no pudo ser encontrada.</p>
+        </div>
+
+        <!-- Secciones agrupadas -->
+        <div class="space-y-12">
+            
+            <!-- Grupo: Sobre Nosotros -->
+            <section class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 rounded-3xl">
+                <div class="flex items-center gap-2 mb-6 pb-3 border-b border-white/10">
+                    <i data-lucide="info" class="text-accent w-5 h-5"></i>
+                    <h3 class="text-xl font-bold text-white">Sección: Sobre Nosotros</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 text-xs text-slate-400 uppercase tracking-wider">
+                                <th class="py-3 px-4">Descripción / Párrafo</th>
+                                <th class="py-3 px-4">Identificador</th>
+                                <th class="py-3 px-4">Texto en Español (Preview)</th>
+                                <th class="py-3 px-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="desc : ${descripciones}" th:if="${desc.seccion == 'Sobre Nosotros'}" class="border-b border-white/5 hover:bg-white/5 transition-colors text-sm">
+                                <td class="py-4 px-4 font-semibold text-slate-200" th:text="${desc.label}">Etiqueta</td>
+                                <td class="py-4 px-4 text-xs font-mono text-slate-400" th:text="${desc.id}">Clave</td>
+                                <td class="py-4 px-4 text-slate-300 max-w-xs truncate" th:text="${desc.descripcionEs}">Texto ES</td>
+                                <td class="py-4 px-4 text-right">
+                                    <a th:href="@{/admin/descripciones/editar/{id}(id=${desc.id})}" class="inline-flex items-center gap-1.5 bg-accent/20 hover:bg-accent/30 text-accent hover:text-white px-3.5 py-1.5 rounded-lg transition-all border border-accent/30 text-xs font-bold">
+                                        <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Grupo: Bitácora -->
+            <section class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 rounded-3xl">
+                <div class="flex items-center gap-2 mb-6 pb-3 border-b border-white/10">
+                    <i data-lucide="book-open" class="text-accent w-5 h-5"></i>
+                    <h3 class="text-xl font-bold text-white">Sección: Bitácora</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 text-xs text-slate-400 uppercase tracking-wider">
+                                <th class="py-3 px-4">Descripción / Párrafo</th>
+                                <th class="py-3 px-4">Identificador</th>
+                                <th class="py-3 px-4">Texto en Español (Preview)</th>
+                                <th class="py-3 px-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="desc : ${descripciones}" th:if="${desc.seccion == 'Bitácora'}" class="border-b border-white/5 hover:bg-white/5 transition-colors text-sm">
+                                <td class="py-4 px-4 font-semibold text-slate-200" th:text="${desc.label}">Etiqueta</td>
+                                <td class="py-4 px-4 text-xs font-mono text-slate-400" th:text="${desc.id}">Clave</td>
+                                <td class="py-4 px-4 text-slate-300 max-w-xs truncate" th:text="${desc.descripcionEs}">Texto ES</td>
+                                <td class="py-4 px-4 text-right">
+                                    <a th:href="@{/admin/descripciones/editar/{id}(id=${desc.id})}" class="inline-flex items-center gap-1.5 bg-accent/20 hover:bg-accent/30 text-accent hover:text-white px-3.5 py-1.5 rounded-lg transition-all border border-accent/30 text-xs font-bold">
+                                        <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Grupo: Inicio -->
+            <section class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 rounded-3xl">
+                <div class="flex items-center gap-2 mb-6 pb-3 border-b border-white/10">
+                    <i data-lucide="home" class="text-accent w-5 h-5"></i>
+                    <h3 class="text-xl font-bold text-white">Sección: Inicio (Hero e Historia)</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 text-xs text-slate-400 uppercase tracking-wider">
+                                <th class="py-3 px-4">Descripción / Párrafo</th>
+                                <th class="py-3 px-4">Identificador</th>
+                                <th class="py-3 px-4">Texto en Español (Preview)</th>
+                                <th class="py-3 px-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="desc : ${descripciones}" th:if="${desc.seccion == 'Inicio'}" class="border-b border-white/5 hover:bg-white/5 transition-colors text-sm">
+                                <td class="py-4 px-4 font-semibold text-slate-200" th:text="${desc.label}">Etiqueta</td>
+                                <td class="py-4 px-4 text-xs font-mono text-slate-400" th:text="${desc.id}">Clave</td>
+                                <td class="py-4 px-4 text-slate-300 max-w-xs truncate" th:text="${desc.descripcionEs}">Texto ES</td>
+                                <td class="py-4 px-4 text-right">
+                                    <a th:href="@{/admin/descripciones/editar/{id}(id=${desc.id})}" class="inline-flex items-center gap-1.5 bg-accent/20 hover:bg-accent/30 text-accent hover:text-white px-3.5 py-1.5 rounded-lg transition-all border border-accent/30 text-xs font-bold">
+                                        <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Grupo: Donaciones -->
+            <section class="bg-[#1f3d47] text-white border border-white/5 shadow-xl p-8 rounded-3xl">
+                <div class="flex items-center gap-2 mb-6 pb-3 border-b border-white/10">
+                    <i data-lucide="heart-handshake" class="text-accent w-5 h-5"></i>
+                    <h3 class="text-xl font-bold text-white">Sección: Donaciones</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-white/10 text-xs text-slate-400 uppercase tracking-wider">
+                                <th class="py-3 px-4">Descripción / Párrafo</th>
+                                <th class="py-3 px-4">Identificador</th>
+                                <th class="py-3 px-4">Texto en Español (Preview)</th>
+                                <th class="py-3 px-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="desc : ${descripciones}" th:if="${desc.seccion == 'Donaciones'}" class="border-b border-white/5 hover:bg-white/5 transition-colors text-sm">
+                                <td class="py-4 px-4 font-semibold text-slate-200" th:text="${desc.label}">Etiqueta</td>
+                                <td class="py-4 px-4 text-xs font-mono text-slate-400" th:text="${desc.id}">Clave</td>
+                                <td class="py-4 px-4 text-slate-300 max-w-xs truncate" th:text="${desc.descripcionEs}">Texto ES</td>
+                                <td class="py-4 px-4 text-right">
+                                    <a th:href="@{/admin/descripciones/editar/{id}(id=${desc.id})}" class="inline-flex items-center gap-1.5 bg-accent/20 hover:bg-accent/30 text-accent hover:text-white px-3.5 py-1.5 rounded-lg transition-all border border-accent/30 text-xs font-bold">
+                                        <i data-lucide="edit-2" class="w-3.5 h-3.5"></i> Editar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- Script de Traducción -->
+    <script th:src="@{/js/translations.js}"></script>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
