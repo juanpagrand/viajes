@@ -24,8 +24,10 @@ public class FileStorageService {
     );
 
     private final Path rootLocation = Paths.get("uploads");
+    private final CloudinaryService cloudinaryService;
 
-    public FileStorageService() {
+    public FileStorageService(CloudinaryService cloudinaryService) {
+        this.cloudinaryService = cloudinaryService;
         try {
             Files.createDirectories(rootLocation);
         } catch (IOException e) {
@@ -34,6 +36,10 @@ public class FileStorageService {
     }
 
     public String storeFile(MultipartFile file) {
+        return storeFile(file, "viajes");
+    }
+
+    public String storeFile(MultipartFile file, String folder) {
         if (file == null || file.isEmpty()) {
             return null;
         }
@@ -54,6 +60,16 @@ public class FileStorageService {
             throw new RuntimeException("Extensión no permitida: " + extension);
         }
 
+        // Si Cloudinary está configurado, subir a Cloudinary
+        if (cloudinaryService.isConfigured()) {
+            try {
+                return cloudinaryService.uploadFile(file, folder);
+            } catch (IOException e) {
+                throw new RuntimeException("Error al subir el archivo a Cloudinary", e);
+            }
+        }
+
+        // Fallback: Guardar localmente
         try {
             String newFilename = UUID.randomUUID().toString() + extension;
             Path destinationFile = this.rootLocation
@@ -72,7 +88,7 @@ public class FileStorageService {
 
             return "/uploads/" + newFilename;
         } catch (IOException e) {
-            throw new RuntimeException("Error al guardar el archivo", e);
+            throw new RuntimeException("Error al guardar el archivo localmente", e);
         }
     }
 }
