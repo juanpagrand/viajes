@@ -149,14 +149,30 @@ public class DataInitializer implements CommandLineRunner {
                 "Un sueño no tiene fecha de vencimiento.",
                 "A dream has no expiration date.",
                 "En drøm har ingen utløpsdato.");
+            createDesc("story-h3", "Inicio", "Nombre del Navío",
+                "EL LOCO DAVID",
+                "EL LOCO DAVID",
+                "EL LOCO DAVID");
+            createDesc("story-specs", "Inicio", "Especificaciones del Navío",
+                "Motiva 49 · Velero oceánico de acero · Construido en Dinamarca · 1996 · Bandera noruega",
+                "Motiva 49 · Steel Ocean Sailboat · Built in Denmark · 1996 · Norwegian Flag",
+                "Motiva 49 · Stålseilbåt for havseilas · Bygget i Danmark · 1996 · Norsk flagg");
             createDesc("story-p1", "Inicio", "Historia del navío - Párrafo 1",
-                "El corazón del proyecto es un Motiva 49 construido en Dinamarca en 1996. No fue elegido por lujo. Fue elegido por resistencia. Actualmente se encuentra en un proceso continuo de modernización y preparación para futuras travesías oceánicas. Cada sistema instalado y cada mejora completada representan un paso más hacia el próximo capítulo de esta historia. El barco no es el destino. Es la herramienta que hace posible el viaje.",
-                "The heart of the project is a Motiva 49 built in Denmark in 1996. It was not chosen for luxury; it was chosen for endurance. It is currently undergoing a continuous process of modernization and preparation for future ocean voyages. Each installed system and completed improvement represents a step closer to the next chapter of this story. The ship is not the destination; it is the tool that makes the journey possible.",
-                "Hjertet av prosjektet er en Motiva 49 bygget i Danmark i 1996. Den ble ikke valgt for luksus; den ble valgt for slitestyrke. Den er for tiden i en kontinuerlig prosess med modernisering og forberedelse til fremtidige havseilaser. Hvert installerte system og hver fullførte forbedring representerer et skritt nærmere neste kapittel i denne historien. Skipet er ikke målet; det er verktøyet som gjør reisen mulig.");
-            createDesc("story-p2", "Inicio", "Historia del navío - Párrafo 2",
-                "Su historia comenzó hace más de dos décadas cruzando el recóndito paso del noroeste. Hoy en día, ha sido completamente remodelado para combinar el romanticismo de la navegación clásica con las comodidades modernas necesarias para exploraciones científicas a largo plazo.",
-                "Its history began over two decades ago crossing the remote Northwest Passage. Today, it has been completely remodeled to combine the romance of classic navigation with the modern amenities necessary for long-term scientific explorations.",
-                "Dets historie begynte for over to tiår siden ved å krysse den avsidesliggende Nordvestpassasjen. I dag er fullstendig pusset opp for å kobine romantikken ved klassisk navigasjon med moderne fasiliteter som er nødvendige for langsiktige vitenskapelige utforskninger.");
+                "El Loco David es un velero oceánico de acero construido en Dinamarca en 1996, concebido para navegación de larga distancia. Con sus 49 pies y más de 30 toneladas de desplazamiento, ofrece robustez, autonomía y capacidad para afrontar largas travesías oceánicas.",
+                "El Loco David is a 1996 Danish-built steel ocean sailboat designed for long-distance navigation. At 49 feet and boasting over 30 tons of displacement, it offers robustness, autonomy, and the capacity to tackle long oceanic voyages.",
+                "El Loco David er en stålseilbåt for havseilas bygget i Danmark i 1996, utformet for langdistansenavigasjon. Med sine 49 fot og over 30 tonns deplasement tilbyr den robusthet, autonomi og kapasitet til å håndtere lange havseilaser.");
+            createDesc("cap-title", "Inicio", "Nombre del Capitán",
+                "ALBERTO SIERRA",
+                "ALBERTO SIERRA",
+                "ALBERTO SIERRA");
+            createDesc("cap-role", "Inicio", "Rol del Capitán",
+                "Capitán y líder de la expedición",
+                "Captain and expedition leader",
+                "Kaptein og ekspedisjonsleder");
+            createDesc("cap-p1", "Inicio", "Capitán - Párrafo 1",
+                "Colombiano y noruego, Alberto Sierra ha construido gran parte de su vida alrededor del mar.",
+                "Colombian and Norwegian, Alberto Sierra has built much of his life around the sea.",
+                "Kolombiansk og norsk har Alberto Sierra bygget store deler av sitt liv rundt havet.");
 
             // Seccion: Donaciones
             createDesc("donar-desc", "Donaciones", "Descripción de Donaciones",
