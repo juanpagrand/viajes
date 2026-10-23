@@ -84,7 +84,6 @@
         <video autoplay muted loop playsinline
             class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0 opacity-80">
             <source th:src="@{/images/nuevo-barco.mp4}" src="/images/nuevo-barco.mp4" type="video/mp4">
-            <source th:src="@{'/images/nuevo barco.mp4'}" src="/images/nuevo barco.mp4" type="video/mp4">
         </video>
 
         <!-- FADE DEGRADADO PARA FUNDIR CON EL FONDO Y EVITAR CORTE SECO -->
@@ -101,16 +100,16 @@
             </div>
 
             <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-xl leading-tight">
-                <span data-i18n="hero-title-1">EL LOCO DAVID EXPEDITION ENTRE OCÉANOS Y LATITUDES</span> <br />
-
+                <span class="block tracking-wide">EL LOCO DAVID EXPEDITION</span>
+                <span data-i18n="hero-title-1" class="text-primaryLight font-medium block text-2xl md:text-4xl lg:text-5xl mt-2">ENTRE OCÉANOS Y LATITUDES</span>
             </h1>
 
             <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mb-10 drop-shadow-md" data-i18n="hero-subtitle">
                 Un sueño no tiene fecha de vencimiento.
             </p>
 
-            <a href="login.html" class="btn-aurora flex items-center gap-3 text-lg" data-i18n="hero-btn">
-                Comenzar la Aventura
+            <a href="#barco" class="btn-aurora flex items-center gap-3 text-lg" data-i18n="hero-btn">
+                Comenzar la aventura
             </a>
         </div>
     </section>
@@ -128,7 +127,7 @@
                 <div class="flex justify-between items-center mb-6 relative z-10">
                     <h3 class="font-semibold text-sm tracking-widest text-slate-400 uppercase flex items-center gap-2">
                         <i data-lucide="navigation" class="w-4 h-4 text-primary"></i>
-                        <span data-i18n="route-title">Ruta Actual</span>
+                        <span data-i18n="route-title">Ruta actual</span>
                     </h3>
                     <div th:if="${rutaActiva != null}"
                         class="px-2 py-1 rounded bg-primary/20 text-primary text-[10px] font-bold tracking-wider border border-primary/30">
@@ -136,7 +135,7 @@
                     </div>
                     <div th:unless="${rutaActiva != null}"
                         class="px-2 py-1 rounded bg-slate-500/20 text-slate-400 text-[10px] font-bold tracking-wider border border-slate-500/30">
-                        <span>ATRACADO</span>
+                        <span data-i18n="status-docked">ATRACADO EN PUERTO</span>
                     </div>
                 </div>
 
@@ -150,8 +149,7 @@
                     <div th:unless="${rutaActiva != null}"
                         class="absolute inset-0 w-full h-full flex flex-col items-center justify-center opacity-50 bg-slate-900">
                         <i data-lucide="anchor" class="w-12 h-12 text-slate-500 mb-2"></i>
-                        <span class="text-slate-400 text-sm font-mono tracking-widest" data-i18n="status-docked">EN
-                            PUERTO</span>
+                        <span class="text-slate-400 text-sm font-mono tracking-widest text-center px-4" data-i18n="status-docked">ATRACADO EN PUERTO</span>
                     </div>
                 </div>
 
@@ -160,7 +158,6 @@
                         <span data-i18n="route-progress">Progreso de Travesía</span>
                         <span th:if="${rutaActiva != null}" class="text-primaryLight font-mono"
                             th:text="${latRuta} + '°N, ' + ${lngRuta} + '°E'">68.3°N, 14.2°E</span>
-                        <span th:unless="${rutaActiva != null}" class="text-slate-500 font-mono">--°N, --°E</span>
                     </div>
                     <div class="w-full bg-slate-800/80 rounded-full h-2 overflow-hidden border border-white/5">
                         <div th:if="${rutaActiva != null}" class="progress-bar-animated h-full rounded-full relative"
@@ -203,7 +200,7 @@
                     <div th:if="${#lists.isEmpty(destinos)}"
                         class="w-full shrink-0 h-64 border border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center text-slate-500 snap-center">
                         <i data-lucide="map" class="w-8 h-8 mb-2 opacity-50"></i>
-                        <p class="text-sm" data-i18n="no-upcoming-departures">No hay próximas salidas programadas</p>
+                        <p class="text-sm" data-i18n="no-upcoming-departures">Próximamente anunciaremos nuestras próximas travesías.</p>
                     </div>
 
                     <!-- Viaje(s) Dinámico(s) -->
@@ -238,7 +235,7 @@
                     </div>
                 </div>
 
-                <a th:href="login.html"
+                <a th:href="@{/login}"
                     class="mt-5 w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center gap-2 text-sm text-slate-300 transition-colors border border-white/5">
                     <span data-i18n="next-btn">Ver calendario completo</span> <i data-lucide="arrow-right"
                         class="w-4 h-4"></i>
@@ -270,8 +267,8 @@
                         </div>
                     </div>
 
-                    <div th:if="${#lists.isEmpty(bitacoras)}" class="p-3 text-center text-sm text-slate-400">
-                        No hay entradas en la bitácora aún.
+                    <div th:if="${#lists.isEmpty(bitacoras)}" class="p-3 text-center text-sm text-slate-400" data-i18n="log-empty">
+                        Próximamente compartiremos noticias y experiencias de la expedición.
                     </div>
                 </div>
             </div>
@@ -320,10 +317,9 @@
             <div class="mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center gap-3 drop-shadow-md">
                     <i data-lucide="anchor" class="text-primary w-8 h-8"></i>
-                    <span data-i18n="story-title">El Navío y su Historia</span>
+                    <span data-i18n="story-title">El velero y su historia</span>
                 </h2>
-                <p class="text-slate-400 mt-2 text-lg" data-i18n="story-subtitle">Conoce el corazón de nuestra
-                    expedición</p>
+                <p class="text-slate-400 mt-2 text-lg" data-i18n="story-subtitle">Conoce el corazón de nuestra expedición.</p>
             </div>
 
             <div class="flex flex-col gap-8">
@@ -332,19 +328,25 @@
                     <!-- Foto 1 -->
                     <div
                         class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-lg group transition-all duration-500 hover:scale-110 hover:z-40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] cursor-zoom-in">
-                        <img th:src="@{/images/WhatsApp Image 2026-03-21 at 8.17.20 AM (3).jpeg}" alt="Barco detalle 1"
+                        <img th:src="@{/images/WhatsApp Image 2026-03-21 at 8.17.20 AM (3).jpeg}"
+                            alt="Velero blanco con franja azul navegando en aguas tranquilas, con una persona en la bañera y una costa boscosa al fondo."
+                            data-i18n-alt="ship-img-1-alt"
                             class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
                     </div>
                     <!-- Foto 2 -->
                     <div
                         class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-lg group transition-all duration-500 hover:scale-110 hover:z-40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] cursor-zoom-in">
-                        <img th:src="@{/images/fto.jpeg}" alt="Barco detalle 2"
+                        <img th:src="@{/images/fto.jpeg}"
+                            alt="Velero blanco con franjas azules amarrado en un puerto deportivo junto a otras embarcaciones, con una ladera boscosa detrás."
+                            data-i18n-alt="ship-img-2-alt"
                             class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
                     </div>
                     <!-- Foto 3 -->
                     <div
                         class="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 shadow-lg group transition-all duration-500 hover:scale-110 hover:z-40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] cursor-zoom-in">
-                        <img th:src="@{/images/Captura de pantalla 2026-03-21 192859.png}" alt="Barco detalle 3"
+                        <img th:src="@{/images/Captura de pantalla 2026-03-21 192859.png}"
+                            alt="Velero con las velas desplegadas navegando cerca de una costa rocosa, con el cielo parcialmente nublado."
+                            data-i18n-alt="ship-img-3-alt"
                             class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
                     </div>
                 </div>
@@ -352,25 +354,14 @@
                 <!-- Tarjeta de Historia de Ancho Completo -->
                 <div class="bento-box p-8 md:p-12 flex flex-col justify-center">
                     <h3 class="text-3xl md:text-4xl font-bold text-white mb-2" data-i18n="story-h3">EL LOCO DAVID</h3>
-                    <p class="text-accent font-mono text-sm mb-6 tracking-wider" data-i18n="story-specs">Motiva 49 ·
-                        Velero oceánico de acero · Construido en Dinamarca · 1996 · Bandera noruega</p>
+                    <p class="text-accent font-mono text-sm mb-6 tracking-wider" data-i18n="story-specs">Motiva 49 · Velero oceánico de acero · Diseño danés · 1996 · Bandera noruega</p>
                     <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
-                        <p data-i18n="story-p1">El Loco David es un velero oceánico de acero construido en Dinamarca en
-                            1996, concebido para navegación de larga distancia. Con sus 49 pies y más de 30 toneladas de
-                            desplazamiento, ofrece robustez, autonomía y capacidad para afrontar largas travesías
-                            oceánicas.</p>
-                        <p data-i18n="story-p2">Actualmente el velero se encuentra en un amplio proceso de preparación y
-                            modernización para navegación oceánica y de altas latitudes. El trabajo incluye sistemas de
-                            energía, navegación, comunicaciones, seguridad y automatización, además de mejoras
-                            estructurales y técnicas.</p>
-                        <p data-i18n="story-p3">Entre sus sistemas se encuentran radar, AIS, VHF, piloto automático,
-                            navegación electrónica y comunicación satelital mediante Starlink.</p>
-                        <p data-i18n="story-p4">La preparación no consiste solamente en instalar nuevos equipos. El
-                            objetivo es desarrollar un barco cuyos sistemas puedan trabajar de manera integrada y
-                            permitan detectar, supervisar y gestionar fallos durante navegaciones prolongadas lejos de
-                            asistencia técnica.</p>
-                        <p data-i18n="story-p5">El Loco David no es solamente el barco de la expedición. Es nuestra
-                            casa, nuestra plataforma de trabajo y el medio que hará posible el viaje.</p>
+                        <p data-i18n="story-p1">El corazón de nuestra expedición es un Motiva 49 de 1996, de diseño danés. No fue elegido por lujo, sino por su robusta construcción y sus características para la navegación oceánica.</p>
+                        <p data-i18n="story-p2">Actualmente, el velero se encuentra en proceso de modernización y preparación para futuras travesías. Cada sistema instalado y cada mejora realizada representan un paso más hacia nuestro objetivo.</p>
+                        <p data-i18n="story-p3">Su equipamiento de navegación incluye radar, AIS, radio VHF, piloto automático y sistemas electrónicos de navegación.</p>
+                        <p data-i18n="story-p4">La preparación no consiste únicamente en instalar equipos. Nuestro objetivo es desarrollar sistemas integrados que faciliten la supervisión del funcionamiento del barco, la detección de posibles fallos y la gestión de problemas técnicos durante travesías prolongadas lejos de asistencia en tierra.</p>
+                        <p data-i18n="story-p5">El Loco David es más que el velero de la expedición: es nuestro hogar, nuestra plataforma de trabajo y el medio que hará posible el viaje.</p>
+                        <p class="font-semibold text-white pt-2" data-i18n="story-quote">El barco no es el destino. Es lo que hace posible el viaje.</p>
                     </div>
                     <!-- Botón "Sobre nosotros" -->
                     <div class="flex justify-center mt-8">
@@ -406,18 +397,17 @@
                             <p class="text-accent font-mono text-sm mb-6 tracking-wider" data-i18n="cap-role">Capitán y
                                 líder de la expedición</p>
                             <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
-                                <p data-i18n="cap-p1">Colombiano y noruego, Alberto Sierra ha construido gran parte de
-                                    su vida alrededor del mar.</p>
-                                <p data-i18n="cap-p2">Su experiencia comenzó en Colombia como miembro de la Infantería
-                                    de Marina (1977–1978) y continuó posteriormente en la Marina Mercante internacional
-                                    (1981–1984). Desde entonces, el mar ha permanecido como una constante en su vida,
-                                    con navegación oceánica, múltiples travesías del Atlántico y del Pacífico y años de
-                                    experiencia en vela en aguas europeas.</p>
-                                <p data-i18n="cap-p3">Hoy, como capitán del velero El Loco David, Alberto lidera la
-                                    preparación de una expedición que une sus dos países y más de cuatro décadas de
-                                    relación con el mar.</p>
-                                <p data-i18n="cap-p4">El objetivo es navegar hacia Groenlandia y el Ártico canadiense
-                                    para intentar el Paso del Noroeste de este a oeste, continuando hacia Alaska.</p>
+                                <p data-i18n="cap-p1">Colombiano y noruego, Alberto Sierra ha dedicado gran parte de
+                                    su vida al mar.</p>
+                                <p data-i18n="cap-p2">Su experiencia marítima comenzó en Colombia, donde prestó servicio en la Infantería
+                                    de Marina (1977–1978), y continuó en la Marina Mercante internacional
+                                    (1981–1984). Durante su trayectoria como marino realizó nueve cruces del océano Atlántico y dos del Pacífico, a bordo de otros buques, no de El Loco David. También cuenta con años de
+                                    experiencia en navegación a vela y regatas en aguas europeas.</p>
+                                <p data-i18n="cap-p3">Hoy, como capitán del velero El Loco David, Alberto dirige los
+                                    preparativos de una expedición que conecta sus dos países y más de cuatro décadas de
+                                    vinculación con el mar.</p>
+                                <p data-i18n="cap-p4">El objetivo es navegar hacia Groenlandia y el Ártico canadiense,
+                                    intentar atravesar el Paso del Noroeste de este a oeste y continuar posteriormente hacia Alaska.</p>
                                 <p data-i18n="cap-p5" class="font-semibold text-white">Dos países. Una vida ligada al
                                     mar. Una expedición.</p>
                             </div>
@@ -437,11 +427,11 @@
                 <div class="text-center md:text-left">
                     <h4 class="text-white text-2xl font-bold tracking-wider mb-2">EL LOCO <span
                             class="text-primary font-light">DAVID</span></h4>
-                    <p class="text-slate-400 mb-4" data-i18n="foot-desc">Expedición Marítima Polar</p>
+                    <p class="text-slate-400 mb-4" data-i18n="foot-desc">Expedición marítima polar</p>
                     <div class="mb-6">
                         <a th:href="@{/politicas}"
                             class="text-xs text-slate-400 hover:text-white transition-colors border-b border-dashed border-slate-500 hover:border-white"
-                            data-i18n="foot-policies">Información Legal y Política de Privacidad</a>
+                            data-i18n="foot-policies">Información legal y política de privacidad</a>
                     </div>
                     <!-- Redes Sociales -->
                     <div class="flex items-center justify-center md:justify-start gap-4">
@@ -453,14 +443,6 @@
                                 <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                                 <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                            </svg>
-                        </a>
-                        <a href="https://facebook.com" target="_blank"
-                            class="w-10 h-10 rounded-full bg-white/5 hover:bg-blue-500/20 flex items-center justify-center text-slate-400 hover:text-blue-400 transition-colors border border-white/10">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                             </svg>
                         </a>
                         <a href="https://www.tiktok.com/@elcolombonoruego" target="_blank"
@@ -479,7 +461,7 @@
                     class="flex flex-col sm:flex-row items-center gap-8 md:gap-12 bg-[#0f172a]/50 px-10 py-6 rounded-3xl border border-white/5 shadow-inner">
                     <div class="text-center">
                         <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
-                            data-i18n="foot-contact">Contáctanos</div>
+                            data-i18n="foot-contact">Contacto</div>
                         <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
                             <i data-lucide="phone" class="w-5 h-5 text-primary"></i> +47 907 06 318
                         </div>
@@ -489,7 +471,7 @@
                     <div class="block sm:hidden h-px w-24 bg-white/10"></div>
                     <div class="text-center">
                         <div class="text-[11px] text-slate-400 font-mono tracking-widest uppercase mb-2"
-                            data-i18n="foot-email">Correo Electrónico
+                            data-i18n="foot-email">Correo electrónico
                         </div>
                         <div class="text-white font-medium flex items-center justify-center gap-3 text-lg">
                             <i data-lucide="mail" class="w-5 h-5 text-accent"></i> alberto@ellocodavid.com
