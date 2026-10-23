@@ -8,7 +8,7 @@ const translations = {
         'login': 'Acceder',
         'logout': 'Salir',
         'hero-tag': 'Expedición Abierta',
-        'hero-title-1': 'NAVEGA EL ABISMO AZUL',
+        'hero-title-1': 'EL LOCO DAVID EXPEDITION ENTRE OCÉANOS Y LATITUDES',
         'hero-title-2': 'DEL FIN DEL MUNDO',
         'hero-subtitle': 'Un sueño no tiene fecha de vencimiento.',
         'hero-btn': 'Comenzar la Aventura',
