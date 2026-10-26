@@ -16,8 +16,8 @@
 
 .input-dark:focus {
     outline: none;
-    border-color: #34d399; /* Primary light hover fallback */
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+    border-color: #33D9B0; /* Primary light hover fallback */
+    box-shadow: 0 0 0 2px rgba(0, 200, 150, 0.2);
 }
 
 .admin-input-focus:focus {

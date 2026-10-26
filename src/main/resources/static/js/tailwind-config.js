@@ -9,8 +9,8 @@ if (typeof tailwind !== 'undefined') {
                     background: '#020617',
                     surface: '#0f172a',
                     surfaceLight: '#1e293b',
-                    primary: '#10b981',
-                    primaryLight: '#34d399',
+                    primary: '#00C896',
+                    primaryLight: '#33D9B0',
                     accent: '#3b82f6',
                 },
                 animation: {

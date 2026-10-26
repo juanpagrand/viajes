@@ -1457,7 +1457,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Inject floating Vipps & PayPal buttons if not on excluded pages
     const path = window.location.pathname.toLowerCase();
-    const isExcluded = path.includes('admin') ||
+    const isExcluded = path === '/' ||
+                       path.includes('admin') ||
                        path.includes('login') ||
                        path.includes('register') ||
                        path.includes('forgot') ||

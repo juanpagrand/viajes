@@ -22,8 +22,8 @@ body {
 }
 
 .bento-box:hover {
-    border-color: rgba(16, 185, 129, 0.4);
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(16, 185, 129, 0.1) inset;
+    border-color: rgba(0, 200, 150, 0.4);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 200, 150, 0.1) inset;
     transform: translateY(-4px);
 }
 
@@ -68,7 +68,7 @@ body {
     position: absolute;
     width: 80vw;
     height: 50vh;
-    background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.15) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(0, 200, 150, 0.15) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
     top: -20vh;
     left: 10vw;
     filter: blur(60px);
