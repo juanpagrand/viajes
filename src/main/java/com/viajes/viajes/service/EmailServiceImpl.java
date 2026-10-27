@@ -12,6 +12,9 @@ public class EmailServiceImpl implements EmailService {
     private static final Logger log = LoggerFactory.getLogger(EmailServiceImpl.class);
     private final JavaMailSender mailSender;
 
+    @org.springframework.beans.factory.annotation.Value("${app.mail.from:${MAIL_FROM:ellocodavid981@gmail.com}}")
+    private String fromEmail;
+
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -27,6 +30,9 @@ public class EmailServiceImpl implements EmailService {
         
         try {
             SimpleMailMessage message = new SimpleMailMessage();
+            if (fromEmail != null && !fromEmail.isBlank()) {
+                message.setFrom(fromEmail);
+            }
             message.setTo(toEmail);
             message.setSubject("¡Bienvenido a Bordo! - Confirmación de Registro");
             message.setText("Hola " + name + ",\n\nTe damos la bienvenida oficial a la expedición El Loco David. Tu registro ha sido completado con éxito.\n\n¡Buen viaje!");
@@ -47,6 +53,9 @@ public class EmailServiceImpl implements EmailService {
         
         try {
             SimpleMailMessage message = new SimpleMailMessage();
+            if (fromEmail != null && !fromEmail.isBlank()) {
+                message.setFrom(fromEmail);
+            }
             message.setTo(toEmail);
             message.setSubject("Restablecer Contraseña - Código de Confirmación");
             message.setText("Hola,\n\nHas solicitado restablecer tu contraseña. Tu código de confirmación es:\n\n" + code + "\n\nEste código es válido por 15 minutos.\n\nSi no solicitaste este cambio, puedes ignorar este correo.");

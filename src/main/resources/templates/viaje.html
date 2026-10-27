@@ -96,24 +96,24 @@
             style="background: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 50%, transparent 75%);"></div>
 
         <!-- CONTENIDO DEL HERO: Layout de dos columnas -->
-        <div class="relative z-20 w-full max-w-7xl mx-auto px-6 pb-16 pt-28 flex flex-col lg:flex-row items-end lg:items-center justify-between gap-8">
+        <div class="relative z-30 w-full max-w-7xl mx-auto px-6 pb-28 sm:pb-36 lg:pb-36 pt-28 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
 
-            <!-- BLOQUE DE TEXTOS (izquierda / arriba en móvil) -->
-            <div class="flex flex-col items-start max-w-xl" style="text-shadow: 0 2px 8px rgba(0,0,0,.6);">
-                <h1 class="text-3xl md:text-5xl lg:text-5xl font-bold text-white mb-3 drop-shadow-xl leading-tight tracking-wide">
+            <!-- BLOQUE DE TEXTOS (desplazado hacia arriba, z-40 para visibilidad total sobre Bento) -->
+            <div class="flex flex-col items-start max-w-xl relative z-40 mb-4 lg:mb-10 -translate-y-4 sm:-translate-y-8 lg:-translate-y-12">
+                <h1 class="text-3xl md:text-5xl lg:text-5xl font-extrabold text-white mb-3 drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)] leading-tight tracking-wide">
                     EL LOCO DAVID EXPEDITION
                 </h1>
                 <p data-i18n="hero-title-1"
-                    class="text-primaryLight font-semibold text-xl md:text-2xl lg:text-3xl mb-3 drop-shadow-lg uppercase tracking-wider">
+                    class="text-primaryLight font-semibold text-xl md:text-2xl lg:text-3xl mb-4 drop-shadow-lg uppercase tracking-wider">
                     ENTRE OCÉANOS Y LATITUDES
                 </p>
-                <p class="text-lg md:text-xl text-white font-light drop-shadow-md" data-i18n="hero-subtitle">
+                <p class="text-lg md:text-2xl text-white font-medium drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-snug" data-i18n="hero-subtitle">
                     Un sueño no tiene fecha de vencimiento.
                 </p>
             </div>
 
             <!-- GRUPO DE BOTONES (derecha / abajo en móvil) -->
-            <div class="flex flex-col items-stretch gap-3 w-full lg:w-auto lg:min-w-[260px]">
+            <div class="flex flex-col items-stretch gap-3 w-full lg:w-auto lg:min-w-[260px] relative z-40 mb-4 lg:mb-10">
                 <!-- Botón 1: Start eventyret -->
                 <a href="#barco"
                     id="hero-start-btn"
@@ -388,9 +388,9 @@
                     <p class="text-accent font-mono text-sm mb-6 tracking-wider" data-i18n="story-specs">Motiva 49 · Velero oceánico de acero · Diseño danés · 1996 · Bandera noruega</p>
                     <div class="space-y-4 text-slate-300 text-lg leading-relaxed">
                         <p data-i18n="story-p1">El corazón de nuestra expedición es un Motiva 49 de 1996, de diseño danés. No fue elegido por lujo, sino por su robusta construcción y sus características para la navegación oceánica.</p>
-                        <p data-i18n="story-p2">Actualmente, el velero se encuentra en proceso de modernización y preparación para futuras travesías. Cada sistema instalado y cada mejora realizada representan un paso más hacia nuestro objetivo.</p>
-                        <p data-i18n="story-p3">Su equipamiento de navegación incluye radar, AIS, radio VHF, piloto automático y sistemas electrónicos de navegación.</p>
-                        <p data-i18n="story-p4">La preparación no consiste únicamente en instalar equipos. Nuestro objetivo es desarrollar sistemas integrados que faciliten la supervisión del funcionamiento del barco, la detección de posibles fallos y la gestión de problemas técnicos durante travesías prolongadas lejos de asistencia en tierra.</p>
+                        <p data-i18n="story-p2">Actualmente continúa en proceso de modernización y preparación para futuras travesías. Cada sistema instalado y cada mejora realizada representan un paso más hacia nuestro objetivo.</p>
+                        <p data-i18n="story-p3">Entre los principales objetivos de su futura navegación destaca el intento de cruzar el legendario Paso del Noroeste, una de las rutas marítimas más desafiantes del planeta.</p>
+                        <p data-i18n="story-p4">Asimismo, contemplamos como posibilidades futuras a explorar la colaboración en investigaciones y toma de datos científicos sobre el medio ambiente ártico.</p>
                         <p data-i18n="story-p5">El Loco David es más que el velero de la expedición: es nuestro hogar, nuestra plataforma de trabajo y el medio que hará posible el viaje.</p>
                         <p class="font-semibold text-white pt-2" data-i18n="story-quote">El barco no es el destino. Es lo que hace posible el viaje.</p>
                     </div>
@@ -516,28 +516,28 @@
             <div class="w-full h-px bg-white/10"></div>
 
             <!-- Disclaimer -->
-            <div class="text-[11px] text-slate-400/70 leading-relaxed text-justify space-y-3 max-w-7xl">
-                <p data-i18n="foot-disclaimer-text-1">Nos esforzamos por mantener toda la información publicada en este
+            <div class="text-xs sm:text-sm text-slate-300 font-light leading-relaxed text-left sm:text-justify space-y-4 max-w-7xl">
+                <p class="text-slate-200" data-i18n="foot-disclaimer-text-1">Nos esforzamos por mantener toda la información publicada en este
                     sitio web actualizada y precisa. Sin embargo, los planes de navegación, rutas, fechas, itinerarios,
                     actividades, disponibilidad de productos o servicios y demás contenidos pueden modificarse sin
                     previo aviso debido a condiciones meteorológicas, factores técnicos, operativos, de seguridad o
                     cualquier otra circunstancia fuera de nuestro control.</p>
-                <p data-i18n="foot-disclaimer-text-2">Aunque procuramos ofrecer información confiable, no garantizamos
+                <p class="text-slate-300" data-i18n="foot-disclaimer-text-2">Aunque procuramos ofrecer información confiable, no garantizamos
                     que el contenido esté siempre completo, actualizado o libre de errores. El Loco David Expedition se
                     reserva el derecho de modificar, actualizar o eliminar cualquier información del sitio web en
                     cualquier momento y sin previo aviso.</p>
-                <p class="font-medium text-slate-300/90" data-i18n="foot-disclaimer-text-3">El uso de este sitio web
+                <p class="font-normal text-slate-200" data-i18n="foot-disclaimer-text-3">El uso de este sitio web
                     implica la aceptación de nuestros <a href="/politicas"
-                        class="text-primaryLight hover:text-white underline transition-colors">Términos y
+                        class="text-primaryLight hover:text-white underline font-medium transition-colors">Términos y
                         Condiciones</a>, así como de nuestra <a href="/politicas"
-                        class="text-primaryLight hover:text-white underline transition-colors">Política de
+                        class="text-primaryLight hover:text-white underline font-medium transition-colors">Política de
                         Privacidad</a>.</p>
-                <div class="mt-4 pt-4 border-t border-white/5 flex flex-wrap gap-4 text-xs">
-                    <a href="/politicas" class="text-slate-400 hover:text-white underline transition-colors"
+                <div class="mt-4 pt-4 border-t border-white/10 flex flex-wrap items-center gap-4 text-xs sm:text-sm">
+                    <a href="/politicas" class="text-slate-300 hover:text-white underline font-medium transition-colors"
                         data-i18n="foot-policies">Información Legal y Política de Privacidad</a>
-                    <span class="text-slate-600">|</span>
+                    <span class="text-slate-500">|</span>
                     <a href="/condiciones-donacion"
-                        class="text-primaryLight hover:text-white underline transition-colors font-medium"
+                        class="text-primaryLight hover:text-white underline font-medium transition-colors"
                         data-i18n="foot-donation-terms">Condiciones de Donación (Vipps)</a>
                 </div>
             </div>
